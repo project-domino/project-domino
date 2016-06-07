@@ -56,8 +56,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	r.Methods("GET").Handler(http.FileServer(httpfs.New(assetFS)))
-	common.LoadTemplates(assetFS)
+	r.Methods("GET").Path("/assets/{file}").Handler(http.FileServer(httpfs.New(assetFS)))
+	if err := common.LoadTemplates(assetFS); err != nil {
+		log.Fatal(err)
+	}
 
 	// Authentication Routes
 	// r.Methods("POST").Path("/login").HandlerFunc(api.LoginHandler)
