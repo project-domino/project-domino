@@ -10,9 +10,8 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/jinzhu/gorm"
-
-	"bitbucket.org/akshay_shekhawat/project-domino/common"
-	"bitbucket.org/akshay_shekhawat/project-domino/models"
+	"github.com/project-domino/project-domino-server/common"
+	"github.com/project-domino/project-domino-server/models"
 )
 
 // LoginHandler handles requests to log a user in.
@@ -41,8 +40,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	db.Limit(1).
 		Where(&models.User{
-		Email: email,
-	}).Or(&models.User{
+			Email: email,
+		}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users)
 

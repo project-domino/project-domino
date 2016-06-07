@@ -4,10 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"bitbucket.org/remexre/chestnut/common"
-
 	"github.com/gorilla/context"
 	"github.com/jinzhu/gorm"
+	"github.com/project-domino/project-domino-server/common"
 	"github.com/project-domino/project-domino-server/models"
 )
 

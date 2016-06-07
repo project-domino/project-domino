@@ -11,6 +11,8 @@ import (
 	// Internal dependencies
 
 	"github.com/project-domino/project-domino-server/common"
+	"github.com/project-domino/project-domino-server/handlers/api"
+	"github.com/project-domino/project-domino-server/handlers/view"
 	"github.com/project-domino/project-domino-server/middleware"
 
 	// 3rd-party dependencies
@@ -62,20 +64,21 @@ func main() {
 	}
 
 	// Authentication Routes
-	// r.Methods("POST").Path("/login").HandlerFunc(api.LoginHandler)
-	// r.Methods("POST").Path("/register").HandlerFunc(api.RegisterHandler)
-	// r.Methods("POST").Path("/logout").HandlerFunc(api.LogoutHandler)
+	r.Methods("POST").Path("/login").HandlerFunc(api.LoginHandler)
+	r.Methods("POST").Path("/register").HandlerFunc(api.RegisterHandler)
+	r.Methods("POST").Path("/logout").HandlerFunc(api.LogoutHandler)
 
 	// View Routes
-	// r.Methods("GET").Path("/").HandlerFunc(view.HomeHandler)
-	// r.Methods("GET").Path("/subjects").HandlerFunc(view.SubjectListHandler)
-	// r.Methods("GET").Path("/subject/{subjectName}").HandlerFunc(view.SubjectHandler)
-	// r.Methods("GET").Path("/subject/{subjectName}/{topicName}").HandlerFunc(view.TopicHandler)
-	// r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteURLID}/{noteName}").HandlerFunc(view.NoteHandler) // Note name for url readability
-	// r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteURLID}").HandlerFunc(view.NoteHandler)
-	// r.Methods("GET").Path("/user/{userName}").HandlerFunc(view.UserHandler)
-	// r.Methods("GET").Path("/university/{shortName}").HandlerFunc(view.UniversityHandler)
-	// r.Methods("GET").Path("/search").HandlerFunc(view.SearchHandler)
+	r.Methods("GET").Path("/").HandlerFunc(view.HomeHandler)
+	r.Methods("GET").Path("/subjects").HandlerFunc(view.SubjectListHandler)
+	r.Methods("GET").Path("/subject/{subjectName}").HandlerFunc(view.SubjectHandler)
+	r.Methods("GET").Path("/subject/{subjectName}/{topicName}").HandlerFunc(view.TopicHandler)
+	r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteID}").HandlerFunc(view.NoteHandler)
+	// noteName for url readability
+	r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteID}/{noteName}").HandlerFunc(view.NoteHandler)
+	r.Methods("GET").Path("/user/{userName}").HandlerFunc(view.UserHandler)
+	r.Methods("GET").Path("/university/{shortName}").HandlerFunc(view.UniversityHandler)
+	r.Methods("GET").Path("/search").HandlerFunc(view.SearchHandler)
 
 	// Start serving.
 	n := negroni.New(negroni.NewRecovery(), negroni.NewLogger())

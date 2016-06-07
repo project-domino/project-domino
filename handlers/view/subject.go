@@ -3,7 +3,7 @@ package view
 import (
 	"net/http"
 
-	"bitbucket.org/akshay_shekhawat/project-domino/common"
+	"github.com/project-domino/project-domino-server/common"
 )
 
 // SubjectHandler serves a list of topics in a given subject

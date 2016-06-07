@@ -3,7 +3,7 @@ package view
 import (
 	"net/http"
 
-	"bitbucket.org/akshay_shekhawat/project-domino/common"
+	"github.com/project-domino/project-domino-server/common"
 )
 
 // TopicHandler serves a list of notes in a given topic

@@ -3,7 +3,7 @@ package view
 import (
 	"net/http"
 
-	"bitbucket.org/akshay_shekhawat/project-domino/common"
+	"github.com/project-domino/project-domino-server/common"
 )
 
 // UserHandler serves a webpage for an individual user
