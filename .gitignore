@@ -1,0 +1,5 @@
+.*
+!.gitignore
+
+domino.db
+project-domino
