@@ -9,7 +9,6 @@ type Note struct {
 
 	Title string
 	Body  string
-	URLID string
 
 	WriterID uint
 	Writer   User
@@ -17,8 +16,6 @@ type Note struct {
 	UniversityID uint
 	University   University
 
-	SubjectID uint
-	Subject   Subject
-
-	Outlines []Outline `gorm:"many2many:note_outline;"`
+	Collections []Collection `gorm:"many2many:note_collection;"`
+	Tags        []Tag        `gorm:"many2many:note_tag;"`
 }
