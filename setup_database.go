@@ -16,4 +16,5 @@ func SetupDatabase(db *gorm.DB) {
 	db.CreateTable(&models.Textbook{})
 	db.CreateTable(&models.University{})
 	db.CreateTable(&models.Tag{})
+	db.CreateTable(&models.TagDepends{})
 }

@@ -6,8 +6,7 @@ import "github.com/jinzhu/gorm"
 type Tag struct {
 	gorm.Model
 
-	Name      string
-	DependsOn []Tag `gorm:"foreignkey:tag_id;associationforeignkey:depends_id;many2many:tag_depends;"`
+	Name string
 
 	Collections []Collection `gorm:"many2many:collection_tag;"`
 	Notes       []Note       `gorm:"many2many:note_tag;"`
