@@ -33,7 +33,7 @@ var (
 	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
 	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
 	debug     = flag.Bool("debug", false, "Enables debugging.")
-	devAssets = flag.Bool("devAssets", true, "Load assets from a directory instead of a .zip file.")
+	devAssets = flag.Bool("devAssets", false, "Load assets from a directory instead of a .zip file.")
 	serveOn   = flag.String("serveOn", ":80", "The address to serve on.")
 )
 
