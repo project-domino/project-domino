@@ -33,6 +33,7 @@ var (
 	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
 	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
 	debug     = flag.Bool("debug", false, "Enables debugging.")
+	devAssets = flag.Bool("devAssets", true, "Load assets from a directory instead of a .zip file.")
 	serveOn   = flag.String("serveOn", ":80", "The address to serve on.")
 )
 
@@ -54,7 +55,11 @@ func main() {
 	r := mux.NewRouter()
 
 	// Assets
-	assetFS, err := NewAssetFilesystem(*assetPath)
+	newFsFunc := NewZipFileSystem
+	if *devAssets {
+		newFsFunc = NewDirFileSystem
+	}
+	assetFS, err := newFsFunc(*assetPath)
 	if err != nil {
 		log.Fatal(err)
 	}
