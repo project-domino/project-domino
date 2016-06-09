@@ -4,20 +4,42 @@ html
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		block head
-		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/readable/bootstrap.min.css")
+		link(rel="stylesheet", href="/assets/header.css")
+		| {{range .stylesheets}}
+		link(rel="stylesheet", href="{{.Link}}")
+		| {{end}}
 	body
-		nav.navbar.navbar-default
-			div.container-fluid
-				a.navbar-brand(href="/") Project Domino
-				form.navbar-form(action="/search")
-					div.form-group(style="display: inline;")
-						div.input-group(style="display: table;")
-							input.form-control(placeholder="Search...", name="q")
-							span.input-group-btn(style="width: 1%;")
-								button.btn.btn-default
-									span.glyphicon.glyphicon-search
+		div.navbar
+			ul.navbar-list
+				li.navbar-left
+					a.navbar-title(href="/") Project Domino
+				li.navbar-left
+					div.search-container
+						input.search-field(placeholder="Search...")
+						button.search-btn Search
+				| {{if .loggedIn}}
+				| {{if eq .requestUser.Type "writer"}}
+				li.navbar-right
+					div.dropdown
+						button.dropdown-btn +
+						div.dropdown-content
+							a(href="/new/note") New Note
+							a(href="/new/collection") New Collection
+							a(href="/new/textbook") New Textbook
+				| {{end}}
+				li.navbar-right
+					div.dropdown
+						button.dropdown-btn {{.requestUser.FirstName}} {{.requestUser.LastName}}
+						div.dropdown-content
+							a(href="/account") My Account
+							a(href="/logout") Sign Out
+				| {{else}}
+				li.navbar-right
+					a.login-btn(href="#") Sign In
+				| {{end}}
 		block body
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js")
-		script(src="/assets/main.js")
+		| {{range .scripts}}
+		script(src="{{.Link}}")
+		| {{end}}
 		block scripts

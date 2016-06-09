@@ -1,0 +1,17 @@
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+
+	.navbar-list {
+		background-color: #B3B3B3;
+		list-style-type: none;
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+
+		.navbar-left { float: left; }
+		.navbar-right { float: right; }
+	}
+}

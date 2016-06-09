@@ -1,0 +1,13 @@
+extends ./template.pug
+
+mixin topic(name, shortName)
+	- if(!shortName) shortName = name.replace(/\s+/g, "-").toLowerCase();
+	li: a(href="/browse/" + shortName)= name
+
+block head
+	title Project Domino
+
+block body
+	section
+		h2.site-name Project Domino
+		h4.site-description Learn Anything or Whatever

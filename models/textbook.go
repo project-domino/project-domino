@@ -6,9 +6,13 @@ import "github.com/jinzhu/gorm"
 type Textbook struct {
 	gorm.Model
 
-	Title       string
-	Description string
-	Featured    bool
+	Title    string
+	Intro    string
+	Featured bool
+
+	AuthorID uint
+	Author   User
+
 	Collections []Collection `gorm:"many2many:textbook_collection;"`
 	Tags        []Tag        `gorm:"many2many:textbook_tag;"`
 }

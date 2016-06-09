@@ -5,11 +5,14 @@ require("./build_helpers/main.js")({
 	},
 	pug: {
 		editor: "src/pug/editor.pug",
-		index:  "src/pug/index.pug",
+		home:   "src/pug/home.pug",
 		search: "src/pug/search.pug",
 	},
 	sass: {
 		editor: "src/sass/editor.scss",
+		home:   "src/sass/home.scss",
+		header: "src/sass/header.scss",
+		util:   "src/sass/util.scss",
 	},
 });
 
