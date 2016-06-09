@@ -1,7 +1,6 @@
 package common
 
 import (
-	"encoding/json"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -14,12 +13,7 @@ import (
 )
 
 // Views is a template containing all views.
-var Views = template.New("Views").Funcs(template.FuncMap{
-	"json": func(obj interface{}) (string, error) {
-		b, err := json.Marshal(obj)
-		return string(b), err
-	},
-})
+var Views = template.New("Views")
 
 // LoadTemplates loads the Views global with templates from the archive.
 func LoadTemplates(fs vfs.FileSystem) error {
