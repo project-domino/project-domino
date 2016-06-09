@@ -1,0 +1,25 @@
+doctype html
+
+html
+	head
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		block head
+		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/readable/bootstrap.min.css")
+	body
+		| {{ if .loggedIn }}
+		nav.navbar.navbar-default
+			div.container-fluid
+				a.navbar-brand(href="/") Project Domino
+				form.navbar-form(action="/search")
+					div.form-group(style="display: inline;")
+						div.input-group(style="display: table;")
+							input.form-control(placeholder="Search...", name="q")
+							span.input-group-btn(style="width: 1%;")
+								button.btn.btn-default
+									span.glyphicon.glyphicon-search
+		| {{ end }}
+		block body
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js")
+		script(src="/assets/main.js")
+		block scripts

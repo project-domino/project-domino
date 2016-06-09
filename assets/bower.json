@@ -1,0 +1,17 @@
+{
+  "authors": [
+    "Akshay Shekhawat <akshay.shekhawat@gmail.com>",
+    "Nathan Ringo <remexre@gmail.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "license": "UNLICENSED",
+  "name": "project-domino-client",
+  "private": true,
+  "version": "0.0.0"
+}

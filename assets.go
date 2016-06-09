@@ -8,11 +8,6 @@ import (
 	"golang.org/x/tools/godoc/vfs/zipfs"
 )
 
-// NewDirFileSystem creates a vfs.FileSystem for assets from a directory.
-func NewDirFileSystem(path string) (vfs.FileSystem, error) {
-	return vfs.OS(path), nil
-}
-
 // NewZipFileSystem creates a vfs.FileSystem for assets from a .zip file.
 func NewZipFileSystem(filePath string) (vfs.FileSystem, error) {
 	reader, err := zip.OpenReader(filePath)

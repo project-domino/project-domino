@@ -1,5 +1,13 @@
 .*
+!.babelrc
 !.gitignore
+!.pug-lintrc
+!.sass-lint.yml
 
 domino.db
-project-domino-server
+project-domino
+
+dist/
+node_modules/
+
+npm-debug.log

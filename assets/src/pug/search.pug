@@ -1,0 +1,31 @@
+extends ./template.pug
+
+mixin item(name, url)
+	h3
+		a(href=url)= name
+		| &nbsp;
+		block
+	hr
+
+mixin note(name, id)
+	+item(name, "/note/" + id)
+		block
+
+mixin collection(name, id)
+	+item(name, "/collection/" + id)
+		span.label.label-default Collection
+		block
+
+block head
+	title Search Results
+
+block body
+	div.container
+		h2 Search results for "eigen"...
+		hr
+		+collection("Introduction to Linear Algebra", 1)
+			span.label.label-success Featured
+		+note("German Prefixes in Mathematics", 7)
+			span.label.label-info New
+		+collection("Pain: The Book", 3)
+			span.label.label-info New

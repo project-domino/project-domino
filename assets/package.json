@@ -1,0 +1,49 @@
+{
+  "bugs": {
+    "email": "remexre@gmail.com",
+    "url": "https://github.com/project-domino/project-domino-client/issues"
+  },
+  "contributors": [
+    "Akshay Shekhawat <akshay.shekhawat@gmail.com>",
+    "Nathan Ringo <remexre@gmail.com>"
+  ],
+  "description": "The web client for Project Domino.",
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "eslint-config-remexre": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.9",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.0.2",
+    "gulp-pug-lint": "^0.1.6",
+    "gulp-rollup": "^1.9.0",
+    "gulp-sass": "^2.3.1",
+    "gulp-sass-lint": "^1.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-watch": "^4.3.6",
+    "gulp-xo": "^0.11.0",
+    "gulp-zip": "^3.2.0",
+    "lodash": "^4.13.1",
+    "rimraf": "^2.5.2",
+    "rollup-plugin-babel": "^2.4.0",
+    "xo": "^0.15.1"
+  },
+  "homepage": "https://github.com/project-domino/project-domino-client",
+  "license": "UNLICENSED",
+  "name": "project-domino-client",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/project-domino/project-domino-client.git"
+  },
+  "scripts": {
+    "postinstall": "npm test && gulp",
+    "test": "xo && ava"
+  },
+  "version": "0.0.0",
+  "xo": {
+    "extends": "eslint-config-remexre"
+  }
+}

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"golang.org/x/tools/godoc/vfs"
 	"golang.org/x/tools/godoc/vfs/httpfs"
 
 	// Internal dependencies
@@ -33,7 +34,7 @@ var (
 	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
 	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
 	debug     = flag.Bool("debug", false, "Enables debugging.")
-	devAssets = flag.Bool("devAssets", false, "Load assets from a directory instead of a .zip file.")
+	dev       = flag.Bool("dev", false, "Load assets from a directory instead of a .zip file.")
 	serveOn   = flag.String("serveOn", ":80", "The address to serve on.")
 )
 
@@ -55,13 +56,15 @@ func main() {
 	r := mux.NewRouter()
 
 	// Assets
-	newFsFunc := NewZipFileSystem
-	if *devAssets {
-		newFsFunc = NewDirFileSystem
-	}
-	assetFS, err := newFsFunc(*assetPath)
-	if err != nil {
-		log.Fatal(err)
+	var assetFS vfs.FileSystem
+	if *dev {
+		assetFS = vfs.OS("assets/dist")
+	} else {
+		var err error
+		assetFS, err = NewZipFileSystem(*assetPath)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	r.Methods("GET").Path("/assets/{file}").Handler(http.FileServer(httpfs.New(assetFS)))
 	if err := common.LoadTemplates(assetFS); err != nil {
