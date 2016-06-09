@@ -21,11 +21,7 @@ function server() {
 
 # Deployment bundle-building function.
 function deployBundle() {
-	(
-		tar c project-domino;
-		cd assets/dist;
-		tar c assets.zip;
-	) | gzip > project-domino.tgz;
+	tar czf project-domino.tgz project-domino -C assets/dist assets.zip;
 }
 
 # Realpath function for OS X people.
@@ -41,6 +37,6 @@ function build() {
 	${@};
 };
 
-build client;
-build server;
+# build client;
+# build server;
 build deployBundle;
