@@ -12,3 +12,14 @@ require("./build_helpers/main.js")({
 		editor: "src/sass/editor.scss",
 	},
 });
+
+const gulp = require("gulp");
+gulp.task("jsdoc", cb => {
+	const jsdoc = require("gulp-jsdoc3");
+	gulp.src("src/editor/**.js", {read: false})
+		.pipe(jsdoc({
+			opts: {
+				destination: "dist/docs/",
+			},
+		}, cb));
+});

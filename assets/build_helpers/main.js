@@ -24,7 +24,7 @@ module.exports = files => {
 	}).flatten().value();
 
 	gulp.task("default", targets, () => {
-		gulp.src(["dist/**", "!dist/assets.zip"])
+		gulp.src(["dist/**", "!dist/assets.zip", "!dist/doc"])
 			.pipe(zip("assets.zip"))
 			.pipe(gulp.dest("dist/"));
 	});
