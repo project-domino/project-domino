@@ -13,6 +13,7 @@ import (
 
 	"github.com/project-domino/project-domino/common"
 	"github.com/project-domino/project-domino/handlers/api"
+	"github.com/project-domino/project-domino/handlers/debug"
 	"github.com/project-domino/project-domino/handlers/view"
 	"github.com/project-domino/project-domino/middleware"
 
@@ -33,7 +34,7 @@ var (
 	assetPath = flag.String("assetPath", "assets.zip", "The zip file to load assets from.")
 	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
 	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
-	debug     = flag.Bool("debug", false, "Enables debugging.")
+	dbDebug   = flag.Bool("dbDebug", false, "Enables debugging on the database.")
 	dev       = flag.Bool("dev", false, "Load assets from a directory instead of a .zip file.")
 	serveOn   = flag.String("serveOn", ":80", "The address to serve on.")
 )
@@ -49,7 +50,7 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-	db.LogMode(*debug)
+	db.LogMode(*dbDebug)
 	SetupDatabase(db)
 
 	// Set up routes.
@@ -87,6 +88,9 @@ func main() {
 	r.Methods("GET").Path("/user/{userName}").HandlerFunc(view.UserHandler)
 	r.Methods("GET").Path("/university/{shortName}").HandlerFunc(view.UniversityHandler)
 	r.Methods("GET").Path("/search").HandlerFunc(view.SearchHandler)
+
+	// Debug Routes
+	r.Methods("GET").Path("/debug/editor").HandlerFunc(debug.EditorHandler)
 
 	// Start serving.
 	n := negroni.New(negroni.NewRecovery(), negroni.NewLogger())

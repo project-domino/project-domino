@@ -3,6 +3,7 @@ const path = require("path");
 const _ =          require("lodash");
 const gulp =       require("gulp");
 const plumber =    require("gulp-plumber");
+const rename =     require("gulp-rename");
 const rollup =     require("gulp-rollup");
 const sourcemaps = require("gulp-sourcemaps");
 const uglify =     require("gulp-uglify");
@@ -12,7 +13,7 @@ const rollupPlugins = _.map([
 	"babel",
 ], name => require(`rollup-plugin-${name}`)());
 
-module.exports = file => gulp.src(file, {read: false})
+module.exports = (file, out) => gulp.src(file, {read: false})
 	.pipe(plumber())
 	.pipe(xo())
 	.pipe(rollup({
@@ -22,5 +23,6 @@ module.exports = file => gulp.src(file, {read: false})
 		sourceMap:  true,
 	}))
 	.pipe(uglify())
+	.pipe(rename(`${out}.js`))
 	.pipe(sourcemaps.write())
 	.pipe(gulp.dest("dist/assets/"));

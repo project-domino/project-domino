@@ -3,11 +3,12 @@ extends ./template.pug
 block head
 	title Project Domino Editor Demo
 	link(rel="stylesheet", href="/assets/editor.css")
+	style #editor { min-height: 50vh; }
 
 block body
 	div.container
 		div.col-md-6.col-md-offset-3
-			| asdf
+			div#editor
 
 block scripts
 	script(src="/assets/editor.js")

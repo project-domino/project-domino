@@ -17,7 +17,7 @@ module.exports = files => {
 		const helper = helpers[type];
 		gulp.task(type, _.map(targets, (file, name) => {
 			const targetName = `${type}:${name}`;
-			gulp.task(targetName, () => helper(file));
+			gulp.task(targetName, () => helper(file, name));
 			return targetName;
 		}));
 		return type;

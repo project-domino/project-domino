@@ -1,6 +1,6 @@
 require("./build_helpers/main.js")({
 	js: {
-		editor: "src/editor/editor.js",
+		editor: "src/editor/main.js",
 		main:   "src/js/main.js",
 	},
 	pug: {
