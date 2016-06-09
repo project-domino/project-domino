@@ -42,7 +42,7 @@ func LoadTemplates(fs vfs.FileSystem) error {
 			return err
 		}
 
-		Views.Parse(string(src))
+		Views.New(file.Name()).Parse(string(src))
 	}
 	return nil
 }
