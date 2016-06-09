@@ -37,6 +37,6 @@ function build() {
 	${@};
 };
 
-# build client;
-# build server;
+build client;
+build server;
 build deployBundle;
