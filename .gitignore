@@ -6,6 +6,7 @@
 
 domino.db
 project-domino
+project-domino.tgz
 
 dist/
 node_modules/

@@ -19,6 +19,15 @@ function server() {
 	go build;
 };
 
+# Deployment bundle-building function.
+function deployBundle() {
+	(
+		tar c project-domino;
+		cd assets/dist;
+		tar c assets.zip;
+	) | gzip > project-domino.tgz;
+}
+
 # Realpath function for OS X people.
 # Credit https://stackoverflow.com/questions/3572105.
 command -v realpath >/dev/null 2>&1 || function realpath() {
@@ -34,3 +43,4 @@ function build() {
 
 build client;
 build server;
+build deployBundle;
