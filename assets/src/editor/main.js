@@ -2,7 +2,6 @@ import Editor from "./editor.js";
 import {
 	Note,
 	HeaderNode,
-	ImageNode,
 	ParagraphNode,
 	TextNode,
 } from "./note.js";

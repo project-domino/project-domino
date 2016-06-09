@@ -7,9 +7,10 @@ class Note {
 	constructor(nodes) {
 		this.nodes = nodes;
 	}
-	static fromJSON(json) {
-		throw new Error("NYI");
-	}
+	// TODO
+	// static fromJSON(json) {
+	// 	throw new Error("NYI");
+	// }
 
 	render() {
 		return this.nodes.map(node => node.render());
