@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/project-domino/project-domino-server/models"
+	"github.com/project-domino/project-domino/models"
 )
 
 // SetupDatabase initializes the database with empty tables of all the needed

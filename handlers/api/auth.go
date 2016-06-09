@@ -10,8 +10,8 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/jinzhu/gorm"
-	"github.com/project-domino/project-domino-server/common"
-	"github.com/project-domino/project-domino-server/models"
+	"github.com/project-domino/project-domino/common"
+	"github.com/project-domino/project-domino/models"
 )
 
 // LoginHandler handles requests to log a user in.

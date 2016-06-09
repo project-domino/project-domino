@@ -6,8 +6,8 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/jinzhu/gorm"
-	"github.com/project-domino/project-domino-server/common"
-	"github.com/project-domino/project-domino-server/models"
+	"github.com/project-domino/project-domino/common"
+	"github.com/project-domino/project-domino/models"
 )
 
 // LoginMiddleware adds a user struct to the request context based on the

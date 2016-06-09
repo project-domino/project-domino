@@ -11,10 +11,10 @@ import (
 
 	// Internal dependencies
 
-	"github.com/project-domino/project-domino-server/common"
-	"github.com/project-domino/project-domino-server/handlers/api"
-	"github.com/project-domino/project-domino-server/handlers/view"
-	"github.com/project-domino/project-domino-server/middleware"
+	"github.com/project-domino/project-domino/common"
+	"github.com/project-domino/project-domino/handlers/api"
+	"github.com/project-domino/project-domino/handlers/view"
+	"github.com/project-domino/project-domino/middleware"
 
 	// 3rd-party dependencies
 	"github.com/codegangsta/negroni"
