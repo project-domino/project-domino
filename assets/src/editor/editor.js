@@ -12,7 +12,7 @@ import {LocalStorageSaveManager} from "./save-manager.js";
  * @extends EventEmitter
  */
 class Editor extends EventEmitter {
-	constructor(e) {
+	constructor(e, saveManager = new LocalStorageSaveManager()) {
 		super();
 
 		// Set up internal event handlers.
@@ -23,7 +23,7 @@ class Editor extends EventEmitter {
 
 		// Set up external components.
 		this.autosaveManager = new AutosaveManager(this);
-		this.saveManager = new LocalStorageSaveManager(this);
+		this.saveManager = saveManager;
 
 		// Set up element.
 		this.container = $(e).addClass("project-domino-editor");
@@ -71,7 +71,8 @@ class Editor extends EventEmitter {
 		this.emit("error", `TODO formattingHandler(${name})`);
 	}
 	errorHandler(error) {
-		alert(error);
+		// TODO Error popups.
+		console.error(error);
 	}
 
 	keyDownListener(event) {
@@ -89,10 +90,12 @@ class Editor extends EventEmitter {
 	 * Handles all saving-related "things".
 	 */
 	save() {
+		console.log("Saving...", this.saveManager);
 		const button = $(".project-domino-editor-save", this.buttons);
 		button.attr("disabled", true);
 		this.saveManager.save(this.note).then(() => {
 			button.attr("disabled", false);
+			console.log("Saved!");
 		}).catch(err => this.emit("error", err));
 	}
 }

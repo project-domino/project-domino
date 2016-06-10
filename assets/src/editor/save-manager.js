@@ -8,6 +8,7 @@ import {Note} from "./note.js";
 class SaveManager {
 	/**
 	 * Attaches a SaveManager to an EventEmitter.
+	 * @deprecated
 	 * @param {module:ee~EventEmitter} ee - The EventEmitter to attach to.
 	 * @param {string} [saveEvent="save"] - The event to save on.
 	 * @param {string} [doneEvent="saved"] - The event to emit when finished saving.
@@ -59,7 +60,6 @@ class LocalStorageSaveManager extends SaveManager {
 	 * @return {Promise} A Promise for a Note.
 	 */
 	load() {
-		// eslint-disable-next-line no-unused-vars
 		return new Promise((resolve, reject) => {
 			let note;
 			try {
@@ -77,7 +77,6 @@ class LocalStorageSaveManager extends SaveManager {
 	 * @return {Promise} A Promise for the save operation's completion.
 	 */
 	save(note) {
-		// eslint-disable-next-line no-unused-vars
 		return new Promise((resolve, reject) => {
 			try {
 				localStorage.setItem(this.key, JSON.stringify(note));

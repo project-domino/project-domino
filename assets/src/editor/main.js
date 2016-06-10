@@ -1,6 +1,8 @@
 import $ from "jquery";
 
 import Editor from "./editor.js";
+import {LocalStorageSaveManager} from "./save-manager.js";
+import {SlowSaveManager} from "./debug.js";
 import {
 	Note,
 	HeaderNode,
@@ -8,7 +10,8 @@ import {
 	TextNode,
 } from "./note.js";
 
-const editor = new Editor(document.getElementById("editor"));
+const saveManager = new SlowSaveManager(new LocalStorageSaveManager());
+const editor = new Editor(document.getElementById("editor"), saveManager);
 window.editor = editor;
 export default editor;
 
