@@ -36,3 +36,13 @@
 	.col-11 { width: 91.66%; }
 	.col-12 { width: 100%; }
 }
+
+// Container, limits width on screens that are too wide
+.container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%
+}
+@media only screen and (min-width: 900px) {
+	.container { width: 900px }
+}
