@@ -80,8 +80,8 @@ class Editor extends EventEmitter {
 		}
 	}
 	errorHandler(error) {
-		// TODO Error popups.
 		console.error(error);
+		$("<div>").addClass("project-domino-editor-error").text(error).appendTo(this.errors);
 	}
 
 	keyDownListener(event) {
