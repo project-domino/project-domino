@@ -1,4 +1,13 @@
-// Utility styles for whole website
+@import "variables.scss";
+
+// Styles for whole website
+
+html, body {
+	background-color: $background-color;
+	font-family: $fonts;
+	margin: 0;
+	padding: 0;
+}
 
 // Cellphones
 [class*="col-"] {
@@ -46,4 +55,9 @@
 }
 @media only screen and (min-width: 1024px) {
 	.container { width: 1024px; }
+}
+
+// Form Elements
+.form-control {
+	display: block;
 }

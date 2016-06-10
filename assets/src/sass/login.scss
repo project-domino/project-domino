@@ -1,0 +1,22 @@
+@import "variables.scss";
+
+.login-panel, button, input {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.login-panel {
+	background-color: $foreground-color;
+	border: 2px solid $border-color;
+	margin-top: 5%;
+	padding: 20px;
+	text-align: center;
+	width: 50%;
+
+	button {
+		margin-top: 10px;
+		width: 50%;
+	}
+	input { width: 80%; }
+	.seperator { display: block; }
+}

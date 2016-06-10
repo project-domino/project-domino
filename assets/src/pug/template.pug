@@ -5,10 +5,7 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		block head
 		link(rel="stylesheet", href="/assets/header.css")
-		link(rel="stylesheet", href="/assets/util.css")
-		| {{range .stylesheets}}
-		link(rel="stylesheet", href="{{.Link}}")
-		| {{end}}
+		link(rel="stylesheet", href="/assets/main.css")
 	body
 		div.navbar
 			ul.navbar-list.container
@@ -36,10 +33,7 @@ html
 							a(href="/logout") Sign Out
 				| {{else}}
 				li.navbar-right
-					a.login-btn(href="#") Sign In
+					a(href="/login") Sign In
 				| {{end}}
 		block body
-		| {{range .scripts}}
-		script(src="{{.Link}}")
-		| {{end}}
 		block scripts

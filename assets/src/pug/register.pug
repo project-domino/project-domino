@@ -1,0 +1,21 @@
+extends ./template.pug
+
+mixin topic(name, shortName)
+	- if(!shortName) shortName = name.replace(/\s+/g, "-").toLowerCase();
+	li: a(href="/browse/" + shortName)= name
+
+block head
+	title Project Domino
+	link(rel="stylesheet", href="/assets/login.css")
+
+block body
+	div.content.container
+		div.login-panel
+			h2.login-header Register
+			input#email-field.form-control(placeholder="Enter your email...")
+			input#username-field.form-control(placeholder="Choose a username...")
+			input#password-field.form-control(placeholder="Choose a password...", type="password")
+			input#retype-password-field.form-control(placeholder="Retype your password...", type="password")
+			button#register-btn.form-control Register
+			span.seperator or...
+			a(href="/login") Login

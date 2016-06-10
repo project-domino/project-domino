@@ -73,6 +73,8 @@ func main() {
 	}
 
 	// Authentication Routes
+	r.Methods("GET").Path("/login").HandlerFunc(view.LoginHandler)
+	r.Methods("GET").Path("/register").HandlerFunc(view.RegisterHandler)
 	r.Methods("POST").Path("/login").HandlerFunc(api.LoginHandler)
 	r.Methods("POST").Path("/register").HandlerFunc(api.RegisterHandler)
 	r.Methods("POST").Path("/logout").HandlerFunc(api.LogoutHandler)

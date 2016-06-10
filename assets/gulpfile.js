@@ -4,15 +4,18 @@ require("./build_helpers/main.js")({
 		main:   "src/js/main.js",
 	},
 	pug: {
-		editor: "src/pug/editor.pug",
-		home:   "src/pug/home.pug",
-		search: "src/pug/search.pug",
+		editor:   "src/pug/editor.pug",
+		home:     "src/pug/home.pug",
+		search:   "src/pug/search.pug",
+		login:    "src/pug/login.pug",
+		register: "src/pug/register.pug",
 	},
 	sass: {
 		editor: "src/sass/editor.scss",
 		home:   "src/sass/home.scss",
 		header: "src/sass/header.scss",
-		util:   "src/sass/util.scss",
+		main:   "src/sass/main.scss",
+		login:  "src/sass/login.scss",
 	},
 });
 
