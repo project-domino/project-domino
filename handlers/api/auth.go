@@ -74,8 +74,6 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	// Get needed variables from request.
 	email := r.FormValue("email")
 	userName := r.FormValue("userName")
-	firstName := r.FormValue("firstName")
-	lastName := r.FormValue("lastName")
 	password := r.FormValue("password")
 	retypePassword := r.FormValue("retypePassword")
 
@@ -108,11 +106,9 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Create the user.
 	user := models.User{
-		Email:     email,
-		UserName:  userName,
-		FirstName: firstName,
-		LastName:  lastName,
-		Type:      models.General,
+		Email:    email,
+		UserName: userName,
+		Type:     models.General,
 	}
 	if err := user.SetPassword(password); err != nil {
 		common.HandleError(w, err, http.StatusInternalServerError)
