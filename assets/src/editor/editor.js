@@ -66,9 +66,18 @@ class Editor extends EventEmitter {
 			break;
 		}
 	}
-	formattingHandler(name) {
-		// TODO
-		this.emit("error", `TODO formattingHandler(${name})`);
+	formattingHandler(formatting) {
+		switch(formatting) {
+		case "h1":
+		case "h2":
+		case "h3":
+		case "bold":
+		case "italic":
+		case "underline":
+		default:
+			this.emit("error", `Unknown command: ${formatting}`);
+			break;
+		}
 	}
 	errorHandler(error) {
 		// TODO Error popups.
