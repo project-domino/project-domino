@@ -1,5 +1,6 @@
 .*
 !.babelrc
+!.eslintrc.json
 !.gitignore
 !.pug-lintrc
 !.sass-lint.yml

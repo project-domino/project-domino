@@ -1,0 +1,6 @@
+{
+	"extends": "eslint-config-remexre",
+	"parserOptions": {
+		"sourceType": "module"
+	}
+}
