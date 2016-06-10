@@ -4,6 +4,12 @@
 	flex-direction: column;
 }
 
+.project-domino-editor-buttons {
+	display: flex;
+
+	> button { flex-grow: 1; }
+}
+
 .project-domino-editor-content {
 	flex-grow: 1;
 	padding: 5px;
