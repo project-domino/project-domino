@@ -1,5 +1,7 @@
 /** @module editor */
 
+import $ from "jquery";
+
 import EventEmitter    from "./ee.js";
 import AutosaveManager from "./autosave-manager.js";
 
@@ -14,7 +16,8 @@ class Editor extends EventEmitter {
 		super();
 
 		// Set up internal event handlers.
-		this.on("button", name => this.buttonHandler(name));
+		this.on("command", name => this.commandHandler(name));
+		this.on("formatting", name => this.formattingHandler(name));
 		this.on("error", error => this.errorHandler(error));
 		// this.on("save-triggered", () => this.emit("save", this.document));
 
@@ -27,16 +30,18 @@ class Editor extends EventEmitter {
 		this.container.on("keydown", e => this.keyDownListener(e));
 		this.container.on("keypress", e => this.keyPressListener(e));
 		this.buttons = $("<div>").addClass("project-domino-editor-buttons").append([
-			"h1",
-			"h2",
-			"h3",
-			"bold",
-			"italic",
-			"underline",
+			["formatting", "h1"],
+			["formatting", "h2"],
+			["formatting", "h3"],
+			["formatting", "bold"],
+			["formatting", "italic"],
+			["formatting", "underline"],
+			["command", "save"],
 		].map(label => {
-			return $("<button>").addClass("btn btn-default").text(label).click(() => {
-				this.emit("button", label);
-			});
+			let button = $("<button>").addClass("btn btn-default").click(() => {
+				this.emit(label[0], label[1]);
+			}).addClass(`project-domino-editor-${label[1]}`);
+			return button;
 		})).appendTo(this.container);
 		this.element = $("<div>").addClass("project-domino-editor-content").attr({
 			contentEditable: true,
@@ -51,9 +56,19 @@ class Editor extends EventEmitter {
 		}).catch(err => this.emit("error", err));
 	}
 
-	buttonHandler(name) {
+	commandHandler(command) {
+		switch(command) {
+		case "save":
+			this.save();
+			break;
+		default:
+			this.emit("error", `Unknown command: ${command}`);
+			break;
+		}
+	}
+	formattingHandler(name) {
 		// TODO
-		this.emit("error", `TODO buttonHandler(${name})`);
+		this.emit("error", `TODO formattingHandler(${name})`);
 	}
 	errorHandler(error) {
 		alert(error);
@@ -74,7 +89,11 @@ class Editor extends EventEmitter {
 	 * Handles all saving-related "things".
 	 */
 	save() {
-		// TODO
+		const button = $(".project-domino-editor-save", this.buttons);
+		button.attr("disabled", true);
+		this.saveManager.save(this.note).then(() => {
+			button.attr("disabled", false);
+		}).catch(err => this.emit("error", err));
 	}
 }
 

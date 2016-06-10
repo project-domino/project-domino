@@ -11,7 +11,7 @@
   "devDependencies": {
     "ava": "^0.15.2",
     "babel-preset-es2015-rollup": "^1.1.1",
-    "eslint-config-remexre": "^1.0.2",
+    "eslint-config-remexre": "^1.0.3",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^2.0.9",
     "gulp-jsdoc3": "^0.3.0",
@@ -30,6 +30,8 @@
     "lodash": "^4.13.1",
     "rimraf": "^2.5.2",
     "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-commonjs": "^3.0.0",
+    "rollup-plugin-node-resolve": "^1.7.0",
     "xo": "^0.15.1"
   },
   "homepage": "https://github.com/project-domino/project-domino-client",
@@ -46,6 +48,7 @@
   },
   "version": "0.0.0",
   "xo": {
+    "envs": ["browser"],
     "extends": "eslint-config-remexre"
   }
 }

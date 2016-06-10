@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 import Editor from "./editor.js";
 import {
 	Note,

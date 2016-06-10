@@ -1,5 +1,7 @@
 /** @module note */
 
+import $ from "jquery";
+
 /**
  * A Note is the thing being edited.
  */
