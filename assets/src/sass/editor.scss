@@ -1,17 +1,18 @@
 .project-domino-editor {
 	border: 1px solid #000000;
-	flex-grow: 1;
-	padding: 5px;
-
-	.bold { font-weight: bold; }
-	.italic { font-style: italic; }
-	.underline { text-decoration: underline; }
+	display: flex;
+	flex-direction: column;
 }
 
-.project-domino-editor-h1 { content: "TODO h1 icon"; }
-.project-domino-editor-h2 { content: "TODO h2 icon"; }
-.project-domino-editor-h3 { content: "TODO h3 icon"; }
-.project-domino-editor-bold { content: "TODO bold icon"; }
-.project-domino-editor-italic { content: "TODO italic icon"; }
-.project-domino-editor-underline { content: "TODO underline icon"; }
-.project-domino-editor-save { content: "TODO save icon"; }
+.project-domino-editor-content {
+	flex-grow: 1;
+	padding: 5px;
+}
+
+.project-domino-editor-h1::before { content: "TODO h1 icon"; }
+.project-domino-editor-h2::before { content: "TODO h2 icon"; }
+.project-domino-editor-h3::before { content: "TODO h3 icon"; }
+.project-domino-editor-bold::before { content: "TODO bold icon"; }
+.project-domino-editor-italic::before { content: "TODO italic icon"; }
+.project-domino-editor-underline::before { content: "TODO underline icon"; }
+.project-domino-editor-save::before { content: "TODO save icon"; }
