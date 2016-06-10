@@ -17,4 +17,5 @@ let note = new Note([
 	]),
 ]);
 window.note = note;
-$("#editor").append(note.render());
+
+$("#editor > .project-domino-editor-content").append(note.render());
