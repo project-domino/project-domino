@@ -1,13 +1,19 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
 .navbar {
+	background-color: #b3b3b3;
 	left: 0;
-	position: fixed;
+	position: relative;
 	top: 0;
 	width: 100%;
 
 	.navbar-list {
-		background-color: #b3b3b3;
 		list-style-type: none;
-		margin: 0;
+		margin-bottom: 0;
+		margin-top: 0;
 		overflow: hidden;
 		padding: 0;
 
