@@ -40,8 +40,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	db.Limit(1).
 		Where(&models.User{
-			Email: email,
-		}).Or(&models.User{
+		Email: email,
+	}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users)
 
@@ -66,7 +66,6 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		Name:   "auth",
 		MaxAge: -1,
 	})
-	http.Redirect(w, r, "/", http.StatusFound)
 }
 
 // RegisterHandler handles requests to handle a new user.
