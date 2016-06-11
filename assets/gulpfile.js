@@ -1,7 +1,9 @@
 require("./build_helpers/main.js")({
 	js: {
-		editor: "src/editor/main.js",
-		main:   "src/js/main.js",
+		editor:   "src/editor/main.js",
+		main:     "src/js/main.js",
+		login:    "src/js/login.js",
+		register: "src/js/register.js",
 	},
 	pug: {
 		editor:   "src/pug/editor.pug",

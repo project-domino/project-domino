@@ -27,7 +27,15 @@ html
 				| {{end}}
 				li.navbar-right
 					div.dropdown
-						button.dropdown-btn {{.requestUser.FirstName}} {{.requestUser.LastName}}
+						button.dropdown-btn
+							| {{if ne .requestUser.FirstName ""}}
+							| 	{{.requestUser.FirstName}}
+							| 	{{if ne .requestUser.LastName ""}}
+							| 		{{.requestUser.LastName}}
+							| 	{{end}}
+							| {{else}}
+							| 	{{.requestUser.UserName}}
+							| {{end}}
 						div.dropdown-content
 							a(href="/account") My Account
 							a(href="/logout") Sign Out

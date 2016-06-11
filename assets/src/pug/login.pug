@@ -12,8 +12,11 @@ block body
 	div.content.container
 		div.login-panel
 			h2.login-header Login
-			input#email-field.form-control(placeholder="Enter your email...")
+			input#username-field.form-control(placeholder="Enter your username..")
 			input#password-field.form-control(placeholder="Enter your password", type="password")
 			button#login-btn.form-control Login
 			span.seperator or...
 			a(href="/register") Register
+
+block scripts
+	script(src="/assets/login.js")
