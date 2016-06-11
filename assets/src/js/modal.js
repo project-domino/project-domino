@@ -3,11 +3,13 @@
 import $ from "jquery";
 
 /**
- * A Modal displays information above the DOM
+ * A Modal displays information above the page's main content. Modal instances
+ * should be treated as singletons.
+ * @see module:modal~modal
  */
 class Modal {
 	/**
-	 * Constructor finds modal and alert elements in DOM
+	 * Finds modal and alert elements in the page.
 	 */
 	constructor() {
 		this.modalElement = $("#modal");
@@ -20,9 +22,9 @@ class Modal {
 
 	/**
 	 * Opens the modal.
-	 * @param {DOM Element} header - Content to place in modal header
-	 * @param {DOM Element} body - Content to place in modal body
-	 * @param {DOM Element} footer - Content to place in modal footer
+	 * @param {HTMLElement} header - Content to place in modal header
+	 * @param {HTMLElement} body - Content to place in modal body
+	 * @param {HTMLElement} footer - Content to place in modal footer
 	 */
 	open(header, body, footer) {
 		this.modalHeader.empty().append($("<span>").attr(
@@ -45,12 +47,13 @@ class Modal {
 	/**
 	 * Opens the alert modal.
 	 * @param {string} message - The message to display in the alert.
-	 * @param {int} time - The amount of time, in ms, for the alert to stay open
+	 * @param {number} [time] - The amount of time, in ms, for the alert to stay open.
 	 */
 	alert(message, time) {
 		this.alertText.text(message);
 		this.alertElement.css("display", "block");
-		setTimeout(this.refreshAlert, time);
+		if(time > 0)
+			setTimeout(this.refreshAlert, time);
 	}
 
 	/**
@@ -59,7 +62,19 @@ class Modal {
 	refreshAlert() {
 		$("#alert").css("display", "none");
 	}
-
 }
 
-export default Modal;
+/**
+ * modal acts as a singleton getter/constructor for the Modal class.
+ * @return {module:modal~Modal} The new or existing instance.
+ */
+const modal = (() => {
+	let instance = null;
+	return () => {
+		if(instance === null)
+			instance = new Modal();
+		return instance;
+	};
+});
+
+export default modal;
