@@ -1,0 +1,89 @@
+@import "variables.scss";
+
+// Styles for modal and alert elements
+
+#modal {
+	background-color: rgba(0,0,0,0.4);
+    display: none;
+	height: 100%;
+	left: 0;
+	overflow: auto;
+    position: fixed;
+	padding-top: 100px;
+    top: 0;
+    width: 100%;
+	z-index: 1;
+}
+
+#modal-content {
+	animation-duration: 0.4s;
+	animation-name: modal-animate-top;
+	background-color: $foreground-color;
+	border: 1px solid $border-color;
+	margin: auto;
+	padding: 20px;
+    position: relative;
+	width: 70%;
+}
+
+@keyframes modal-animate-top {
+    from {
+		top:-300px;
+		opacity:0;
+	}
+    to {
+		top:0;
+		opacity:1
+	}
+}
+
+#modal-close {
+    font-size: 28px;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+}
+
+@import "variables.scss";
+
+#alert {
+    display: none;
+	height: 100%;
+	left: 0;
+	overflow: auto;
+    position: fixed;
+	padding-top: 0;
+    top: 0;
+    width: 100%;
+	z-index: 2;
+}
+
+#alert-content {
+	animation-duration: 0.4s;
+	animation-name: alert-animate-top;
+	background-color: lighten(#000000, 25%);
+	border: 1px solid #000000;
+	color: white;
+	margin: auto;
+	padding: 10px;
+    position: relative;
+	text-align: center;
+	width: 50%;
+	height: 20px
+}
+
+#alert-text {
+	height: 20px;
+	line-height: 20px;
+}
+
+@keyframes alert-animate-top {
+    from {
+		top:-20px;
+		opacity:0;
+	}
+    to {
+		top:0;
+		opacity:1
+	}
+}
