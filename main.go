@@ -5,6 +5,7 @@ import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 
 	"golang.org/x/tools/godoc/vfs"
 	"golang.org/x/tools/godoc/vfs/httpfs"
@@ -36,7 +37,7 @@ var (
 	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
 	dbDebug   = flag.Bool("dbDebug", false, "Enables debugging on the database.")
 	dev       = flag.Bool("dev", false, "Load assets from a directory instead of a .zip file.")
-	serveOn   = flag.String("serveOn", ":80", "The address to serve on.")
+	serveOn   = flag.String("serveOn", "default", "The address to serve on.")
 )
 
 func init() {
@@ -94,10 +95,19 @@ func main() {
 	// Debug Routes
 	r.Methods("GET").Path("/debug/editor").HandlerFunc(debug.EditorHandler)
 
-	// Start serving.
+	// Set up
 	n := negroni.New(negroni.NewRecovery(), negroni.NewLogger())
 	n.UseFunc(middleware.DatabaseMiddleware(db))
 	n.UseFunc(middleware.LoginMiddleware)
 	n.UseHandler(r)
+
+	// Start serving.
+	if *serveOn == "default" {
+		if port := os.Getenv("PORT"); port != "" {
+			*serveOn = ":" + port
+		} else {
+			*serveOn = ":80"
+		}
+	}
 	n.Run(*serveOn)
 }
