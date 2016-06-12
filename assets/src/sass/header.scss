@@ -28,16 +28,18 @@
 		padding-right: 20px;
 		div { display: inline; }
 
-		.sign-in-btn {
-			background-color: rgb(20, 92, 198);
-			border: 1px solid rgb(21, 86, 183);
+		.sign-in {
+			background-color: #167ac6;
+			border: 1px solid darken(#167ac6, 10%);
 			border-radius: 6px;
+			color: #ffffff;
 			height: 30px;
+			padding: 5px;
+			text-decoration: none;
+		}
 
-			a {
-				color: #ffffff;
-				text-decoration: none;
-			}
+		.sign-in:active {
+			background-color: darken(#167ac6, 10%);
 		}
 	}
 
