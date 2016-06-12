@@ -18,6 +18,7 @@ class Modal {
 		this.modalFooter = $("#modal-footer");
 		this.alertElement = $("#alert");
 		this.alertText = $("#alert-text");
+		this.alertClose = $("#alert-close").click(this.refreshAlert);
 	}
 
 	/**
