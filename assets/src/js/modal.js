@@ -5,7 +5,7 @@ import $ from "jquery";
 /**
  * A Modal displays information above the page's main content. Modal instances
  * should be treated as singletons.
- * @see module:modal~modal
+ * @see module:modal~getModal
  */
 class Modal {
 	/**
@@ -65,16 +65,16 @@ class Modal {
 }
 
 /**
- * modal acts as a singleton getter/constructor for the Modal class.
+ * getModal acts as a singleton getter/constructor for the Modal class.
  * @return {module:modal~Modal} The new or existing instance.
  */
-const modal = (() => {
+const getModal = (() => {
 	let instance = null;
 	return () => {
 		if(instance === null)
 			instance = new Modal();
 		return instance;
 	};
-});
+})();
 
-export default modal;
+export default getModal;

@@ -7,18 +7,13 @@
 .project-domino-editor-buttons {
 	display: flex;
 
-	> button { flex-grow: 1; }
+	> button {
+		flex-grow: 1;
+		height: 3em;
+	}
 }
 
 .project-domino-editor-content {
 	flex-grow: 1;
 	padding: 5px;
 }
-
-.project-domino-editor-h1::before { content: "TODO h1 icon"; }
-.project-domino-editor-h2::before { content: "TODO h2 icon"; }
-.project-domino-editor-h3::before { content: "TODO h3 icon"; }
-.project-domino-editor-bold::before { content: "TODO bold icon"; }
-.project-domino-editor-italic::before { content: "TODO italic icon"; }
-.project-domino-editor-underline::before { content: "TODO underline icon"; }
-.project-domino-editor-save::before { content: "TODO save icon"; }

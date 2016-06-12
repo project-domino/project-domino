@@ -2,6 +2,9 @@
 
 import $ from "jquery";
 
+import getModal from "../js/modal.js";
+const modal = getModal();
+
 import EventEmitter    from "./ee.js";
 import AutosaveManager from "./autosave-manager.js";
 
@@ -29,17 +32,25 @@ class Editor extends EventEmitter {
 		this.container.on("keydown", e => this.keyDownListener(e));
 		this.container.on("keypress", e => this.keyPressListener(e));
 		this.buttons = $("<div>").addClass("project-domino-editor-buttons").append([
-			["formatting", "h1"],
-			["formatting", "h2"],
-			["formatting", "h3"],
+			["formatting", "h1", "header", "1"],
+			["formatting", "h2", "header", "2"],
+			["formatting", "h3", "header", "3"],
 			["formatting", "bold"],
 			["formatting", "italic"],
 			["formatting", "underline"],
 			["command", "save"],
 		].map(label => {
+			const eventType = label[0];
+			const eventName = label[1];
+			const labelIcon = label[2] || eventName;
+			const labelText = label[3];
+
 			let button = $("<button>").addClass("btn btn-default").click(() => {
-				this.emit(label[0], label[1]);
-			}).addClass(`project-domino-editor-${label[1]}`);
+				this.emit(eventType, eventName);
+			}).addClass(`project-domino-editor-${eventName}`).append([
+				$("<span>").addClass(`fa fa-${labelIcon}`),
+				$("<span>").text(labelText),
+			]);
 			return button;
 		})).appendTo(this.container);
 		this.element = $("<div>").addClass("project-domino-editor-content").attr({
@@ -80,6 +91,7 @@ class Editor extends EventEmitter {
 	}
 	errorHandler(error) {
 		console.error(error);
+		modal.alert(error, -1);
 		$("<div>").addClass("project-domino-editor-error").text(error).appendTo(this.errors);
 	}
 
