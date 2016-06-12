@@ -4,6 +4,7 @@ html
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		block head
+		script(src="https://use.fontawesome.com/3ca30f4373.js")
 		link(rel="stylesheet", href="/assets/header.css")
 		link(rel="stylesheet", href="/assets/main.css")
 	body
@@ -12,7 +13,8 @@ html
 				a.navbar-title(href="/") Project Domino
 			div.search-container
 				input.search-field(placeholder="Search...")
-				button.search-btn Search
+				button.search-btn
+					span.fa.fa-search
 			div.nav-right-container
 				| {{if .loggedIn}}
 				| {{if eq .requestUser.Type "writer"}}
