@@ -19,7 +19,6 @@ class Editor extends EventEmitter {
 		this.on("command", name => this.commandHandler(name));
 		this.on("formatting", name => this.formattingHandler(name));
 		this.on("error", error => this.errorHandler(error));
-		// this.on("save-triggered", () => this.emit("save", this.document));
 
 		// Set up external components.
 		this.autosaveManager = new AutosaveManager(this);
