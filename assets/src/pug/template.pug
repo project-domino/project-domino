@@ -8,40 +8,38 @@ html
 		link(rel="stylesheet", href="/assets/main.css")
 	body
 		div.navbar
-			ul.navbar-list.container
-				li.navbar-left
-					a.navbar-title(href="/") Project Domino
-				li.navbar-left
-					div.search-container
-						input.search-field(placeholder="Search...")
-						button.search-btn Search
+			h2.logo
+				a.navbar-title(href="/") Project Domino
+			div.search-container
+				input.search-field(placeholder="Search...")
+				button.search-btn Search
+			div.nav-right-container
 				| {{if .loggedIn}}
 				| {{if eq .requestUser.Type "writer"}}
-				li.navbar-right
-					div.dropdown
-						button.dropdown-btn +
-						div.dropdown-content
-							a(href="/new/note") New Note
-							a(href="/new/collection") New Collection
-							a(href="/new/textbook") New Textbook
+				div.dropdown.new-item-dropdown
+					button.dropdown-btn +
+					div.dropdown-content
+						a(href="/new/note") New Note
+						a(href="/new/collection") New Collection
+						a(href="/new/textbook") New Textbook
 				| {{end}}
-				li.navbar-right
-					div.dropdown
-						button.dropdown-btn
-							| {{if ne .requestUser.FirstName ""}}
-							| 	{{.requestUser.FirstName}}
-							| 	{{if ne .requestUser.LastName ""}}
-							| 		{{.requestUser.LastName}}
-							| 	{{end}}
-							| {{else}}
-							| 	{{.requestUser.UserName}}
-							| {{end}}
+				div.dropdown.account-dropdown
+					button.dropdown-btn
+						| {{if ne .requestUser.FirstName ""}}
+						| 	{{.requestUser.FirstName}}
+						| 	{{if ne .requestUser.LastName ""}}
+						| 		{{.requestUser.LastName}}
+						| 	{{end}}
+						| {{else}}
+						| 	{{.requestUser.UserName}}
+						| {{end}}
 						div.dropdown-content
 							a(href="/account") My Account
 							a.logout-btn Sign Out
 				| {{else}}
-				li.navbar-right
-					a(href="/login") Sign In
+				div.sign-in-container
+					button.sign-in-btn
+						a(href="/login") Sign In
 				| {{end}}
 		block body
 		div#modal

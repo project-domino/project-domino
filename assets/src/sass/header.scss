@@ -3,19 +3,60 @@
 .navbar {
 	background-color: $foreground-color;
 	border-bottom: 1px solid $border-color;
+	display: flex;
+	height: 50px;
 	left: 0;
 	position: relative;
 	top: 0;
 	width: 100%;
 
-	.navbar-list {
-		list-style-type: none;
-		margin-bottom: 0;
-		margin-top: 0;
-		overflow: hidden;
-		padding: 0;
+	.logo {
+		display: inline;
+		margin: auto 0;
+		padding-left: 20px;
+		width: 250px;
 
-		.navbar-left { float: left; }
-		.navbar-right { float: right; }
+		.navbar-title {
+			color: #000000;
+			text-decoration: none;
+		}
+	}
+
+	.nav-right-container {
+		display: inline;
+		margin: auto 0 auto auto;
+		padding-right: 20px;
+		div { display: inline; }
+
+		.sign-in-btn {
+			background-color: rgb(20, 92, 198);
+			border: 1px solid rgb(21, 86, 183);
+			border-radius: 6px;
+			height: 30px;
+
+			a {
+				color: #ffffff;
+				text-decoration: none;
+			}
+		}
+	}
+
+	.search-container {
+		display: inline;
+		flex-grow: 1;
+		margin: auto 0;
+
+		input {
+			border: 1px solid darken($border-color, 20%);
+			height: 30px;
+			width: 600px;
+		}
+
+		button { height: 30px; }
+
+		@media only screen and (max-width: 1100px) {
+			input { width: 80%; }
+			button { width: 10%; }
+		}
 	}
 }
