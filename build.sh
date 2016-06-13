@@ -16,7 +16,7 @@ function client() {
 
 # Server-building function.
 function server() {
-	go build;
+	go get .;
 };
 
 # Deployment bundle-building function.
