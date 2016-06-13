@@ -116,6 +116,7 @@
 			flex-grow: 1;
 			height: 30px;
 			margin: 0;
+			max-width: 80px;
 			padding: 0;
 
 			&:active { background-color: darken($border-color, 5%); }
