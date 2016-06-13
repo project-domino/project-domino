@@ -2,26 +2,6 @@
 
 import $ from "jquery";
 
-/**
- * A Note is the thing being edited.
- */
-class Note {
-	constructor(nodes) {
-		this.nodes = nodes;
-	}
-	// TODO
-	// static fromJSON(json) {
-	// 	throw new Error("NYI");
-	// }
-
-	render() {
-		return this.nodes.map(node => node.render());
-	}
-	toJSON() {
-		return JSON.stringify(this.nodes);
-	}
-}
-
 class HeaderNode {
 	constructor(text, level = 1) {
 		if(typeof text !== "string")
@@ -35,7 +15,7 @@ class HeaderNode {
 		this.level = level;
 	}
 	render() {
-		return $(`<h${this.level + 1}>`).text(this.text);
+		return $(`<h${this.level}>`).text(this.text);
 	}
 }
 
@@ -82,8 +62,69 @@ class ParagraphNode {
 
 		this.nodes = textNodes;
 	}
+	static fromElement(element) {
+		for(const node of element.childNodes) {
+			switch(node.nodeType) {
+			case Node.ELEMENT_NODE:
+			case Node.TEXT_NODE:
+			default:
+				throw new TypeError(`unknown node: ${node}`);
+			}
+		}
+	}
+
 	render() {
 		return $("<p>").append(this.nodes.map(node => node.render()));
+	}
+}
+
+/**
+ * nodesFromElement parses the contents of an element and returns the
+ * cooresponding nodes.
+ * @param {HTMLElement} e - The element whose contents should be parsed.
+ * @return {module:note~Node[]} The parsed nodes.
+ */
+const nodesFromElement = e => {
+	if(e instanceof $)
+		e = e[0];
+	for(const node of e.childNodes) {
+		switch(node.tagName) {
+		case "H1":
+			return new HeaderNode(node.textContent, 1);
+		case "H2":
+			return new HeaderNode(node.textContent, 2);
+		case "H3":
+			return new HeaderNode(node.textContent, 3);
+		case "P":
+			return ParagraphNode.fromElement(node);
+		default:
+			throw new TypeError(`unknown tag: ${node.tagName} in ${node}`);
+		}
+	}
+};
+
+/**
+ * A Note is the thing being edited.
+ */
+class Note {
+	constructor(nodes) {
+		if(typeof nodes === "string")
+			nodes = JSON.parse(nodes);
+		this.nodes = nodes;
+	}
+	static fromElement(element) {
+		return new Note(nodesFromElement(element));
+	}
+
+	render() {
+		console.debug(this.nodes);
+		return this.nodes.map(node => node.render());
+	}
+	toJSON() {
+		return JSON.stringify(this.nodes);
+	}
+	update(element) {
+		this.nodes = nodesFromElement(element);
 	}
 }
 

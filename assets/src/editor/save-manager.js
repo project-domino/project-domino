@@ -1,6 +1,11 @@
 /** @module save-manager */
 
-import {Note} from "./note.js";
+import {
+	Note,
+	HeaderNode,
+	ParagraphNode,
+	TextNode,
+} from "./note.js";
 
 /**
  * SaveManager is an abstract class that handles saving and loading data.
@@ -43,6 +48,35 @@ class SaveManager {
 }
 
 /**
+ * A SaveManager that "saves" data to console.log and loads default data.
+ * @extends module:save-manager~SaveManager
+ */
+class DebugSaveManager extends SaveManager {
+	/**
+	 * Handles loading.
+	 * @return {Promise.<module:note~Note>} A Promise for a Note.
+	 */
+	load() {
+		return Promise.resolve(new Note([
+			new HeaderNode("Header", 1),
+			new ParagraphNode([
+				new TextNode("Hello, world!"),
+			]),
+		]));
+	}
+
+	/**
+	 * Handles saving.
+	 * @param {module:note~Note} note - The Note to save.
+	 * @return {Promise} A Promise for the save operation's completion.
+	 */
+	save(note) {
+		console.log(note);
+		return Promise.resolve();
+	}
+}
+
+/**
  * A SaveManager that saves data to LocalStorage.
  * @extends module:save-manager~SaveManager
  */
@@ -57,23 +91,17 @@ class LocalStorageSaveManager extends SaveManager {
 
 	/**
 	 * Handles loading.
-	 * @return {Promise} A Promise for a Note.
+	 * @return {Promise.<module:note~Note>} A Promise for a Note.
 	 */
 	load() {
-		return new Promise((resolve, reject) => {
-			let note;
-			try {
-				note = new Note(JSON.parse(localStorage.getItem(this.key)));
-			} catch(err) {
-				return reject(err);
-			}
-			resolve(note);
-		});
+		return Promise.resolve(this.key)
+			.then(key => localStorage.getItem(key))
+			.then(data => new Note(data || []));
 	}
 
 	/**
 	 * Handles saving.
-	 * @param {Note} note - The Note to save.
+	 * @param {module:note~Note} note - The Note to save.
 	 * @return {Promise} A Promise for the save operation's completion.
 	 */
 	save(note) {
@@ -90,5 +118,6 @@ class LocalStorageSaveManager extends SaveManager {
 
 export default SaveManager;
 export {
+	DebugSaveManager,
 	LocalStorageSaveManager,
 };

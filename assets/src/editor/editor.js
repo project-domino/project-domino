@@ -1,6 +1,7 @@
 /** @module editor */
 
 import $ from "jquery";
+import StackTrace from "stacktrace-js";
 
 import getModal from "../js/modal.js";
 const modal = getModal();
@@ -22,6 +23,7 @@ class Editor extends EventEmitter {
 		this.on("command", name => this.commandHandler(name));
 		this.on("formatting", name => this.formattingHandler(name));
 		this.on("error", error => this.errorHandler(error));
+		this.on("render", () => this.renderHandler());
 
 		// Set up external components.
 		this.autosaveManager = new AutosaveManager(this);
@@ -53,15 +55,14 @@ class Editor extends EventEmitter {
 			]);
 			return button;
 		})).appendTo(this.container);
-		this.element = $("<div>").addClass("project-domino-editor-content").attr({
-			contentEditable: true,
-		}).appendTo(this.container);
+		this.element = $("<div>").addClass("project-domino-editor-content").appendTo(this.container);
 		this.errors = $("<div>").addClass("project-domino-editor-errors").appendTo(this.container);
 
 		// Load and render.
-		return this.saveManager.load().then(note => {
+		this.saveManager.load().then(note => {
 			this.note = note;
-			this.emit("update");
+			this.emit("render");
+			this.element.attr("contentEditable", true);
 			return this;
 		}).catch(err => this.emit("error", err));
 	}
@@ -90,27 +91,34 @@ class Editor extends EventEmitter {
 		}
 	}
 	errorHandler(error) {
-		console.error(error);
 		modal.alert(error, -1);
 		$("<div>").addClass("project-domino-editor-error").text(error).appendTo(this.errors);
+		console.error(error);
+		StackTrace.fromError(error).then(trace => {
+			console.log(trace.join("\n"));
+		}).catch(err => console.error(err));
+	}
+	renderHandler() {
+		this.element.empty().append(this.note.render());
 	}
 
 	keyDownListener(event) {
 		if(event.ctrlKey && event.key === "s") {
 			event.stopPropagation();
 			event.preventDefault();
-			this.save();
+			this.emit("command", "save");
 		}
 	}
 	keyPressListener(event) {
 		this.emit("keypress", event);
+		this.note.update(this.element);
 	}
 
 	/**
 	 * Handles all saving-related "things".
 	 */
 	save() {
-		console.log("Saving...", this.saveManager);
+		console.log("Saving...");
 		const button = $(".project-domino-editor-save", this.buttons);
 		button.attr("disabled", true);
 		this.saveManager.save(this.note).then(() => {
