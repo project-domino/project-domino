@@ -1,0 +1,20 @@
+{
+  "name": "project-domino",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/project-domino/heroku-buildpack-project-domino"
+    }
+  ]
+}
