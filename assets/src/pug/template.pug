@@ -19,14 +19,14 @@ html
 				| {{if .loggedIn}}
 				| {{if eq .requestUser.Type "writer"}}
 				div.dropdown.new-item-dropdown
-					button.dropdown-btn +
-					div.dropdown-content
-						a(href="/new/note") New Note
-						a(href="/new/collection") New Collection
-						a(href="/new/textbook") New Textbook
+					span.dropdown-btn.new-item-dropdown-btn.fa.fa-plus
+					div.dropdown-content.new-item-dropdown-content
+						a(href="/new/note") + Note
+						a(href="/new/collection") + Collection
+						a(href="/new/textbook") + Textbook
 				| {{end}}
 				div.dropdown.account-dropdown
-					button.dropdown-btn
+					span.dropdown-btn.account-dropdown-btn
 						| {{if ne .requestUser.FirstName ""}}
 						| 	{{.requestUser.FirstName}}
 						| 	{{if ne .requestUser.LastName ""}}
@@ -35,12 +35,11 @@ html
 						| {{else}}
 						| 	{{.requestUser.UserName}}
 						| {{end}}
-						div.dropdown-content
-							a(href="/account") My Account
-							a.logout-btn Sign Out
+					div.dropdown-content.account-dropdown-content
+						a(href="/account") My Account
+						a.logout-btn Sign Out
 				| {{else}}
-				div.sign-in-container
-					a.sign-in(href="/login") Sign In
+				btn.sign-in-btn Sign In
 				| {{end}}
 		block body
 		div#modal

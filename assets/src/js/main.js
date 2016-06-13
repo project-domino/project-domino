@@ -14,4 +14,13 @@ $(() => {
 			window.location.reload();
 		});
 	});
+	$(".sign-in-btn").click(() => {
+		window.location.assign("/login");
+	});
+	$(".account-dropdown-btn").click(() => {
+		$(".account-dropdown-content").toggle();
+	});
+	$(".new-item-dropdown-btn").click(() => {
+		$(".new-item-dropdown-content").toggle();
+	});
 });
