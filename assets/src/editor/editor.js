@@ -56,7 +56,6 @@ class Editor extends EventEmitter {
 			return button;
 		})).appendTo(this.container);
 		this.element = $("<div>").addClass("project-domino-editor-content").appendTo(this.container);
-		this.errors = $("<div>").addClass("project-domino-editor-errors").appendTo(this.container);
 
 		// Load and render.
 		this.saveManager.load().then(note => {
@@ -73,7 +72,7 @@ class Editor extends EventEmitter {
 			this.save();
 			break;
 		default:
-			this.emit("error", `Unknown command: ${command}`);
+			this.emit("error", new Error(`Unknown command: ${command}`));
 			break;
 		}
 	}
@@ -86,13 +85,12 @@ class Editor extends EventEmitter {
 		case "italic":
 		case "underline":
 		default:
-			this.emit("error", `Unknown command: ${formatting}`);
+			this.emit("error", new Error(`Unknown command: ${formatting}`));
 			break;
 		}
 	}
 	errorHandler(error) {
 		modal.alert(error, -1);
-		$("<div>").addClass("project-domino-editor-error").text(error).appendTo(this.errors);
 		console.error(error);
 		StackTrace.fromError(error).then(trace => {
 			console.log(trace.join("\n"));
