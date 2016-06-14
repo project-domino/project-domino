@@ -23,4 +23,7 @@ $(() => {
 	$(".new-item-dropdown-btn").click(() => {
 		$(".new-item-dropdown-content").toggle();
 	});
+	$(".sidebar-btn").click(() => {
+		$("body").toggleClass("sidebar-close");
+	});
 });

@@ -2,7 +2,7 @@
 
 // Styles for modal and alert elements
 
-#modal {
+.modal {
 	background-color: rgba(0,0,0,0.4);
     display: none;
 	height: 100%;
@@ -12,10 +12,10 @@
 	padding-top: 100px;
     top: 0;
     width: 100%;
-	z-index: 1;
+	z-index: 99;
 }
 
-#modal-content {
+.modal-content {
 	animation-duration: 0.4s;
 	animation-name: modal-animate-top;
 	background-color: $foreground-color;
@@ -37,7 +37,7 @@
 	}
 }
 
-#modal-close {
+.modal-close {
 	cursor: pointer;
     font-size: 28px;
 	position: absolute;
@@ -47,7 +47,7 @@
 
 @import "variables.scss";
 
-#alert {
+.alert {
     display: none;
 	left: 0;
 	overflow: auto;
@@ -56,10 +56,10 @@
 	padding-top: 0;
     top: 0;
     width: 100%;
-	z-index: 2;
+	z-index: 100;
 }
 
-#alert-content {
+.alert-content {
 	animation-duration: 0.4s;
 	animation-name: alert-animate-top;
 	background-color: lighten(#000000, 25%);
@@ -73,7 +73,7 @@
 	height: 20px;
 }
 
-#alert-close {
+.alert-close {
 	cursor: pointer;
 	pointer-events: all;
 	font-size: 25px;
@@ -83,7 +83,7 @@
 	line-height: 20px;
 }
 
-#alert-text {
+.alert-text {
 	height: 20px;
 	line-height: 20px;
 }

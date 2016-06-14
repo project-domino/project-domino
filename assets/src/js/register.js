@@ -1,4 +1,7 @@
 import $ from "jquery";
+import getModal from "../js/modal.js";
+
+const modal = getModal();
 
 $(() => {
 	$("#register-btn").click(() => {
@@ -16,6 +19,7 @@ $(() => {
 			window.location.assign("/");
 		}).fail((err) => {
 			console.log(err);
+			modal.alert(err.responseText, 3000);
 		});
 	});
 });

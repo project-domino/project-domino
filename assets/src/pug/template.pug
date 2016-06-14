@@ -5,12 +5,13 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1")
 		block head
 		script(src="https://use.fontawesome.com/3ca30f4373.js")
-		link(rel="stylesheet", href="/assets/header.css")
 		link(rel="stylesheet", href="/assets/main.css")
 	body
 		div.navbar
+			div.sidebar-btn-container
+				span.fa.fa-bars.sidebar-btn
 			h2.logo
-				a.navbar-title(href="/") Project Domino
+				a.navbar-title(href="/") Domino
 			div.search-container
 				input.search-field(placeholder="Search...")
 				button.search-btn
@@ -41,17 +42,19 @@ html
 				| {{else}}
 				btn.sign-in-btn Sign In
 				| {{end}}
-		block body
-		div#modal
+		div#sidebar.sidebar
+		div#main-content.main-content
+			block body
+		div#modal.modal
 			div.container
-				div#modal-content
-					div#modal-header
-						span#modal-close ×
-					div#modal-body
-					div#modal-footer
-		div#alert
-			div#alert-content
-				span#alert-close ×
-				span#alert-text
+				div#modal-content.modal-content
+					div#modal-header.modal-header
+						span#modal-close.modal-close ×
+					div#modal-body.modal-body
+					div#modal-footer.modal-footer
+		div#alert.alert
+			div#alert-content.alert-content
+				span#alert-close.alert-close ×
+				span#alert-text.alert-text
 		script(src="/assets/main.js")
 		block scripts

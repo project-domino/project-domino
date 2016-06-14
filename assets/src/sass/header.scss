@@ -4,23 +4,41 @@
 	align-items: center;
 	background-color: $foreground-color;
 	border-bottom: 1px solid $border-color;
+	box-sizing: border-box;
 	display: flex;
 	height: 50px;
 	left: 0;
-	position: relative;
+	position: fixed;
 	top: 0;
 	width: 100%;
+	z-index: 1;
+
+	.sidebar-btn-container {
+		padding-left: 10px;
+		padding-right: 10px;
+		width: 40px;
+
+		.sidebar-btn {
+			color: darken(#ffffff, 30%);
+			cursor: pointer;
+		}
+		.sidebar-btn:hover { color: darken(#ffffff, 40%); }
+		.sidebar-btn:active { color: darken(#ffffff, 50%); }
+	}
 
 	.logo {
 		display: inline;
 		margin: 0;
-		padding-left: 20px;
-		width: 20%;
+		width: 170px;
 
 		.navbar-title {
 			color: #000000;
 			text-decoration: none;
 		}
+	}
+
+	@media only screen and (max-width: 500px) {
+		.logo { display: none; }
 	}
 
 	.nav-right-container {
@@ -30,7 +48,6 @@
 		margin-left: auto;
 		padding-right: 20px;
 		position: relative;
-		width: 20%;
 
 		.sign-in-btn {
 			background-color: #167ac6;
@@ -53,8 +70,9 @@
 			order: 2;
 		}
 
-		.new-item-dropdown-btn {
-			padding-right: 20px;
+		.dropdown-btn {
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 
 		.dropdown {
@@ -85,8 +103,8 @@
 					display: block;
 					padding: 12px 16px;
 					text-decoration: none;
-					&:hover { background-color: #f9f9f9; }
-					&:active { background-color: #f1f1f1; }
+					&:hover { background-color: darken(#ffffff, 5%); }
+					&:active { background-color: darken(#ffffff, 10%); }
 				}
 			}
 		}
@@ -96,10 +114,11 @@
 		display: flex;
 		height: 30px;
 		position: relative;
-		width: 60%;
+		width: 45%;
 
 		input {
-			border: 1px solid darken($border-color, 20%);
+			border: 1px solid $input-border-color;
+			border-radius: 0;
 			box-sizing: border-box;
 			flex-grow: 5;
 			font-size: 1rem;
@@ -110,7 +129,7 @@
 
 		button {
 			background-color: $background-color;
-			border: 1px solid darken($border-color, 20%);
+			border: 1px solid $input-border-color;
 			box-sizing: border-box;
 			cursor: pointer;
 			flex-grow: 1;
