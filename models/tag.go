@@ -10,5 +10,4 @@ type Tag struct {
 
 	Collections []Collection `gorm:"many2many:collection_tag;"`
 	Notes       []Note       `gorm:"many2many:note_tag;"`
-	Textbooks   []Textbook   `gorm:"many2many:textbook_tag;"`
 }

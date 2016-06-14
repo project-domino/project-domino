@@ -29,6 +29,16 @@ type User struct {
 	Email          string
 	EmailVerified  bool
 	SendNewsletter bool
+
+	// Ranking Info
+	UpvoteCollections   []Collection `gorm:"many2many:upvotecollection_user;"`
+	DownvoteCollections []Collection `gorm:"many2many:downvotecollection_user;"`
+
+	UpvoteComments   []Comment `gorm:"many2many:upvotecomment_user;"`
+	DownvoteComments []Comment `gorm:"many2many:downvotecomment_user;"`
+
+	UpvoteNotes   []Note `gorm:"many2many:upvotenote_user;"`
+	DownvoteNotes []Note `gorm:"many2many:downvotenote_user;"`
 }
 
 // CheckPassword checks if the provided password is correct. Note that it will
