@@ -3,9 +3,9 @@ doctype html
 html
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1")
-		block head
 		script(src="https://use.fontawesome.com/3ca30f4373.js")
 		link(rel="stylesheet", href="/assets/main.css")
+		block head
 	body
 		div.navbar
 			div.sidebar-btn-container
@@ -40,7 +40,7 @@ html
 						a(href="/account") My Account
 						a.logout-btn Sign Out
 				| {{else}}
-				btn.sign-in-btn Sign In
+				button.sign-in-btn Sign In
 				| {{end}}
 		div#sidebar.sidebar
 		div#main-content.main-content

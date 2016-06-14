@@ -2,6 +2,7 @@
 @import "grid.scss";
 @import "modal.scss";
 @import "header.scss";
+@import "form.scss";
 
 // Main styles for the whole website
 html, body {
@@ -66,9 +67,4 @@ body {
 			}
 		}
 	}
-}
-
-// Form Elements
-.form-control {
-	display: block;
 }
