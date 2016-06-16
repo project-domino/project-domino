@@ -36,11 +36,15 @@ module.exports = (file, out, dev = false) => {
 	if(dev) {
 		rollupConfig.external = [
 			"jquery",
+			"selectivity",
 			"stacktrace-js",
+			"zxcvbn",
 		];
 		rollupConfig.globals = {
 			"jquery":        "jQuery",
+			"selectivity":   "TODO1",
 			"stacktrace-js": "StackTrace",
+			"zxcvbn":        "TODO2",
 		};
 	}
 
@@ -48,7 +52,9 @@ module.exports = (file, out, dev = false) => {
 	if(dev) {
 		inner.push(addsrc.prepend([
 			"node_modules/jquery/dist/jquery.min.js",
+			"node_modules/selectivity/dist/selectivity-full.min.js",
 			"node_modules/stacktrace-js/stacktrace.js",
+			"node_modules/zxcvbn/dist/zxcvbn.js",
 		]));
 		inner.push(concat("rename-me.js"));
 	} else {
