@@ -11,8 +11,7 @@ import SaveManager from "./save-manager.js";
  * @param {number} delay - The delay to add, in milliseconds.
  * @return {module:debug~thenable}
  */
-// eslint-disable-next-line no-unused-vars
-const slowPromise = delay => value => new Promise((resolve, reject) => {
+const slowPromise = delay => value => new Promise((resolve, reject) => { // eslint-disable-line no-unused-vars
 	window.setTimeout(() => resolve(value), delay);
 });
 
