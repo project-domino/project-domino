@@ -16,13 +16,18 @@ function client() {
 
 # Server-building function.
 function server() {
+	cd cmd/project-domino-server;
 	go get .;
 	go build;
 };
 
 # Deployment bundle-building function.
 function deployBundle() {
-	tar czf project-domino.tgz project-domino -C assets/dist assets.zip;
+	tmp_file="$(mktemp)";
+	tar rf "${tmp_file}" -C cmd/project-domino-server project-domino-server;
+	tar rf "${tmp_file}" -C assets/dist assets.zip;
+	gzip "${tmp_file}" -c > project-domino.tgz;
+	rm "${tmp_file}";
 }
 
 # Realpath function for OS X people.

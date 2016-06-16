@@ -61,7 +61,6 @@ module.exports = (file, out, dev = false) => {
 	].concat(inner).concat([
 		rename(`${out}.js`),
 		sourcemaps.write("."),
-		gulp.dest("dist/assets"),
 	]).reduce((pipeline, stage) => {
 		return pipeline.pipe(stage);
 	}, gulp.src(file, {read: false}));

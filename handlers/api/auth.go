@@ -8,88 +8,86 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gorilla/context"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/project-domino/project-domino/common"
 	"github.com/project-domino/project-domino/models"
 )
 
 // LoginHandler handles requests to log a user in.
 // If credentials are valid, sets an auth cookie.
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+func LoginHandler(c *gin.Context) {
 	// Get needed variables from request.
-	userName := r.FormValue("userName")
-	email := r.FormValue("email")
-	password := r.FormValue("password")
+	userName := c.PostForm("userName")
+	email := c.PostForm("email")
+	password := c.PostForm("password")
+
+	// TODO Uhhhh... maybe make it a lot more clear to the user that they can't
+	// use both? I put in both...
 
 	// If there are blank fields, return bad request
 	if password == "" || (userName == "" && email == "") {
-		common.HandleError(w, errors.New("Missing Parameters"), http.StatusBadRequest)
-		return
+		panic(errors.New("Missing Parameters"))
 	}
 	// If both userName and email are filled in, return bad request
 	if userName != "" && email != "" {
-		common.HandleError(w, errors.New("Both username and email cannot be used."), http.StatusBadRequest)
-		return
+		panic(errors.New("Both username and email cannot be used."))
 	}
 
-	// Acquire db handle from request context.
-	db := context.Get(r, "db").(*gorm.DB)
+	// Acquire DB handle from request context.
+	db := c.MustGet("db").(*gorm.DB)
 
 	// Find user in the database
 	var users []models.User
 	db.Limit(1).
 		Where(&models.User{
-		Email: email,
-	}).Or(&models.User{
+			Email: email,
+		}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users)
 
 	// If a user with these credentials does not exist, return error
 	if len(users) == 0 {
-		common.HandleError(w, errors.New("Invalid Credentials"), http.StatusForbidden)
-		return
+		panic(errors.New("Invalid Credentials"))
 	}
 
 	// Otherwise, check password and assign cookie
 	user := users[0]
 	if !user.CheckPassword(password) {
-		common.HandleError(w, errors.New("Invalid Credentials"), http.StatusForbidden)
-		return
+		panic(errors.New("Invalid Credentials"))
 	}
-	AuthCookie(w, r, user, db)
+
+	// TODO unlegacy
+	AuthCookie(c.Writer, c.Request, user, db)
 }
 
 // LogoutHandler handles requests to log a user out.
-func LogoutHandler(w http.ResponseWriter, r *http.Request) {
-	http.SetCookie(w, &http.Cookie{
+func LogoutHandler(c *gin.Context) {
+	http.SetCookie(c.Writer, &http.Cookie{
 		Name:   "auth",
 		MaxAge: -1,
 	})
 }
 
 // RegisterHandler handles requests to handle a new user.
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+func RegisterHandler(c *gin.Context) {
 	// Get needed variables from request.
-	email := r.FormValue("email")
-	userName := r.FormValue("userName")
-	password := r.FormValue("password")
-	retypePassword := r.FormValue("retypePassword")
+	email := c.PostForm("email")
+	userName := c.PostForm("userName")
+	password := c.PostForm("password")
+	retypePassword := c.PostForm("retypePassword")
 
 	// Check if the request is missing needed parameters
 	if userName == "" || password == "" || retypePassword == "" {
-		common.HandleError(w, errors.New("Missing Parameters"), http.StatusBadRequest)
-		return
+		panic(errors.New("Missing Parameters"))
 	}
 
 	// Check if password matches retype password
 	if retypePassword != password {
-		common.HandleError(w, errors.New("Passwords do not match."), http.StatusBadRequest)
-		return
+		panic(errors.New("Passwords do not match."))
 	}
 
 	// Acquire db handle from request context.
-	db := context.Get(r, "db").(*gorm.DB)
+	db := c.MustGet("db").(*gorm.DB)
 
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
@@ -99,8 +97,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		UserName: userName,
 	}).Find(&checkUsers)
 	if len(checkUsers) != 0 {
-		common.HandleError(w, errors.New("User with same email/username already exists."), http.StatusForbidden)
-		return
+		panic(errors.New("User with same email/username already exists."))
 	}
 
 	// Create the user.
@@ -110,16 +107,16 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		Type:     models.General,
 	}
 	if err := user.SetPassword(password); err != nil {
-		common.HandleError(w, err, http.StatusInternalServerError)
-		return
+		panic(err)
 	}
 
 	// Add user to database.
 	db.Create(user)
 
 	// Set an auth cookie for the user
-	AuthCookie(w, r, user, db)
-	http.Redirect(w, r, "/", http.StatusFound)
+	// TODO unlegacy
+	AuthCookie(c.Writer, c.Request, user, db)
+	c.Redirect(http.StatusFound, "/")
 }
 
 // AuthCookie creates an authentication token and sends it to the client.
@@ -134,8 +131,7 @@ func AuthCookie(w http.ResponseWriter, r *http.Request, user models.User, db *go
 	}
 
 	if err != nil {
-		common.HandleError(w, err, http.StatusInternalServerError)
-		return
+		panic(err)
 	}
 
 	db.Create(&authToken)

@@ -4,57 +4,57 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/context"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/project-domino/project-domino/common"
 	"github.com/project-domino/project-domino/models"
 )
 
 // LoginMiddleware adds a user struct to the request context based on the
 // authentication token provided in a cookie. Also sets a loggedIn boolean.
-func LoginMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+func LoginMiddleware(c *gin.Context) {
 	// Acquire db handle from request context.
-	db := context.Get(r, "db").(*gorm.DB)
+	db := c.MustGet("db").(*gorm.DB)
 
 	// Check if auth cookie is present.
-	authCookie, err := r.Cookie("auth")
+	authCookie, err := c.Cookie("auth")
 
 	// Go to next handler if no cookie is found
 	// Set loggedIn to false
 	if err == http.ErrNoCookie {
-		notLoggedIn(w, r, next)
+		notLoggedIn(c)
 		return
 	} else if err != nil {
-		common.HandleError(w, err, http.StatusInternalServerError)
-		return
+		panic(err)
 	}
 
 	// If the cookie is present, search the database for the token.
 	var authEntries []models.AuthToken
 
 	db.Limit(1).Preload("User").Where(&models.AuthToken{
-		Token: authCookie.Value,
+		Token: authCookie,
 	}).Where("Expires > ?", time.Now()).Find(&authEntries)
 	if len(authEntries) == 0 {
-		// clear the invalid/expired authtoken.
-		http.SetCookie(w, &http.Cookie{
+		// Clear the invalid/expired authtoken.
+		http.SetCookie(c.Writer, &http.Cookie{
 			Name:    "auth",
 			Value:   "",
+			MaxAge:  0,
 			Expires: time.Unix(0, 0),
 		})
-		notLoggedIn(w, r, next)
+		notLoggedIn(c)
 		return
 	}
 
-	// If there is a token and it is not expired, add user to context.
+	// If there is a token and it is not expired, add the user to the context.
 	auth := authEntries[0]
-	context.Set(r, "requestUser", auth.User)
-	context.Set(r, "loggedIn", true)
-	next(w, r)
+	c.Set("user", auth.User)
+	c.Set("loggedIn", true)
+
+	c.Next()
 }
 
-func notLoggedIn(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	context.Set(r, "requestUser", models.User{})
-	context.Set(r, "loggedIn", false)
-	next(w, r)
+func notLoggedIn(c *gin.Context) {
+	c.Set("user", models.User{})
+	c.Set("loggedIn", false)
+	c.Next()
 }

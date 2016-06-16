@@ -15,5 +15,4 @@ module.exports = (file, out) => gulp.src(file)
 	.pipe(sass())
 	.pipe(cleanCSS())
 	.pipe(rename(`${out}.css`))
-	.pipe(sourcemaps.write())
-	.pipe(gulp.dest("dist/assets/"));
+	.pipe(sourcemaps.write());
