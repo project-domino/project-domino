@@ -113,6 +113,7 @@ func main() {
 
 	// Debug Routes
 	r.Methods("GET").Path("/debug/editor").HandlerFunc(debug.EditorHandler)
+	r.Methods("GET").Path("/debug/new/note").HandlerFunc(debug.NewNoteHandler)
 
 	// Set up
 	n := negroni.New(negroni.NewRecovery(), negroni.NewLogger())
