@@ -12,8 +12,13 @@
 }
 
 .new-note-editor {
+	box-sizing: border-box;
 	min-height: 300px;
 	width: 100%;
+}
+
+.new-note-btn {
+	//float: right;
 }
 
 @media only screen and (max-width: 800px) {

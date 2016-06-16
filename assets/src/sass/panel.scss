@@ -12,3 +12,11 @@
 	margin: 0;
 	padding: 20px 0 10px;
 }
+
+.panel-footer {
+	border-top: 1px solid $border-color;
+	display: flex;
+	flex-direction: row-reverse;
+	margin: 0;
+	padding: 20px 20px 0 20px;
+}
