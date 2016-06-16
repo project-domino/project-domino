@@ -25,6 +25,9 @@ type User struct {
 	// Only for writer
 	UniversityID uint
 	University   University
+	Notes        []Note       `gorm:"ForeignKey:AuthorID"`
+	Collections  []Collection `gorm:"ForeignKey:AuthorID"`
+	Textbooks    []Textbook   `gorm:"ForeignKey:AuthorID"`
 
 	Email          string
 	EmailVerified  bool

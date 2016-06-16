@@ -12,6 +12,8 @@ type Note struct {
 	AuthorID uint
 	Author   User
 
+	Published bool
+
 	Collections []Collection `gorm:"many2many:note_collection;"`
 	Tags        []Tag        `gorm:"many2many:note_tag;"`
 

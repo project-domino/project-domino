@@ -99,13 +99,17 @@ func main() {
 	r.GET("/user/:username", handlers.TODO)
 
 	// University Route
-	r.GET("/uni/:uni-id", handlers.TODO)
+	r.GET("/uni/:uni-short-name", handlers.TODO)
 
 	// Search Route
 	r.GET("/search", handlers.TODO)
 
-	// New item routes
-	r.GET("/new/note",
+	// Writer-panel routes
+	r.GET("/writer-panel",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin),
+		handlers.Simple("writer-panel.html"))
+	r.GET("writer-panel/new/note",
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("new-note.html"))

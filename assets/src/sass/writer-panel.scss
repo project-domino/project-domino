@@ -1,0 +1,23 @@
+.writer-sidebar, .writer-body {
+	box-sizing: border-box;
+	float: left;
+}
+
+.writer-sidebar {
+	margin: 20px 20px 0 20px;
+	width: 300px;
+
+	.sidebar-link {
+		display: block;
+	}
+}
+
+.writer-body {
+	margin: 20px 20px 0 20px;
+	width: calc(100% - 400px);
+}
+
+@media screen and (max-width: 1024px) {
+	.writer-sidebar { width: calc(100% - 40px); }
+	.writer-body { width: calc(100% - 40px); }
+}

@@ -10,12 +10,13 @@ html, body {
 	background-color: $background-color;
 	font-family: $fonts;
 	margin: 0;
+	overflow-x: hidden;
 	padding: 0;
+	width: 100vw;
 }
 
 body {
 	min-height: calc(100vh - 50px);
-	width: 100vw;
 
 	.main-content {
 		left: 0;

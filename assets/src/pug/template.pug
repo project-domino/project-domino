@@ -18,11 +18,8 @@ html
 			div.nav-right-container
 				| {{if .loggedIn}}
 				| {{if eq .user.Type "writer"}}
-				div.dropdown.new-item-dropdown
-					span.dropdown-btn.new-item-dropdown-btn.fa.fa-plus
-					div.dropdown-content.new-item-dropdown-content
-						a(href="/new/note") + Note
-						a(href="/new/collection") + Collection
+				a.writer-panel-btn(href="/writer-panel")
+					span.fa.fa-plus
 				| {{end}}
 				div.dropdown.account-dropdown
 					span.dropdown-btn.account-dropdown-btn

@@ -1,0 +1,39 @@
+extends ./template.pug
+
+block head
+	title Writer Panel
+	link(rel="stylesheet", href="/assets/writer-panel.css")
+	block writer-panel-head
+
+block body
+	div.writer-sidebar.panel
+		h4.sidebar-header Create
+		a.sidebar-link(href="/writer-panel/new/note") New Note
+		a.sidebar-link(href="/writer-panel/new/collection") New Collection
+		a.sidebar-link(href="/writer-panel/new/textbook") New Textbook
+		div.sidebar-section-container
+			h4.sidebar-header My Notes
+			| {{range .user.Notes}}
+			| {{if .Published}}
+			a.sidebar-link(href="/writer-panel/edit/note/{{.ID}}") {{.Title}}
+			| {{end}}
+			| {{end}}
+		div.sidebar-section-container
+			h4.sidebar-header My Collections
+			| {{range .user.Collections}}
+			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
+			| {{end}}
+		div.sidebar-section-container
+			h4.sidebar-header My Textbooks
+			| {{range .user.Collections}}
+			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
+			| {{end}}
+		div.sidebar-section-container
+			h4.sidebar-header Drafts
+			| {{range .user.Collections}}
+			| {{if .Published}}{{else}}
+			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
+			| {{end}}
+			| {{end}}
+	div.writer-body
+		block writer-panel-body

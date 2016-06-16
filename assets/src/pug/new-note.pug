@@ -1,11 +1,11 @@
-extends ./template.pug
+extends ./writer-panel.pug
 
-block head
+block writer-panel-head
 	title New Note
 	link(rel="stylesheet", href="/assets/selectivity.css")
 	link(rel="stylesheet", href="/assets/new-note.css")
 
-block body
+block writer-panel-body
 	div.panel.new-note-container
 		h2.panel-heading Create a new note
 		h4.field-header Title
@@ -13,9 +13,10 @@ block body
 		h4.field-header Type your note's content below...
 		textarea#editor.new-note-editor
 		h4.field-header Pick some tags for your note...
-		div#tag-selector
+		div#tag-selector.tag-selector
 		div.panel-footer
-			button#new-note-btn.form-btn.new-note-btn Create Note
+			button#publish-note-btn.form-btn.publish-note-btn Publish Note
+			button#save-draft-btn.form-btn.save-draft-btn Save Draft
 
 block scripts
 	script(src="/assets/new-note.js")
