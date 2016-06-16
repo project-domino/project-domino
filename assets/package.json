@@ -37,7 +37,7 @@
     "rollup-plugin-babel": "^2.4.0",
     "rollup-plugin-commonjs": "^3.0.0",
     "rollup-plugin-node-resolve": "^1.7.0",
-    "xo": "^0.15.1"
+    "xo": "^0.16.0"
   },
   "homepage": "https://github.com/project-domino/project-domino-client",
   "license": "UNLICENSED",

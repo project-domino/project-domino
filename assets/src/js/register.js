@@ -19,7 +19,7 @@ $(() => {
 			dataType: "text",
 		}).then(() => {
 			window.location.assign("/");
-		}).fail((err) => {
+		}).fail(err => {
 			console.log(err);
 			modal.alert(err.responseText, 3000);
 		});

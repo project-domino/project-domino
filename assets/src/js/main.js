@@ -9,7 +9,7 @@ $(() => {
 			type:     "POST",
 			url:      "/logout",
 			dataType: "text",
-		}).fail((err) => {
+		}).fail(err => {
 			console.log(err);
 		}).then(() => {
 			window.location.reload();

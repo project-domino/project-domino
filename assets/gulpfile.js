@@ -1,35 +1,10 @@
-require("./build_helpers/main.js")({
-	js: {
-		"editor":   "src/editor/main.js",
-		"main":     "src/js/main.js",
-		"login":    "src/js/login.js",
-		"register": "src/js/register.js",
-		"new-note": "src/js/new-note.js",
-		"note":     "src/js/note.js",
-	},
-	pug: {
-		"editor":   "src/pug/editor.pug",
-		"home":     "src/pug/home.pug",
-		"search":   "src/pug/search.pug",
-		"login":    "src/pug/login.pug",
-		"register": "src/pug/register.pug",
-		"new-note": "src/pug/new-note.pug",
-		"note":     "src/pug/note.pug",
-	},
-	sass: {
-		"editor":   "src/sass/editor.scss",
-		"home":     "src/sass/home.scss",
-		"header":   "src/sass/header.scss",
-		"main":     "src/sass/main.scss",
-		"login":    "src/sass/login.scss",
-		"new-note": "src/sass/new-note.scss",
-		"sidebar":  "src/sass/sidebar.scss",
-	},
-});
+require("./build_helpers/main.js")(require("./targets.json"));
 
 const gulp = require("gulp");
+
 gulp.task("jsdoc", cb => {
 	const jsdoc = require("gulp-jsdoc3");
+
 	gulp.src(["src/editor/**.js", "src/editor/README.md"], {read: false})
 		.pipe(jsdoc({
 			opts: {
