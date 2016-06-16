@@ -48,6 +48,13 @@ class TextNode {
 		if(this.underline) e.css("text-decoration", "underline");
 		return e;
 	}
+	toJSON() {
+		const out = {text: this.text};
+		if(this.bold) out.bold = true;
+		if(this.italic) out.italic = true;
+		if(this.underline) out.underline = true;
+		return out;
+	}
 }
 
 class ParagraphNode {
@@ -137,7 +144,7 @@ class Note {
 		return this.nodes.map(node => node.render());
 	}
 	toJSON() {
-		return JSON.stringify(this.nodes);
+		return this.nodes;
 	}
 	update(element) {
 		this.nodes = nodesFromElement(element);

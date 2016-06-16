@@ -71,7 +71,7 @@ class Editor extends EventEmitter {
 		switch(command) {
 		case "debug-export":
 			$("#editor-debug-out").append($("<pre>").append(
-				$("<code>").text(this.note.toJSON())
+				$("<code>").text(JSON.stringify(this.note))
 			));
 			break;
 		case "save":
