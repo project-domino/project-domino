@@ -4,12 +4,13 @@ import $ from "jquery";
 import StackTrace from "stacktrace-js";
 
 import getModal from "../js/modal.js";
-const modal = getModal();
 
-import EventEmitter    from "./ee.js";
 import AutosaveManager from "./autosave-manager.js";
+import EventEmitter    from "./ee.js";
 
 import {LocalStorageSaveManager} from "./save-manager.js";
+
+const modal = getModal();
 
 /**
  * Editor is the central class used for creating an editor component.
@@ -41,6 +42,7 @@ class Editor extends EventEmitter {
 			["formatting", "italic"],
 			["formatting", "underline"],
 			["command", "save"],
+			["command", "debug-export", "terminal", " export"],
 		].map(label => {
 			const eventType = label[0];
 			const eventName = label[1];
@@ -68,6 +70,11 @@ class Editor extends EventEmitter {
 
 	commandHandler(command) {
 		switch(command) {
+		case "debug-export":
+			$("#editor-debug-out").append($("<pre>").append(
+				$("<code>").text(this.note.toJSON())
+			));
+			break;
 		case "save":
 			this.save();
 			break;
