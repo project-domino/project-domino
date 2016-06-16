@@ -16,13 +16,13 @@ function watchClient() {
 function watchServer() {
 	command -v CompileDaemon >/dev/null 2>&1 || go get -u github.com/githubnemo/CompileDaemon;
 	CompileDaemon \
-		-command "./project-domino -dev -serveOn :${PORT}" \
+		-command "./project-domino-server -dev" \
 		-exclude-dir node_modules \
 		-graceful-kill \
 		-pattern ".+(\\.c)|(\\.go)|(\\.pug)$";
 };
 
 # Ensure that a port is defined.
-PORT="${1-12345}";
+export PORT="${1-12345}";
 
 (watchClient) & (watchServer);

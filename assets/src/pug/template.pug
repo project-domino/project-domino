@@ -17,7 +17,7 @@ html
 					span.fa.fa-search
 			div.nav-right-container
 				| {{if .loggedIn}}
-				| {{if eq .requestUser.Type "writer"}}
+				| {{if eq .user.Type "writer"}}
 				div.dropdown.new-item-dropdown
 					span.dropdown-btn.new-item-dropdown-btn.fa.fa-plus
 					div.dropdown-content.new-item-dropdown-content
@@ -26,13 +26,13 @@ html
 				| {{end}}
 				div.dropdown.account-dropdown
 					span.dropdown-btn.account-dropdown-btn
-						| {{if ne .requestUser.FirstName ""}}
-						| 	{{.requestUser.FirstName}}
-						| 	{{if ne .requestUser.LastName ""}}
-						| 		{{.requestUser.LastName}}
+						| {{if ne .user.FirstName ""}}
+						| 	{{.user.FirstName}}
+						| 	{{if ne .user.LastName ""}}
+						| 		{{.user.LastName}}
 						| 	{{end}}
 						| {{else}}
-						| 	{{.requestUser.UserName}}
+						| 	{{.user.UserName}}
 						| {{end}}
 					div.dropdown-content.account-dropdown-content
 						a(href="/account") My Account

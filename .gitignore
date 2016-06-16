@@ -6,10 +6,12 @@
 !.sass-lint.yml
 
 domino.db
-project-domino
 project-domino.tgz
+
+cmd/project-domino-server/project-domino-server
 
 dist/
 node_modules/
+test/
 
 npm-debug.log

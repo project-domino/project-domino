@@ -8,5 +8,4 @@ module.exports = (file, out, dev = false) => gulp.src(file)
 	.pipe(plumber())
 	.pipe(pugLint())
 	.pipe(pug({locals: {dev: dev}}))
-	.pipe(rename(`${out}.html`))
-	.pipe(gulp.dest("dist/templates/"));
+	.pipe(rename(`${out}.html`));

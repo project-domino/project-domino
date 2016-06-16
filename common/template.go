@@ -17,16 +17,16 @@ var Views = template.New("Views")
 
 // LoadTemplates loads the Views global with templates from the archive.
 func LoadTemplates(fs vfs.FileSystem) error {
-	files, err := fs.ReadDir("/templates")
+	files, err := fs.ReadDir("/")
 	if err != nil {
 		return err
 	}
 	for _, file := range files {
-		if file.IsDir() {
+		if file.IsDir() || path.Ext(file.Name()) != ".html" {
 			continue
 		}
 
-		reader, err := fs.Open(path.Join("/templates", file.Name()))
+		reader, err := fs.Open("/" + file.Name())
 		if err != nil {
 			return err
 		}
