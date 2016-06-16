@@ -3,6 +3,7 @@ const gulp = require("gulp");
 const zip =  require("gulp-zip");
 
 const helpers = _([
+	"copy",
 	"js",
 	"pug",
 	"sass",

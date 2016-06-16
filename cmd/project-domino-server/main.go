@@ -108,7 +108,7 @@ func main() {
 	r.GET("/new/note",
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
-		handlers.Simple("search.html"))
+		handlers.Simple("new-note.html"))
 	// r.POST("/new/note, api.NewNoteHandler)
 	// r.PUT("/new/note, api.EditNoteHandler)
 	// r.GET("/new/collection, views.NewCollectionHandler)

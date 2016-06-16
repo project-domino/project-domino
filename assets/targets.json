@@ -1,4 +1,7 @@
 {
+	"copy": {
+		"selectivity.css": "node_modules/selectivity/dist/selectivity-full.min.css"
+	},
 	"js": {
 		"editor":   "src/editor/main.js",
 		"main":     "src/js/main.js",
