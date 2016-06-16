@@ -19,7 +19,7 @@ function watchServer() {
 		-command "./project-domino -dev -serveOn :${PORT}" \
 		-exclude-dir node_modules \
 		-graceful-kill \
-		-pattern ".+\\.(c|go|pug)$";
+		-pattern ".+(\\.c)|(\\.go)|(\\.pug)$";
 };
 
 # Ensure that a port is defined.
