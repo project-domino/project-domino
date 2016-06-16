@@ -19,7 +19,6 @@ import (
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/vharitonsky/iniflags"
 
 	// Database Drivers
 	_ "github.com/denisenkom/go-mssqldb" // MS SQL
@@ -30,24 +29,16 @@ import (
 
 var (
 	assetPath = flag.String("assetPath", "assets.zip", "The zip file to load assets from.")
-	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
-	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
-	dbDebug   = flag.Bool("dbDebug", false, "Enables debugging on the database.")
-	dev       = flag.Bool("dev", false, "Load assets from a directory instead of a .zip file.")
 )
-
-func init() {
-	iniflags.Parse()
-}
 
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(*dbType, *dbAddr)
+	db, err := gorm.Open(config.DB.Type, config.DB.Addr)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-	db.LogMode(*dbDebug)
+	db.LogMode(config.DB.Debug)
 	SetupDatabase(db)
 
 	// Create router.
@@ -60,7 +51,7 @@ func main() {
 	// Load assets and templates.
 	// TODO: There's a better way...
 	var assetFS vfs.FileSystem
-	if *dev {
+	if config.Assets.Dev {
 		assetFS = vfs.OS("assets/dist")
 	} else {
 		var err error
