@@ -35,7 +35,7 @@ class TextNode {
 	 * @param {boolean} italic - Whether the text should be italic.
 	 * @param {boolean} underline - Whether the text should be underlined.
 	 */
-	constructor(text, bold, italic, underline) {
+	constructor(text, bold = false, italic = false, underline = false) {
 		this.text = text;
 		this.bold = bold;
 		this.italic = italic;
@@ -63,14 +63,24 @@ class ParagraphNode {
 		this.nodes = textNodes;
 	}
 	static fromElement(element) {
+		const nodes = [];
 		for(const node of element.childNodes) {
 			switch(node.nodeType) {
 			case Node.ELEMENT_NODE:
+				switch(node.tagName) {
+				case "SPAN":
+					nodes.push(new TextNode(node.textContent));
+					break;
+				default:
+					throw new TypeError(`unknown tag: ${node.tagName} in ${node}`);
+				}
+				break;
 			case Node.TEXT_NODE:
 			default:
 				throw new TypeError(`unknown node: ${node}`);
 			}
 		}
+		return new ParagraphNode(nodes);
 	}
 
 	render() {
@@ -87,20 +97,26 @@ class ParagraphNode {
 const nodesFromElement = e => {
 	if(e instanceof $)
 		e = e[0];
+	const out = [];
 	for(const node of e.childNodes) {
 		switch(node.tagName) {
 		case "H1":
-			return new HeaderNode(node.textContent, 1);
+			out.push(new HeaderNode(node.textContent, 1));
+			break;
 		case "H2":
-			return new HeaderNode(node.textContent, 2);
+			out.push(new HeaderNode(node.textContent, 2));
+			break;
 		case "H3":
-			return new HeaderNode(node.textContent, 3);
+			out.push(new HeaderNode(node.textContent, 3));
+			break;
 		case "P":
-			return ParagraphNode.fromElement(node);
+			out.push(ParagraphNode.fromElement(node));
+			break;
 		default:
 			throw new TypeError(`unknown tag: ${node.tagName} in ${node}`);
 		}
 	}
+	return out;
 };
 
 /**

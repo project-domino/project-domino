@@ -49,13 +49,12 @@ class Editor extends EventEmitter {
 			const labelIcon = label[2] || eventName;
 			const labelText = label[3];
 
-			let button = $("<button>").addClass("btn btn-default").click(() => {
+			return $("<button>").attr("disabled", true).click(() => {
 				this.emit(eventType, eventName);
 			}).addClass(`project-domino-editor-${eventName}`).append([
 				$("<span>").addClass(`fa fa-${labelIcon}`),
 				$("<span>").text(labelText),
 			]);
-			return button;
 		})).appendTo(this.container);
 		this.element = $("<div>").addClass("project-domino-editor-content").appendTo(this.container);
 
@@ -64,7 +63,7 @@ class Editor extends EventEmitter {
 			this.note = note;
 			this.emit("render");
 			this.element.attr("contentEditable", true);
-			return this;
+			$("button", this.container).attr("disabled", false);
 		}).catch(err => this.emit("error", err));
 	}
 
@@ -116,7 +115,10 @@ class Editor extends EventEmitter {
 	}
 	keyPressListener(event) {
 		this.emit("keypress", event);
-		this.note.update(this.element);
+		setTimeout(() => {
+			// Wait for the DOM to be updated.
+			this.note.update(this.element);
+		}, 0);
 	}
 
 	/**
