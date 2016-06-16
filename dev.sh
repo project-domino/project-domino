@@ -9,7 +9,7 @@ function watchClient() {
 	if [[ ! -e node_modules ]]; then
 		npm i;
 	fi;
-	gulp watch;
+	gulp watch-dev;
 };
 
 # Server-watching function.
