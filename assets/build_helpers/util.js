@@ -3,21 +3,20 @@ const rimraf = require("rimraf");
 const watch =  require("gulp-watch");
 
 gulp.task("clean", cb => rimraf("dist/", cb));
+
+const watchTargets = [
+	"build_helpers/**",
+	"src/**",
+	"gulpfile.js",
+];
+
 gulp.task("watch", () => {
-	watch([
-		"build_helpers/**",
-		"src/**",
-		"gulpfile.js",
-	], () => {
+	watch(watchTargets, () => {
 		gulp.start("default");
 	});
 });
 gulp.task("watch-dev", () => {
-	watch([
-		"build_helpers/**",
-		"src/**",
-		"gulpfile.js",
-	], () => {
+	watch(watchTargets, () => {
 		gulp.start("default-dev");
 	});
 });
