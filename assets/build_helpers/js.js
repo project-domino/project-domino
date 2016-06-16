@@ -1,6 +1,8 @@
 const path = require("path");
 
 const gulp =       require("gulp");
+const addsrc =     require("gulp-add-src");
+const concat =     require("gulp-concat");
 const plumber =    require("gulp-plumber");
 const rename =     require("gulp-rename");
 const rollup =     require("gulp-rollup");
@@ -14,6 +16,7 @@ module.exports = (file, out, dev = false) => {
 			exclude: "node_modules/**",
 		}),
 	];
+
 	if(!dev) {
 		rollupPlugins.push(require("rollup-plugin-commonjs")({
 			include: "node_modules/**",
@@ -41,10 +44,16 @@ module.exports = (file, out, dev = false) => {
 		};
 	}
 
-	const inner = [
-		rollup(rollupConfig),
-	];
-	if(!dev) inner.push(uglify());
+	const inner = [rollup(rollupConfig)];
+	if(dev) {
+		inner.push(addsrc.prepend([
+			"node_modules/jquery/dist/jquery.min.js",
+			"node_modules/stacktrace-js/stacktrace.js",
+		]));
+		inner.push(concat("rename-me.js"));
+	} else {
+		inner.push(uglify());
+	}
 
 	return [
 		plumber(),
