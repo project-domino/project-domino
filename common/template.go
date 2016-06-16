@@ -26,7 +26,7 @@ func LoadTemplates(fs vfs.FileSystem) error {
 			continue
 		}
 
-		reader, err := fs.Open(file.Name())
+		reader, err := fs.Open("/" + file.Name())
 		if err != nil {
 			return err
 		}

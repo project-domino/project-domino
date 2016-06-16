@@ -17,8 +17,8 @@ function client() {
 # Server-building function.
 function server() {
 	cd cmd/project-domino-server;
-	go get .;
-	go build;
+	go get -v .;
+	go build -v;
 };
 
 # Deployment bundle-building function.
@@ -40,9 +40,12 @@ command -v realpath >/dev/null 2>&1 || function realpath() {
 base_dir="$(dirname $(realpath ${0}))";
 function build() {
 	cd "${base_dir}";
+	echo "-----> ${@}";
 	${@};
 };
 
 build client;
 build server;
 build deployBundle;
+
+echo "-----> Done building!";
