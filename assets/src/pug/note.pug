@@ -1,0 +1,17 @@
+extends ./template.pug
+
+block head
+	link(rel="stylesheet", href="/assets/sidebar.css")
+	title Note
+
+block sidebar-btn
+	div.sidebar-btn-container
+		span.fa.fa-bars.sidebar-btn
+
+block sidebar
+	div#sidebar.sidebar
+
+block body
+
+block scripts
+	script(src="/assets/note.js")

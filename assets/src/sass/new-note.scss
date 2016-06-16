@@ -1,0 +1,21 @@
+@import "variables.scss";
+
+.new-note-container {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	width: 800px;
+}
+
+.form-input {
+	width: 100%;
+}
+
+.new-note-editor {
+	min-height: 300px;
+	width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+	.new-note-container { width: 100%; }
+}

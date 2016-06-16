@@ -6,3 +6,9 @@
 	box-sizing: border-box;
 	padding: 20px;
 }
+
+.panel-heading {
+	border-bottom: 1px solid $border-color;
+	margin: 0;
+	padding: 20px 0 10px;
+}

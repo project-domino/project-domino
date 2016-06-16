@@ -8,8 +8,7 @@ html
 		block head
 	body
 		div.navbar
-			div.sidebar-btn-container
-				span.fa.fa-bars.sidebar-btn
+			block sidebar-btn
 			h2.logo
 				a.navbar-title(href="/") Domino
 			div.search-container
@@ -41,7 +40,7 @@ html
 				| {{else}}
 				button.sign-in-btn Sign In
 				| {{end}}
-		div#sidebar.sidebar
+		block sidebar
 		div#main-content.main-content
 			block body
 		div#modal.modal

@@ -6,11 +6,11 @@ block head
 
 block body
 	div.panel.new-note-container
-		h2.panel-heading Create a new Note
+		h2.panel-heading Create a new note
 		h4.field-header Title
 		input#new-note-title.form-input(placeholder="Enter note title...")
 		h4.field-header Type your note's content below...
-		textarea#editor
+		textarea#editor.new-note-editor
 
 block scripts
 	script(src="/assets/new-note.js")

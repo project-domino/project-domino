@@ -13,8 +13,9 @@ type Collection struct {
 	AuthorID uint
 	Author   User
 
-	Notes []Note `gorm:"many2many:note_collection;"`
-	Tags  []Tag  `gorm:"many2many:collection_tag;"`
+	Notes     []Note     `gorm:"many2many:note_collection;"`
+	Textbooks []Textbook `gorm:"many2many:textbook_collection;"`
+	Tags      []Tag      `gorm:"many2many:collection_tag;"`
 
 	// Ranking Info
 	Upvotes       uint

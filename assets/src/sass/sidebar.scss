@@ -1,0 +1,55 @@
+@import "variables.scss";
+
+body {
+	.sidebar {
+		background-color: $foreground-color;
+		border-right: 1px solid $border-color;
+		box-sizing: border-box;
+		height: calc(100vh - 50px);
+		left: 0;
+		position: fixed;
+		top: 50px;
+		width: 230px;
+		z-index: 1;
+	}
+
+	.main-content {
+		left: 230px;
+		min-height: calc(100vh - 50px);
+		overflow-x: hidden;
+		padding-top: 50px;
+		position: relative;
+		width: calc(100% - 230px);
+	}
+
+	&.sidebar-close {
+		.sidebar {
+			display: none;
+		}
+
+		.main-content {
+			left: 0;
+			width: 100%;
+		}
+	}
+}
+
+@media only screen and (max-width: 900px) {
+	body {
+		.sidebar {
+			position: fixed;
+			z-index: 2;
+		}
+
+		.main-content {
+			left: 0;
+			width: 100%;
+		}
+
+		&.sidebar-close {
+			.sidebar {
+				display: none;
+			}
+		}
+	}
+}

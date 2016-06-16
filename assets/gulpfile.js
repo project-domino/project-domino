@@ -4,7 +4,8 @@ require("./build_helpers/main.js")({
 		"main":     "src/js/main.js",
 		"login":    "src/js/login.js",
 		"register": "src/js/register.js",
-		"new-note": "src/pug/new-note.js",
+		"new-note": "src/js/new-note.js",
+		"note":     "src/js/note.js",
 	},
 	pug: {
 		"editor":   "src/pug/editor.pug",
@@ -13,6 +14,7 @@ require("./build_helpers/main.js")({
 		"login":    "src/pug/login.pug",
 		"register": "src/pug/register.pug",
 		"new-note": "src/pug/new-note.pug",
+		"note":     "src/pug/note.pug",
 	},
 	sass: {
 		"editor":   "src/sass/editor.scss",
@@ -20,7 +22,8 @@ require("./build_helpers/main.js")({
 		"header":   "src/sass/header.scss",
 		"main":     "src/sass/main.scss",
 		"login":    "src/sass/login.scss",
-		"new-note": "src/pug/new-note.scss",
+		"new-note": "src/sass/new-note.scss",
+		"sidebar":  "src/sass/sidebar.scss",
 	},
 });
 

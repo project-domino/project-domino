@@ -8,5 +8,5 @@ import (
 
 // NoteHandler serves an individual note
 func NoteHandler(w http.ResponseWriter, r *http.Request) {
-	common.ExecuteTemplate(w, r, "home.html")
+	common.ExecuteTemplate(w, r, "note.html")
 }
