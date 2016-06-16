@@ -16,7 +16,8 @@ function watchClient() {
 function watchServer() {
 	command -v CompileDaemon >/dev/null 2>&1 || go get -u github.com/githubnemo/CompileDaemon;
 	CompileDaemon \
-		-command "./project-domino-server -dev" \
+		-build "go build ./..." \
+		-command "cmd/project-domino-server/project-domino-server -dev" \
 		-exclude-dir node_modules \
 		-graceful-kill \
 		-pattern ".+(\\.c)|(\\.go)|(\\.pug)$";
