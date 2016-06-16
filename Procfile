@@ -1,1 +1,1 @@
-web: ./project-domino
+web: ./project-domino-server
