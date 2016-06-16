@@ -1,5 +1,11 @@
-// Styles for form elements
+@import "variables.scss";
 
-.form-control {
+// Styles for form elements
+.form-input {
+	border: 1px solid $input-border-color;
 	display: block;
+	font-size: 0.8rem;
+	height: 25px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }

@@ -15,6 +15,9 @@ type Note struct {
 	Collections []Collection `gorm:"many2many:note_collection;"`
 	Tags        []Tag        `gorm:"many2many:note_tag;"`
 
+	// Favorite Info
+	FavoriteUsers []User `gorm:"many2many:favoritenote_user;"`
+
 	// Ranking Info
 	Upvotes       uint
 	Downvotes     uint

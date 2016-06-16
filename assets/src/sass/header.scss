@@ -19,11 +19,11 @@
 		width: 40px;
 
 		.sidebar-btn {
-			color: darken(#ffffff, 30%);
+			color: $sidebar-btn-color;
 			cursor: pointer;
 		}
-		.sidebar-btn:hover { color: darken(#ffffff, 40%); }
-		.sidebar-btn:active { color: darken(#ffffff, 50%); }
+		.sidebar-btn:hover { color: darken($sidebar-btn-color, 10%); }
+		.sidebar-btn:active { color: darken($sidebar-btn-color, 20%); }
 	}
 
 	.logo {
@@ -37,7 +37,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 500px) {
+	@media only screen and (max-width: 600px) {
 		.logo { display: none; }
 	}
 

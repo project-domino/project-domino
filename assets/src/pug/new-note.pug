@@ -1,0 +1,16 @@
+extends ./template.pug
+
+block head
+	title Login
+	link(rel="stylesheet", href="/assets/new-note.css")
+
+block body
+	div.panel.new-note-container
+		h2.panel-heading Create a new Note
+		h4.field-header Title
+		input#new-note-title.form-input(placeholder="Enter note title...")
+		h4.field-header Type your note's content below...
+		textarea#editor
+
+block scripts
+	script(src="/assets/new-note.js")

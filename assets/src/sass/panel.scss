@@ -1,0 +1,8 @@
+@import "variables.scss";
+
+.panel {
+	background-color: #ffffff;
+	border: 1px solid $border-color;
+	box-sizing: border-box;
+	padding: 20px;
+}

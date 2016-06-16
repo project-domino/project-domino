@@ -4,7 +4,7 @@ import getModal from "../js/modal.js";
 const modal = getModal();
 
 $(() => {
-	$("body").addClass("sidebar-close");
+	$("body").addClass("sidebar-close sidebar-default-close");
 
 	$("#login-btn").click(() => {
 		$.ajax({

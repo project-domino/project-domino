@@ -17,6 +17,9 @@ type Comment struct {
 
 	Body string
 
+	// Favorite Info
+	FavoriteUsers []User `gorm:"many2many:favoritecollection_user;"`
+
 	// Ranking Info
 	Upvotes       uint
 	Downvotes     uint

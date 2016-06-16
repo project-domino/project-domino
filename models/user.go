@@ -30,6 +30,10 @@ type User struct {
 	EmailVerified  bool
 	SendNewsletter bool
 
+	// Favorite Info
+	FavoriteNotes       []Note       `gorm:"many2many:favoritenote_user;"`
+	FavoriteCollections []Collection `gorm:"many2many:favoritecollection_user;"`
+
 	// Ranking Info
 	UpvoteCollections   []Collection `gorm:"many2many:upvotecollection_user;"`
 	DownvoteCollections []Collection `gorm:"many2many:downvotecollection_user;"`

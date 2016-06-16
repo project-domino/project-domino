@@ -8,10 +8,11 @@
 .login-panel {
 	background-color: $foreground-color;
 	border: 1px solid $border-color;
+	box-sizing: border-box;
 	margin-top: 5%;
 	padding: 20px;
 	text-align: center;
-	width: 50%;
+	width: 500px;
 
 	button {
 		margin-top: 10px;
@@ -19,4 +20,8 @@
 	}
 	input { width: 80%; }
 	.seperator { display: block; }
+}
+
+@media only screen and (max-width: 500px) {
+	.login-panel { width: 100%; }
 }

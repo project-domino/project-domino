@@ -80,17 +80,36 @@ func main() {
 	r.Methods("POST").Path("/register").HandlerFunc(api.RegisterHandler)
 	r.Methods("POST").Path("/logout").HandlerFunc(api.LogoutHandler)
 
-	// View Routes
+	// Home Route
 	r.Methods("GET").Path("/").HandlerFunc(view.HomeHandler)
-	r.Methods("GET").Path("/subjects").HandlerFunc(view.SubjectListHandler)
-	r.Methods("GET").Path("/subject/{subjectName}").HandlerFunc(view.SubjectHandler)
-	r.Methods("GET").Path("/subject/{subjectName}/{topicName}").HandlerFunc(view.TopicHandler)
-	r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteID}").HandlerFunc(view.NoteHandler)
-	// noteName for url readability
-	r.Methods("GET").Path("/subject/{subjectName}/{topicName}/{noteID}/{noteName}").HandlerFunc(view.NoteHandler)
+
+	// Collection Routes - names for URL readibility
+	//r.Methods("GET").Path("/collection/{collectionID}").HandlerFunc(view.CollectionHandler)
+	//r.Methods("GET").Path("/collection/{collectionID}/{collectionName}").HandlerFunc(view.CollectionHandler)
+	//r.Methods("GET").Path("/collection/{collectionID}/note/{noteID}").HandlerFunc(view.CollectionNoteHandler)
+	//r.Methods("GET").Path("/collection/{collectionID}/note/{noteID}/{noteName}").HandlerFunc(view.CollectionNoteHandler)
+
+	// Note Routes
+	r.Methods("GET").Path("/note/{noteID}").HandlerFunc(view.NoteHandler)
+	r.Methods("GET").Path("/note/{noteID}/{noteName}").HandlerFunc(view.NoteHandler)
+
+	// User Routes
 	r.Methods("GET").Path("/user/{userName}").HandlerFunc(view.UserHandler)
+	r.Methods("GET").Path("/u/{userName}").HandlerFunc(view.UserHandler)
+
+	// University Route
 	r.Methods("GET").Path("/university/{shortName}").HandlerFunc(view.UniversityHandler)
+
+	// Search Route
 	r.Methods("GET").Path("/search").HandlerFunc(view.SearchHandler)
+
+	// New item routes
+	r.Methods("GET").Path("/new/note").HandlerFunc(view.NewNoteHandler)
+	//r.Methods("GET").Path("/new/collection").HandlerFunc(view.NewCollectionHandler)
+	//r.Methods("POST").Path("/new/note").HandlerFunc(api.NewNoteHandler)
+	//r.Methods("POST").Path("/new/collection").HandlerFunc(api.NewCollectionHandler)
+	//r.Methods("PUT").Path("/new/note").HandlerFunc(api.EditNoteHandler)
+	//r.Methods("PUT").Path("/new/collection").HandlerFunc(api.EditCollectionHandler)
 
 	// Debug Routes
 	r.Methods("GET").Path("/debug/editor").HandlerFunc(debug.EditorHandler)
