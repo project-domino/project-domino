@@ -115,9 +115,9 @@
 
 	.search-container {
 		display: flex;
+		flex-grow: 0.4;
 		height: 30px;
 		position: relative;
-		flex-grow: .4;
 
 		input {
 			border: 1px solid $input-border-color;
