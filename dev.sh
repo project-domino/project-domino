@@ -19,6 +19,7 @@ function watchServer() {
 		-build "go build ./..." \
 		-command "cmd/project-domino-server/project-domino-server -dev" \
 		-exclude-dir node_modules \
+		-exclude-dir .git \
 		-graceful-kill \
 		-pattern ".+(\\.c)|(\\.go)|(\\.pug)$";
 };
