@@ -61,7 +61,7 @@ class ParagraphNode {
 	/**
 	 * @param {module:note~TextNode[]} textNodes - The nodes in the paragraph.
 	 */
-	constructor(textNodes) {
+	constructor(textNodes = []) {
 		if(!Array.isArray(textNodes))
 			throw new TypeError("textNodes must be an Array");
 		else if(!textNodes.every(n => n instanceof TextNode))
@@ -83,6 +83,8 @@ class ParagraphNode {
 				}
 				break;
 			case Node.TEXT_NODE:
+				nodes.push(new TextNode(node.textContent));
+				break;
 			default:
 				throw new TypeError(`unknown node: ${node}`);
 			}
@@ -106,21 +108,32 @@ const nodesFromElement = e => {
 		e = e[0];
 	const out = [];
 	for(const node of e.childNodes) {
-		switch(node.tagName) {
-		case "H1":
-			out.push(new HeaderNode(node.textContent, 1));
+		switch(node.nodeType) {
+		case Node.ELEMENT_NODE:
+			switch(node.tagName) {
+			case "H1":
+				out.push(new HeaderNode(node.textContent, 1));
+				break;
+			case "H2":
+				out.push(new HeaderNode(node.textContent, 2));
+				break;
+			case "H3":
+				out.push(new HeaderNode(node.textContent, 3));
+				break;
+			case "P":
+				out.push(ParagraphNode.fromElement(node));
+				break;
+			default:
+				throw new TypeError(`unknown tag: ${node.tagName} in ${node}`);
+			}
 			break;
-		case "H2":
-			out.push(new HeaderNode(node.textContent, 2));
-			break;
-		case "H3":
-			out.push(new HeaderNode(node.textContent, 3));
-			break;
-		case "P":
-			out.push(ParagraphNode.fromElement(node));
+		case Node.TEXT_NODE:
+			out.push(new ParagraphNode([
+				new TextNode(node.textContent),
+			]));
 			break;
 		default:
-			throw new TypeError(`unknown tag: ${node.tagName} in ${node}`);
+			throw new TypeError(`unknown node: ${node}`);
 		}
 	}
 	return out;
