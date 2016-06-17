@@ -1,6 +1,6 @@
 {
 	"copy": {
-		"selectivity.css": "node_modules/selectivity/dist/selectivity-full.min.css"
+		"select2.css": "node_modules/select2/dist/css/select2.min.css"
 	},
 	"js": {
 		"editor":   "src/editor/main.js",
@@ -9,26 +9,26 @@
 		"register": "src/js/register.js",
 		"new-note": "src/js/new-note.js",
 		"note":     "src/js/note.js",
-		"sidebar":     "src/js/sidebar.js"
+		"sidebar":  "src/js/sidebar.js"
 	},
 	"pug": {
-		"editor":   "src/pug/editor.pug",
-		"home":     "src/pug/home.pug",
-		"search":   "src/pug/search.pug",
-		"login":    "src/pug/login.pug",
-		"register": "src/pug/register.pug",
-		"new-note": "src/pug/new-note.pug",
-		"note":     "src/pug/note.pug",
-		"writer-panel":  "src/pug/writer-panel.pug"
+		"editor":       "src/pug/editor.pug",
+		"home":         "src/pug/home.pug",
+		"search":       "src/pug/search.pug",
+		"login":        "src/pug/login.pug",
+		"register":     "src/pug/register.pug",
+		"new-note":     "src/pug/new-note.pug",
+		"note":         "src/pug/note.pug",
+		"writer-panel": "src/pug/writer-panel.pug"
 	},
 	"sass": {
-		"editor":   "src/sass/editor.scss",
-		"home":     "src/sass/home.scss",
-		"header":   "src/sass/header.scss",
-		"main":     "src/sass/main.scss",
-		"login":    "src/sass/login.scss",
-		"new-note": "src/sass/new-note.scss",
-		"sidebar":  "src/sass/sidebar.scss",
-		"writer-panel":  "src/sass/writer-panel.scss"
+		"editor":       "src/sass/editor.scss",
+		"home":         "src/sass/home.scss",
+		"header":       "src/sass/header.scss",
+		"main":         "src/sass/main.scss",
+		"login":        "src/sass/login.scss",
+		"new-note":     "src/sass/new-note.scss",
+		"sidebar":      "src/sass/sidebar.scss",
+		"writer-panel": "src/sass/writer-panel.scss"
 	}
 }

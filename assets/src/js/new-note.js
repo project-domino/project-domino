@@ -1,10 +1,10 @@
 import $ from "jquery";
-import "selectivity";
+import "select2";
 
 $(() => {
-	$("#tag-selector").selectivity({
-		items:       ["example", "example2", "example3"],
-		multiple:    true,
-		placeholder: "Type to search tags...",
+	$("#tag-selector").select2({
+		tags:        "true",
+		placeholder: "Type to search for tags...",
+		allowClear:  true,
 	});
 });
