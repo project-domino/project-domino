@@ -5,7 +5,7 @@
 
 .writer-sidebar {
 	margin: 20px 20px 0 20px;
-	width: 300px;
+	width: 25%;
 
 	.sidebar-link {
 		display: block;
@@ -14,10 +14,10 @@
 
 .writer-body {
 	margin: 20px 20px 0 20px;
-	width: calc(100% - 400px);
+	width: calc(75% - 80px);
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 750px) {
 	.writer-sidebar { width: calc(100% - 40px); }
 	.writer-body { width: calc(100% - 40px); }
 }
