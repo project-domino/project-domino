@@ -7,9 +7,14 @@
 }
 
 .new-note-editor {
+	border: 1px solid $input-border-color;
 	box-sizing: border-box;
-	min-height: 300px;
+	min-height: 500px;
 	width: 100%;
+}
+
+.toolbar {
+	border: 1px solid $input-border-color;
 }
 
 .tag-selector {

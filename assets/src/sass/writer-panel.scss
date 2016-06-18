@@ -4,8 +4,8 @@
 }
 
 .writer-sidebar {
-	margin: 20px 20px 0 20px;
-	width: 25%;
+	margin: 20px;
+	width: 300px;
 
 	.sidebar-link {
 		display: block;
@@ -13,8 +13,18 @@
 }
 
 .writer-body {
-	margin: 20px 20px 0 20px;
-	width: calc(75% - 80px);
+	margin: 20px;
+	width: calc(100% - 380px);
+}
+
+@media screen and (max-width: 1200px) {
+	.writer-sidebar {
+		width: 25%;
+	}
+
+	.writer-body {
+		width: calc(75% - 80px);
+	}
 }
 
 @media screen and (max-width: 750px) {
