@@ -113,7 +113,12 @@ func main() {
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("new-note.html"))
-	// r.POST("/new/note, api.NewNoteHandler)
+
+	// New routes
+	r.POST("/new/note",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin),
+		api.NewNote)
 	// r.PUT("/new/note, api.EditNoteHandler)
 	// r.GET("/new/collection, views.NewCollectionHandler)
 	// r.POST("/new/collection, api.NewCollectionHandler)
