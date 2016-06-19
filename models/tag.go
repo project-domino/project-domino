@@ -6,7 +6,8 @@ import "github.com/jinzhu/gorm"
 type Tag struct {
 	gorm.Model
 
-	Name string
+	Name        string
+	Description string
 
 	Collections []Collection `gorm:"many2many:collection_tag;"`
 	Notes       []Note       `gorm:"many2many:note_tag;"`

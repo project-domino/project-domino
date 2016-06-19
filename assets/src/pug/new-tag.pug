@@ -1,0 +1,12 @@
+extends ./writer-panel.pug
+
+block writer-panel-head
+	title New Note
+	link(rel="stylesheet", href="/assets/new-tag.css")
+
+block writer-panel-body
+	div.panel.new-note-container
+		h2.panel-heading Tags
+
+block scripts
+	script(src="/assets/new-tag.js")

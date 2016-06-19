@@ -15,5 +15,4 @@ func SetupDatabase(db *gorm.DB) {
 	db.CreateTable(&models.Collection{})
 	db.CreateTable(&models.University{})
 	db.CreateTable(&models.Tag{})
-	db.CreateTable(&models.TagDepends{})
 }

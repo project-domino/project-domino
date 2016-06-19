@@ -12,7 +12,6 @@ $(() => {
 		},
 		theme: "snow",
 	});
-	window.quill = quill;
 	$(".tag-selector").select2({
 		placeholder: "Type to search for tags...",
 		allowClear:  true,

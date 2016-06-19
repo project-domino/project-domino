@@ -109,10 +109,14 @@ func main() {
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("writer-panel.html"))
-	r.GET("writer-panel/new/note",
+	r.GET("/writer-panel/note",
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("new-note.html"))
+	r.GET("/writer-panel/tag",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin),
+		handlers.Simple("new-tag.html"))
 
 	// New routes
 	r.POST("/new/note",
