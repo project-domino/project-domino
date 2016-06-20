@@ -2,7 +2,6 @@ package main
 
 import (
 	// Standard Library
-	"flag"
 	"log"
 
 	// Extended Standard Library
@@ -15,6 +14,7 @@ import (
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
+	"github.com/spf13/viper"
 
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
@@ -27,18 +27,14 @@ import (
 	_ "github.com/mattn/go-sqlite3"      // SQLite 3.x.y
 )
 
-var (
-	assetPath = flag.String("assetPath", "assets.zip", "The zip file to load assets from.")
-)
-
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(config.DB.Type, config.DB.Addr)
+	db, err := gorm.Open(viper.GetString("db.type"), viper.GetString("db.addr"))
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-	db.LogMode(config.DB.Debug)
+	// db.LogMode(config.DB.Debug)
 	SetupDatabase(db)
 
 	// Create router.
@@ -51,11 +47,11 @@ func main() {
 	// Load assets and templates.
 	// TODO: There's a better way...
 	var assetFS vfs.FileSystem
-	if config.Assets.Dev {
+	if viper.GetBool("assets.dev") {
 		assetFS = vfs.OS("assets/dist")
 	} else {
 		var err error
-		assetFS, err = NewZipFileSystem(*assetPath)
+		assetFS, err = NewZipFileSystem(viper.GetString("assets.path"))
 		if err != nil {
 			log.Fatal(err)
 		}

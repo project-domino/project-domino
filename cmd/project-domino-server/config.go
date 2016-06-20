@@ -1,6 +1,6 @@
 package main
 
-import "github.com/remexre/uniconf"
+import "github.com/spf13/viper"
 
 type configAssets struct {
 	Dev  bool   `uniconf:"dev"`
@@ -13,21 +13,19 @@ type configDB struct {
 	Debug bool `uniconf:"debug"`
 }
 
-var config = struct {
-	Assets configAssets
-	DB     configDB
-}{
-	Assets: configAssets{
-		Dev:  false,
-		Path: "assets.zip",
-	},
-	DB: configDB{
-		Addr:  "domino.db",
-		Type:  "sqlite3",
-		Debug: false,
-	},
-}
-
 func init() {
-	uniconf.MustLoad(&config)
+	viper.SetDefault("assets.dev", false)
+	viper.SetDefault("assets.path", "assets.zip")
+	viper.SetDefault("db.addr", "domino.db")
+	viper.SetDefault("db.type", "sqlite3")
+	viper.SetDefault("db.debug", false)
+
+	viper.SetConfigName("project-domino")
+	viper.AddConfigPath("/etc/project-domino/")
+	viper.AddConfigPath("$HOME/.project-domino")
+	viper.AddConfigPath(".")
+
+	if err := viper.ReadInConfig(); err != nil {
+		panic(err)
+	}
 }
