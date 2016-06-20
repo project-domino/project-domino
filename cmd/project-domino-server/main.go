@@ -5,19 +5,16 @@ import (
 	"fmt"
 	"os"
 
-	// Extended Standard Library
-
 	// Internal Dependencies
-
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
-	"github.com/spf13/viper"
 
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
+	"github.com/spf13/viper"
 
 	// Database Drivers
 	_ "github.com/denisenkom/go-mssqldb" // MS SQL
