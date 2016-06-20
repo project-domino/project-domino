@@ -123,7 +123,7 @@ func main() {
 	debug := r.Group("/debug")
 	debug.GET("/editor", handlers.Simple("editor.html"))
 	debug.GET("/env", func(c *gin.Context) { c.JSON(200, os.Environ()) })
-	debug.GET("/config", func(c *gin.Context) { c.JSON(viper.AllSettings()) })
+	debug.GET("/config", func(c *gin.Context) { c.JSON(200, viper.AllSettings()) })
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
