@@ -1,8 +1,12 @@
 [assets]
 dev = false
-path = "../../assets/dist/assets.zip"
+path = "assets.zip"
 
 [db]
 addr = "domino.db"
 type = "sqlite3"
 debug = false
+
+[http]
+debug = false
+port = 12345

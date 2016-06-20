@@ -2,6 +2,7 @@ package main
 
 import (
 	// Standard Library
+	"fmt"
 	"log"
 
 	// Extended Standard Library
@@ -34,8 +35,15 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-	// db.LogMode(config.DB.Debug)
+	db.LogMode(viper.GetBool("db.debug"))
 	SetupDatabase(db)
+
+	// Enable/disable gin's debug mode.
+	if viper.GetBool("http.debug") {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 	// Create router.
 	r := gin.New()
@@ -113,7 +121,7 @@ func main() {
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
-	if err := r.Run(); err != nil {
+	if err := r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))); err != nil {
 		panic(err)
 	}
 }
