@@ -36,12 +36,15 @@ module.exports = (file, out, dev = false) => {
 	if(dev) {
 		rollupConfig.external = [
 			"jquery",
+			"quill",
 			"select2",
 			"stacktrace-js",
 			"zxcvbn",
 		];
 		rollupConfig.globals = {
 			"jquery":        "jQuery",
+			"quill":         "Quill",
+			"select2":       "$.select2",
 			"stacktrace-js": "StackTrace",
 			"zxcvbn":        "zxcvbn",
 		};
