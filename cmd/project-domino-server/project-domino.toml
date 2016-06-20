@@ -1,0 +1,12 @@
+[assets]
+dev = false
+path = "assets.zip"
+
+[database]
+debug = false
+type = "sqlite3"
+url = "domino.db"
+
+[http]
+debug = false
+port = 12345

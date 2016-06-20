@@ -2,8 +2,9 @@ package main
 
 import (
 	// Standard Library
-	"flag"
+	"fmt"
 	"log"
+	"os"
 
 	// Extended Standard Library
 	"golang.org/x/tools/godoc/vfs"
@@ -15,11 +16,11 @@ import (
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
+	"github.com/spf13/viper"
 
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/vharitonsky/iniflags"
 
 	// Database Drivers
 	_ "github.com/denisenkom/go-mssqldb" // MS SQL
@@ -28,27 +29,25 @@ import (
 	_ "github.com/mattn/go-sqlite3"      // SQLite 3.x.y
 )
 
-var (
-	assetPath = flag.String("assetPath", "assets.zip", "The zip file to load assets from.")
-	dbAddr    = flag.String("dbAddr", "domino.db", "The database's address or path.")
-	dbType    = flag.String("dbType", "sqlite3", "The database's type.")
-	dbDebug   = flag.Bool("dbDebug", false, "Enables debugging on the database.")
-	dev       = flag.Bool("dev", false, "Load assets from a directory instead of a .zip file.")
-)
-
-func init() {
-	iniflags.Parse()
-}
-
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(*dbType, *dbAddr)
+	db, err := gorm.Open(
+		viper.GetString("database.type"),
+		viper.GetString("database.url"),
+	)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-	db.LogMode(*dbDebug)
+	db.LogMode(viper.GetBool("database.debug"))
 	SetupDatabase(db)
+
+	// Enable/disable gin's debug mode.
+	if viper.GetBool("http.debug") {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 	// Create router.
 	r := gin.New()
@@ -60,11 +59,11 @@ func main() {
 	// Load assets and templates.
 	// TODO: There's a better way...
 	var assetFS vfs.FileSystem
-	if *dev {
+	if viper.GetBool("assets.dev") {
 		assetFS = vfs.OS("assets/dist")
 	} else {
 		var err error
-		assetFS, err = NewZipFileSystem(*assetPath)
+		assetFS, err = NewZipFileSystem(viper.GetString("assets.path"))
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -125,10 +124,12 @@ func main() {
 	// Debug Routes
 	debug := r.Group("/debug")
 	debug.GET("/editor", handlers.Simple("editor.html"))
+	debug.GET("/env", func(c *gin.Context) { c.JSON(200, os.Environ()) })
+	debug.GET("/config", func(c *gin.Context) { c.JSON(200, viper.AllSettings()) })
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
-	if err := r.Run(); err != nil {
+	if err := r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))); err != nil {
 		panic(err)
 	}
 }

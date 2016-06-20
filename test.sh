@@ -26,4 +26,4 @@ echo "-----> Uncompressing...";
 tar zxf "${base_dir}/project-domino.tgz";
 
 echo "-----> Running...";
-GIN_MODE=release PORT=3000 ./project-domino-server;
+PORT=3000 ./project-domino-server;
