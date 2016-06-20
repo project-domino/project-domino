@@ -10,7 +10,7 @@ command -v realpath >/dev/null 2>&1 || function realpath() {
 };
 base_dir="$(dirname $(realpath ${0}))";
 
-if [[ "$(pwd)" -eq "${base_dir}" ]]; then
+if [[ "$(pwd)" = "${base_dir}" ]]; then
 	echo "-----> Currently in repo root. Moving to test subdir...";
 	if [[ -d test ]]; then
 		rm -r test;
