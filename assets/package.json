@@ -10,7 +10,7 @@
   "description": "The web client for Project Domino.",
   "dependencies": {
     "jquery": "^3.0.0",
-    "selectivity": "^2.1.0",
+    "select2": "^4.0.3",
     "stacktrace-js": "^1.2.0",
     "zxcvbn": "^4.3.0"
   },

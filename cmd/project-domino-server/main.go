@@ -69,42 +69,43 @@ func main() {
 	r.POST("/register", api.RegisterHandler)
 	r.POST("/logout", api.LogoutHandler)
 
-	// Home Route
+	// View Routes
 	r.GET("/", handlers.Simple("home.html"))
+	r.GET("/u/:username", handlers.TODO)
+	r.GET("/uni/:uni-short-name", handlers.TODO)
+	r.GET("/search", handlers.TODO)
 
-	// Collection Routes - names for URL readibility
-	// r.GET("/collection/:collectionID", views.CollectionHandler)
-	// r.GET("/collection/:collectionID/:collectionName", views.CollectionHandler)
-	// r.GET("/collection/:collectionID/note/:noteID", views.CollectionNoteHandler)
-	// r.GET("/collection/:collectionID/note/:noteID/:noteName", views.CollectionNoteHandler)
-
-	// Note Routes
 	r.GET("/note/:note-id", handlers.TODO)
 	r.GET("/note/:note-id/:note-name", handlers.TODO)
 
-	// User Routes
-	r.GET("/user/:username", handlers.TODO)
+	r.GET("/collection/:collectionID", handlers.TODO)
+	r.GET("/collection/:collectionID/note/:noteID", handlers.TODO)
+	r.GET("/collection/:collectionID/note/:noteID/:noteName", handlers.TODO)
 
-	// University Route
-	r.GET("/uni/:uni-short-name", handlers.TODO)
-
-	// Search Route
-	r.GET("/search", handlers.TODO)
-
-	// Writer-panel routes
 	r.GET("/writer-panel",
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("writer-panel.html"))
-	r.GET("writer-panel/new/note",
+	r.GET("/writer-panel/note",
 		middleware.RequireAuth,
 		middleware.RequireUserType(models.Writer, models.Admin),
 		handlers.Simple("new-note.html"))
-	// r.POST("/new/note, api.NewNoteHandler)
-	// r.PUT("/new/note, api.EditNoteHandler)
-	// r.GET("/new/collection, views.NewCollectionHandler)
-	// r.POST("/new/collection, api.NewCollectionHandler)
-	// r.PUT("/new/collection, api.EditCollectionHandler)
+	r.GET("/writer-panel/tag",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin),
+		handlers.Simple("new-tag.html"))
+
+	// API
+	r.GET("/search/tag", api.SearchTags)
+
+	r.POST("/note",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin),
+		api.NewNote)
+	r.PUT("/note", handlers.TODO)
+
+	r.POST("/collection", handlers.TODO)
+	r.PUT("/collection", handlers.TODO)
 
 	// Debug Routes
 	debug := r.Group("/debug")

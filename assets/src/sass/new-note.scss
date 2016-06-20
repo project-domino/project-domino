@@ -1,13 +1,21 @@
 @import "variables.scss";
 
+@import "editor.scss";
+
 .form-input {
 	width: 100%;
 }
 
 .new-note-editor {
+	border: 1px solid $input-border-color;
 	box-sizing: border-box;
-	min-height: 300px;
+	min-height: 500px;
 	width: 100%;
+}
+
+.toolbar {
+	border: 1px solid $input-border-color;
+	border-bottom: none;
 }
 
 .tag-selector {
@@ -16,4 +24,13 @@
 
 .save-draft-btn {
 	margin-right: 10px;
+}
+
+.tag-selector-container {
+	margin-bottom: 20px;
+	width: 100%;
+
+	.tag-selector {
+		width: 100%;
+	}
 }

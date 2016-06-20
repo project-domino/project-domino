@@ -96,7 +96,11 @@ class LocalStorageSaveManager extends SaveManager {
 	load() {
 		return Promise.resolve(this.key)
 			.then(key => localStorage.getItem(key))
-			.then(data => new Note(data || []));
+			.then(data => new Note(data || [
+				new ParagraphNode([
+					new TextNode("Type here..."),
+				]),
+			]));
 	}
 
 	/**

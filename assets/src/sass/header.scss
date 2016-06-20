@@ -30,7 +30,7 @@
 	.logo {
 		display: inline;
 		margin: 0;
-		width: 170px;
+		padding-right: 50px;
 
 		.navbar-title {
 			color: #000000;
@@ -114,9 +114,9 @@
 
 	.search-container {
 		display: flex;
+		flex-grow: 0.4;
 		height: 30px;
 		position: relative;
-		width: 45%;
 
 		input {
 			border: 1px solid $input-border-color;
@@ -134,11 +134,11 @@
 			border: 1px solid $input-border-color;
 			box-sizing: border-box;
 			cursor: pointer;
-			flex-grow: 1;
 			height: 30px;
 			margin: 0;
 			max-width: 80px;
 			padding: 0;
+			width: 70px;
 
 			&:active { background-color: darken($border-color, 5%); }
 		}

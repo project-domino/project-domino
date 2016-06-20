@@ -1,0 +1,27 @@
+extends ./writer-panel.pug
+
+block writer-panel-head
+	title New Note
+	link(rel="stylesheet", href="/assets/new-tag.css")
+
+block writer-panel-body
+	div.panel.new-note-container
+		h2.panel-heading Create a new tag
+		h4.panel-field-header Note:
+		p.panel-paragraph
+			| Before creating a tag, first check if a similar tag exists.
+			| New tags which are rarely used will be removed.
+		h4.panel-field-header Type your tags name below:
+		div.tag-name-container
+			input.new-tag-name-field(placeholder="Enter tag name...")
+			button.new-btn
+				span.fa.fa-plus
+		h4.panel-field-header Similar Tags:
+		table.tag-search-table.hidden
+			th
+				td Name
+				td Description
+		span.result-notification Please enter your tag name...
+
+block scripts
+	script(src="/assets/new-tag.js")

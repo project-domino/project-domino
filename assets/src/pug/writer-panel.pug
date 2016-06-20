@@ -8,9 +8,10 @@ block head
 block body
 	div.writer-sidebar.panel
 		h4.sidebar-header Create
-		a.sidebar-link(href="/writer-panel/new/note") New Note
-		a.sidebar-link(href="/writer-panel/new/collection") New Collection
-		a.sidebar-link(href="/writer-panel/new/textbook") New Textbook
+		a.sidebar-link(href="/writer-panel/note") New Note
+		a.sidebar-link(href="/writer-panel/collection") New Collection
+		a.sidebar-link(href="/writer-panel/textbook") New Textbook
+		a.sidebar-link(href="/writer-panel/tag") New Tag
 		div.sidebar-section-container
 			h4.sidebar-header My Notes
 			| {{range .user.Notes}}

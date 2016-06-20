@@ -36,15 +36,17 @@ module.exports = (file, out, dev = false) => {
 	if(dev) {
 		rollupConfig.external = [
 			"jquery",
-			"selectivity",
+			"quill",
+			"select2",
 			"stacktrace-js",
 			"zxcvbn",
 		];
 		rollupConfig.globals = {
 			"jquery":        "jQuery",
-			"selectivity":   "TODO1",
+			"quill":         "Quill",
+			"select2":       "$.select2",
 			"stacktrace-js": "StackTrace",
-			"zxcvbn":        "TODO2",
+			"zxcvbn":        "zxcvbn",
 		};
 	}
 
@@ -52,7 +54,7 @@ module.exports = (file, out, dev = false) => {
 	if(dev) {
 		inner.push(addsrc.prepend([
 			"node_modules/jquery/dist/jquery.min.js",
-			"node_modules/selectivity/dist/selectivity-full.min.js",
+			"node_modules/select2/dist/js/select2.js",
 			"node_modules/stacktrace-js/stacktrace.js",
 			"node_modules/zxcvbn/dist/zxcvbn.js",
 		]));

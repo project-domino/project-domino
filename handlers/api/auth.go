@@ -21,16 +21,9 @@ func LoginHandler(c *gin.Context) {
 	email := c.PostForm("email")
 	password := c.PostForm("password")
 
-	// TODO Uhhhh... maybe make it a lot more clear to the user that they can't
-	// use both? I put in both...
-
 	// If there are blank fields, return bad request
 	if password == "" || (userName == "" && email == "") {
 		panic(errors.New("Missing Parameters"))
-	}
-	// If both userName and email are filled in, return bad request
-	if userName != "" && email != "" {
-		panic(errors.New("Both username and email cannot be used."))
 	}
 
 	// Acquire DB handle from request context.
