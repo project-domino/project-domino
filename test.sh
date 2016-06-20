@@ -26,4 +26,4 @@ echo "-----> Uncompressing...";
 tar zxf "${base_dir}/project-domino.tgz";
 
 echo "-----> Running...";
-HTTP_DEBUG=false PORT=3000 ./project-domino-server;
+PORT=3000 ./project-domino-server;
