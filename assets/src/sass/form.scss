@@ -3,9 +3,11 @@
 // Styles for form elements
 .form-input {
 	border: 1px solid $input-border-color;
+	box-sizing: border-box;
 	display: block;
-	font-size: 0.8rem;
-	height: 25px;
+	font-size: 1rem;
+	height: 30px;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	padding-left: 5px;
 }

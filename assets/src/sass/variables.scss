@@ -4,9 +4,15 @@ $foreground-color: #ffffff;
 $background-color: #fafafa;
 $border-color: #e8e8e8;
 
-$primary-color: #167ac6;
+$primary-color: #448aff;
 
 $input-border-color: #d2d2d2;
 
 $sidebar-btn-color: #b3b3b3;
 $sidebar-header-color: #000000;
+
+$lighter: darken(#ffffff, 5%);
+$light: darken(#ffffff, 10%);
+$gray: darken(#ffffff, 20%);
+$dark: darken(#ffffff, 30%);
+$darker: darken(#ffffff, 40%);
