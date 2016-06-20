@@ -4,6 +4,7 @@ import (
 	// Standard Library
 	"fmt"
 	"log"
+	"os"
 
 	// Extended Standard Library
 	"golang.org/x/tools/godoc/vfs"
@@ -118,6 +119,7 @@ func main() {
 	// Debug Routes
 	debug := r.Group("/debug")
 	debug.GET("/editor", handlers.Simple("editor.html"))
+	debug.GET("/env", func(c *gin.Context) { c.JSON(200, os.Environ()) })
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
