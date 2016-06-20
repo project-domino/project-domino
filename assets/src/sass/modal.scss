@@ -4,14 +4,14 @@
 
 .modal {
 	background-color: rgba(0,0,0,0.4);
-    display: none;
+	display: none;
 	height: 100%;
 	left: 0;
 	overflow: auto;
-    position: fixed;
+	position: fixed;
 	padding-top: 100px;
-    top: 0;
-    width: 100%;
+	top: 0;
+	width: 100%;
 	z-index: 99;
 }
 
@@ -22,16 +22,16 @@
 	border: 1px solid $border-color;
 	margin: auto;
 	padding: 20px;
-    position: relative;
+	position: relative;
 	width: 70%;
 }
 
 @keyframes modal-animate-top {
-    from {
+	from {
 		top:-300px;
 		opacity:0;
 	}
-    to {
+	to {
 		top:0;
 		opacity:1
 	}
@@ -39,7 +39,7 @@
 
 .modal-close {
 	cursor: pointer;
-    font-size: 28px;
+	font-size: 28px;
 	position: absolute;
 	top: 5px;
 	right: 10px;
@@ -48,14 +48,14 @@
 @import "variables.scss";
 
 .alert {
-    display: none;
+	display: none;
 	left: 0;
 	overflow: auto;
 	pointer-events: none;
-    position: fixed;
+	position: fixed;
 	padding-top: 0;
-    top: 0;
-    width: 100%;
+	top: 0;
+	width: 100%;
 	z-index: 100;
 }
 
@@ -67,7 +67,7 @@
 	color: #ffffff;
 	margin: auto;
 	padding: 10px;
-    position: relative;
+	position: relative;
 	text-align: center;
 	width: 50%;
 	height: 20px;
@@ -89,11 +89,11 @@
 }
 
 @keyframes alert-animate-top {
-    from {
+	from {
 		top:-20px;
 		opacity:0;
 	}
-    to {
+	to {
 		top:0;
 		opacity:1
 	}
