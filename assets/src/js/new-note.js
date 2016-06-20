@@ -1,5 +1,6 @@
 import $ from "jquery";
 import "select2";
+import Quill from "quill";
 
 $(() => {
 	window.quill = new Quill("#editor", { // eslint-disable-line no-undef

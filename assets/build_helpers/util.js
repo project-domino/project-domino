@@ -15,8 +15,3 @@ gulp.task("watch", () => {
 		gulp.start("default");
 	});
 });
-gulp.task("watch-dev", () => {
-	watch(watchTargets, () => {
-		gulp.start("default-dev");
-	});
-});

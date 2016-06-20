@@ -32,18 +32,4 @@ module.exports = files => {
 			.pipe(zip("assets.zip"))
 			.pipe(gulp.dest("dist/"));
 	});
-
-	gulp.task("js-dev", _(files.js).map((file, name) => {
-		const targetName = `js-dev:${name}`;
-		gulp.task(targetName, () => {
-			return helpers.js(file, name, true)
-				.pipe(gulp.dest("dist"));
-		});
-		return targetName;
-	}).value());
-	gulp.task("default-dev", targets.map(name => {
-		if(name === "js")
-			return "js-dev";
-		return name;
-	}));
 };

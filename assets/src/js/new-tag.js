@@ -1,4 +1,5 @@
 import $ from "jquery";
+import _ from "lodash";
 import getModal from "../js/modal.js";
 
 const modal = getModal();
@@ -8,7 +9,7 @@ var tagResultHandler = function (data) {
 };
 
 $(() => {
-	$(".new-tag-name-field").on("keyup", () => {
+	$(".new-tag-name-field").on("keyup", _.debounce(() => {
 		$.ajax({
 			type: "GET",
 			url:  "/search/tag",
@@ -20,5 +21,5 @@ $(() => {
 			console.log(err);
 			modal.alert(err.responseText, 3000);
 		});
-	});
+	}, 250));
 });
