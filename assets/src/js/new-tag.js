@@ -4,7 +4,6 @@ import getModal from "../js/modal.js";
 const modal = getModal();
 
 var tagResultHandler = function (data) {
-	// TODO - Fill result table with results
 	console.log(data);
 };
 

@@ -1,8 +1,9 @@
 import $ from "jquery";
 import "select2";
+import Quill from "quill";
 
 $(() => {
-	var quill = new Quill("#editor", {
+	var quill = new Quill("#editor", { // eslint-disable-line no-unused-vars
 		modules: {
 			"toolbar": {
 				container: "#editor-toolbar",
