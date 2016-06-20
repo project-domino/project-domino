@@ -112,16 +112,15 @@ func main() {
 			handlers.Simple("new-tag.html"))
 
 	// API
-	r.GET("/search/tag", api.SearchTags)
-
-	r.POST("/note",
-		middleware.RequireAuth,
-		middleware.RequireUserType(models.Writer, models.Admin),
-		api.NewNote)
-	r.PUT("/note", handlers.TODO)
-
-	r.POST("/collection", handlers.TODO)
-	r.PUT("/collection", handlers.TODO)
+	r.Group("/api/v1").
+		GET("/search/tag", api.SearchTags).
+		POST("/note",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewNote).
+		PUT("/note", handlers.TODO).
+		POST("/collection", handlers.TODO).
+		PUT("/collection", handlers.TODO)
 
 	// Debug Routes
 	debug := r.Group("/debug")
