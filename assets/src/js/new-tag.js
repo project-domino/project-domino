@@ -12,7 +12,7 @@ $(() => {
 	$(".new-tag-name-field").on("keyup", _.debounce(() => {
 		$.ajax({
 			type: "GET",
-			url:  "/search/tag",
+			url:  "/api/v1/search/tag",
 			data: {
 				q: $(".new-tag-name-field").val(),
 			},

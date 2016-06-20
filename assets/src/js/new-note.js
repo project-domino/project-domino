@@ -14,7 +14,7 @@ $(() => {
 	});
 	$(".tag-selector").select2({
 		ajax: {
-			url:         "/search/tag",
+			url:         "/api/v1/search/tag",
 			dataType:    "json",
 			quietMillis: 250,
 			cache:       true,
