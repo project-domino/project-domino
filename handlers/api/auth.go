@@ -104,7 +104,7 @@ func RegisterHandler(c *gin.Context) {
 	}
 
 	// Add user to database.
-	db.Create(user)
+	db.Create(&user)
 
 	// Set an auth cookie for the user
 	// TODO unlegacy
