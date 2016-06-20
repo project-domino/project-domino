@@ -12,9 +12,9 @@ func init() {
 	// Set variable defaults.
 	viper.SetDefault("assets.dev", false)
 	viper.SetDefault("assets.path", "assets.zip")
-	viper.SetDefault("db.addr", "domino.db")
-	viper.SetDefault("db.type", "sqlite3")
-	viper.SetDefault("db.debug", false)
+	viper.SetDefault("database.debug", false)
+	viper.SetDefault("database.type", "sqlite3")
+	viper.SetDefault("database.url", "domino.db")
 	viper.SetDefault("http.debug", false)
 	viper.SetDefault("http.port", 80)
 

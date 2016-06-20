@@ -2,10 +2,10 @@
 dev = false
 path = "assets.zip"
 
-[db]
-addr = "domino.db"
-type = "sqlite3"
+[database]
 debug = false
+type = "sqlite3"
+url = "domino.db"
 
 [http]
 debug = false

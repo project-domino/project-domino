@@ -31,12 +31,15 @@ import (
 
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(viper.GetString("db.type"), viper.GetString("db.addr"))
+	db, err := gorm.Open(
+		viper.GetString("database.type"),
+		viper.GetString("database.url"),
+	)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-	db.LogMode(viper.GetBool("db.debug"))
+	db.LogMode(viper.GetBool("database.debug"))
 	SetupDatabase(db)
 
 	// Enable/disable gin's debug mode.
@@ -120,6 +123,7 @@ func main() {
 	debug := r.Group("/debug")
 	debug.GET("/editor", handlers.Simple("editor.html"))
 	debug.GET("/env", func(c *gin.Context) { c.JSON(200, os.Environ()) })
+	debug.GET("/config", func(c *gin.Context) { c.JSON(viper.AllSettings()) })
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
