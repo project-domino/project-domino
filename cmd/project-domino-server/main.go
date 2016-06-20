@@ -88,25 +88,28 @@ func main() {
 	r.GET("/uni/:uni-short-name", handlers.TODO)
 	r.GET("/search", handlers.TODO)
 
-	r.GET("/note/:note-id", handlers.TODO)
-	r.GET("/note/:note-id/:note-name", handlers.TODO)
+	r.Group("/note").
+		GET("/:note-id", handlers.TODO).
+		GET("/:note-id/:note-name", handlers.TODO)
 
-	r.GET("/collection/:collectionID", handlers.TODO)
-	r.GET("/collection/:collectionID/note/:noteID", handlers.TODO)
-	r.GET("/collection/:collectionID/note/:noteID/:noteName", handlers.TODO)
+	r.Group("/collection").
+		GET("/:collectionID", handlers.TODO).
+		GET("/:collectionID/note/:noteID", handlers.TODO).
+		GET("/:collectionID/note/:noteID/:noteName", handlers.TODO)
 
-	r.GET("/writer-panel",
-		middleware.RequireAuth,
-		middleware.RequireUserType(models.Writer, models.Admin),
-		handlers.Simple("writer-panel.html"))
-	r.GET("/writer-panel/note",
-		middleware.RequireAuth,
-		middleware.RequireUserType(models.Writer, models.Admin),
-		handlers.Simple("new-note.html"))
-	r.GET("/writer-panel/tag",
-		middleware.RequireAuth,
-		middleware.RequireUserType(models.Writer, models.Admin),
-		handlers.Simple("new-tag.html"))
+	r.Group("/writer-panel").
+		GET("/",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			handlers.Simple("writer-panel.html")).
+		GET("/note",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			handlers.Simple("new-note.html")).
+		GET("/tag",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			handlers.Simple("new-tag.html"))
 
 	// API
 	r.GET("/search/tag", api.SearchTags)
