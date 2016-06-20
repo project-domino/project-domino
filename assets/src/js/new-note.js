@@ -2,7 +2,7 @@ import $ from "jquery";
 import "select2";
 
 $(() => {
-	window.quill = new Quill("#editor", { // eslint-disable-line no-unused-vars
+	window.quill = new Quill("#editor", { // eslint-disable-line no-undef
 		modules: {
 			"toolbar": {
 				container: "#editor-toolbar",
