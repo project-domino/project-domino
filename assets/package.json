@@ -50,7 +50,7 @@
     "url": "https://github.com/project-domino/project-domino-client.git"
   },
   "scripts": {
-    "postinstall": "npm test && gulp",
+    "postinstall": "gulp",
     "test": "xo"
   },
   "version": "0.0.0",
