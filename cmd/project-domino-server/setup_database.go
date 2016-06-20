@@ -7,7 +7,7 @@ import (
 
 // SetupDatabase initializes the database with empty tables of all the needed
 // types.
-func SetupDatabase(db *gorm.DB) {
+func SetupDatabase(db *gorm.DB) error {
 	db.CreateTable(&models.User{})
 	db.CreateTable(&models.AuthToken{})
 	db.CreateTable(&models.Comment{})
@@ -16,4 +16,5 @@ func SetupDatabase(db *gorm.DB) {
 	db.CreateTable(&models.Textbook{})
 	db.CreateTable(&models.University{})
 	db.CreateTable(&models.Tag{})
+	return db.Error
 }

@@ -3,15 +3,12 @@ package main
 import (
 	// Standard Library
 	"fmt"
-	"log"
 	"os"
 
 	// Extended Standard Library
-	"golang.org/x/tools/godoc/vfs"
-	"golang.org/x/tools/godoc/vfs/httpfs"
 
 	// Internal Dependencies
-	"github.com/project-domino/project-domino/common"
+
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/middleware"
@@ -35,12 +32,10 @@ func main() {
 		viper.GetString("database.type"),
 		viper.GetString("database.url"),
 	)
-	if err != nil {
-		panic(err)
-	}
+	Must(err)
 	defer db.Close()
 	db.LogMode(viper.GetBool("database.debug"))
-	SetupDatabase(db)
+	Must(SetupDatabase(db))
 
 	// Enable/disable gin's debug mode.
 	if viper.GetBool("http.debug") {
@@ -49,30 +44,13 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// Create router.
+	// Create and set up router.
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	r.Use(middleware.DatabaseMiddleware(db))
 	r.Use(middleware.LoginMiddleware)
-
-	// Load assets and templates.
-	// TODO: There's a better way...
-	var assetFS vfs.FileSystem
-	if viper.GetBool("assets.dev") {
-		assetFS = vfs.OS("assets/dist")
-	} else {
-		var err error
-		assetFS, err = NewZipFileSystem(viper.GetString("assets.path"))
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	if err := common.LoadTemplates(assetFS); err != nil {
-		log.Fatal(err)
-	}
-	r.SetHTMLTemplate(common.Views)
-	r.StaticFS("/assets/", httpfs.New(assetFS))
+	Must(SetupAssets(r))
 
 	// Authentication Routes
 	r.GET("/login", handlers.Simple("login.html"))
@@ -129,7 +107,5 @@ func main() {
 	debug.GET("/new/note", handlers.Simple("new-note.html"))
 
 	// Start serving.
-	if err := r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))); err != nil {
-		panic(err)
-	}
+	Must(r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))))
 }
