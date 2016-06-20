@@ -23,19 +23,35 @@
 	}
 
 	button {
-		background-color: $primary-color;
-		border: 1px solid darken($primary-color, 5%);
 		box-sizing: border-box;
-		color: #ffffff;
 		cursor: pointer;
 		height: 100%;
 		margin: 0;
 		max-width: 80px;
 		padding: 0;
 		width: 70px;
-
-		&:active { background-color: darken($primary-color, 10%); }
 	}
+}
+
+.tag-search-table {
+	text-align: left;
+	width: 100%;
+}
+
+.description-header { margin-bottom: 10px; }
+
+.new-tag-description-field {
+	box-sizing: border-box;
+	min-height: 60px;
+	width: 100%;
+}
+
+.create-btn-container {
+	height: 30px;
+	margin: 10px 0;
+	width:100%;
+
+	.new-tag-create-btn { float: right; }
 }
 
 .result-notification { color: $darker; }

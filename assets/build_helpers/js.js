@@ -29,5 +29,4 @@ module.exports = (file, out) => gulp.src(file, {read: false})
 	}))
 	.pipe(uglify())
 	.pipe(rename(`${out}.js`))
-	.pipe(sourcemaps.write())
-	.pipe(gulp.dest("dist/assets/"));
+	.pipe(sourcemaps.write());

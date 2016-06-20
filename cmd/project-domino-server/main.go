@@ -92,6 +92,10 @@ func main() {
 			middleware.RequireAuth,
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewNote).
+		POST("/tag",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewTag).
 		PUT("/note", handlers.TODO).
 		POST("/collection", handlers.TODO).
 		PUT("/collection", handlers.TODO)

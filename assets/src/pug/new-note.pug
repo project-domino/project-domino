@@ -3,7 +3,7 @@ extends ./writer-panel.pug
 block writer-panel-head
 	title New Note
 	link(rel="stylesheet", href="/assets/select2.css")
-	link(rel="stylesheet", href="/assets/quill.css")
+	link(rel="stylesheet", href="//cdn.quilljs.com/0.20.1/quill.snow.css")
 	link(rel="stylesheet", href="/assets/new-note.css")
 
 block writer-panel-body
@@ -48,4 +48,5 @@ block writer-panel-body
 			button.form-btn.save-draft-btn Save Draft
 
 block scripts
+	script(src="//cdn.quilljs.com/0.20.1/quill.js")
 	script(src="/assets/new-note.js")

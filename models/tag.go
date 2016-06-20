@@ -9,6 +9,9 @@ type Tag struct {
 	Name        string
 	Description string
 
+	AuthorID uint
+	Author   User
+
 	Collections []Collection `gorm:"many2many:collection_tag;"`
 	Notes       []Note       `gorm:"many2many:note_tag;"`
 }

@@ -21,7 +21,7 @@ function watchServer() {
 		-exclude-dir node_modules \
 		-exclude-dir .git \
 		-graceful-kill \
-		-pattern ".+(\\.c)|(\\.go)|(\\.pug)$";
+		-pattern "(.+\.go|.+\.c|.+\.pug)$";
 };
 
 # Ensure that a port is defined.
