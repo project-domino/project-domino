@@ -10,13 +10,19 @@ import (
 
 func init() {
 	// Set variable defaults.
-	viper.SetDefault("assets.dev", false)
-	viper.SetDefault("assets.path", "assets.zip")
-	viper.SetDefault("database.debug", false)
-	viper.SetDefault("database.type", "sqlite3")
-	viper.SetDefault("database.url", "domino.db")
-	viper.SetDefault("http.debug", false)
-	viper.SetDefault("http.port", 80)
+	viper.SetDefault("assets", map[string]interface{}{
+		"dev":  false,
+		"path": "assets.zip",
+	})
+	viper.SetDefault("database", map[string]interface{}{
+		"debug": false,
+		"type":  "sqlite3",
+		"url":   "domino.db",
+	})
+	viper.SetDefault("http", map[string]interface{}{
+		"debug": false,
+		"port":  80,
+	})
 
 	// Setup configuration files.
 	viper.SetConfigName("project-domino")
