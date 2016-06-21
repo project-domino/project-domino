@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -10,9 +11,10 @@ import (
 
 // NewNoteRequest holds the request object for NewNote
 type NewNoteRequest struct {
-	Title string `json:"title" binding:"required"`
-	Body  string `json:"body" binding:"required"`
-	Tags  []uint `json:"tags" binding:"required"`
+	Body    string `json:"body" binding:"required"`
+	Publish bool   `json:"publish"`
+	Tags    []uint `json:"tags" binding:"required"`
+	Title   string `json:"title" binding:"required"`
 }
 
 // NewNote creates a note with a specified values
@@ -22,14 +24,14 @@ func NewNote(c *gin.Context) {
 
 	// Get request variables
 	var requestVars NewNoteRequest
-	if c.BindJSON(&requestVars) != nil {
-		panic(errors.New("Invalid Parameters"))
+	if err := c.BindJSON(&requestVars); err != nil {
+		panic(err)
 	}
 
 	// TODO 10 seems like a good number for max tags?
 	// Especially if some tags depend on others.
 	if len(requestVars.Tags) > 10 {
-		panic(errors.New("Invalid Parameters"))
+		panic(errors.New("To many tags"))
 	}
 
 	// Remove duplicate tags
@@ -47,13 +49,17 @@ func NewNote(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 
 	// Create and save note
-	db.Create(&models.Note{
+	newNote := models.Note{
 		Title:     requestVars.Title,
 		Body:      requestVars.Body,
 		Author:    user,
 		Published: false,
 		Tags:      tags,
-	})
+	}
+	db.Create(&newNote)
+
+	// Return note in JSON
+	c.JSON(http.StatusOK, newNote)
 }
 
 func contains(set []uint, element uint) bool {
