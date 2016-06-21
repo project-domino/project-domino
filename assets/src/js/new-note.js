@@ -14,23 +14,28 @@ $(() => {
 	});
 	$(".tag-selector").select2({
 		ajax: {
-			url:         "/api/v1/search/tag",
-			dataType:    "json",
-			quietMillis: 250,
-			cache:       true,
-			width:       "100%",
-			data:        function (params) {
+			url:      "/api/v1/search/tag",
+			dataType: "json",
+			delay:    250,
+			cache:    true,
+			width:    "100%",
+			data:     function (params) {
 				return {
 					q: params.term,
 				};
 			},
-			results: function (data) {
-				return data.map(function (e) {
+			processResults: function (data) {
+				if(data) {
 					return {
-						id:  e.id,
-						tag: e.Name + " - " + e.Description,
+						results: data.map(function (e) {
+							return {
+								id:   e.ID,
+								text: e.Name + " - " + e.Description,
+							};
+						}),
 					};
-				});
+				}
+				return {results: []};
 			},
 		},
 		placeholder: "Type to search for tags...",
