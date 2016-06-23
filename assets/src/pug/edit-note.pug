@@ -18,7 +18,7 @@ block writer-panel-body
 			div.tag-selector-container
 				select.tag-selector(multiple="multiple", style="width: 100%;")
 					| {{range .note.Tags}}
-					option(value="{{.ID}}") {{.Name}} - {{.Description}}
+					option(value="{{.ID}}") {{.Name}}
 					| {{end}}
 		div.panel-footer
 			| {{if .note.Published}}{{else}}

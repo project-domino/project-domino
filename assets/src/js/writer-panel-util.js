@@ -41,8 +41,9 @@ class WriterPanelUtil {
 						return {
 							results: data.map(e => {
 								return {
-									id:   e.ID,
-									text: e.Name + " - " + e.Description,
+									id:          e.ID,
+									name:        e.Name,
+									description: e.Description,
 								};
 							}),
 						};
@@ -50,8 +51,16 @@ class WriterPanelUtil {
 					return {results: []};
 				},
 			},
-			placeholder: "Type to search for tags...",
-			allowClear:  true,
+			placeholder:    "Type to search for tags...",
+			allowClear:     true,
+			templateResult: data => {
+				return data.name + " - " + data.description;
+			},
+			templateSelection: data => {
+				if(!data.text)
+					return data.name;
+				return data.text;
+			},
 		});
 	}
 }

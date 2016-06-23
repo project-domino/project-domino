@@ -86,6 +86,9 @@ func EditNote(c *gin.Context) {
 		panic(errors.New("You are not the owner of this note"))
 	}
 
+	// Clear current note-tag relationships
+	db.Model(&note).Association("Tags").Clear()
+
 	// Save note
 	note.Title = sanitizedRequest.Title
 	note.Body = sanitizedRequest.Body
