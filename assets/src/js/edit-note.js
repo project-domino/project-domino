@@ -12,9 +12,11 @@ $(() => {
 	// Set up quill and tag selector
 	util.initQuill();
 	util.initTagSelector();
-	$(".tag-selector").val(noteJSON.Tags.map(e => {
-		return e.ID;
-	})).trigger("change");
+	if(noteJSON.Tags) {
+		$(".tag-selector").val(noteJSON.Tags.map(e => {
+			return e.ID;
+		})).trigger("change");
+	}
 	window.quill.setHTML(noteJSON.Body);
 
 	// Wire up buttons
@@ -23,13 +25,13 @@ $(() => {
 			type: "PUT",
 			url:  "/api/v1/note/" + noteJSON.ID,
 			data: JSON.stringify({
-				title: $(".new-note-title").val(),
-				body:  window.quill.getHTML(),
-				tags:  $(".tag-selector").val().map(e => {return parseFloat(e);}),
+				title:   $(".new-note-title").val(),
+				body:    window.quill.getHTML(),
+				tags:    $(".tag-selector").val().map(e => {return parseFloat(e);}),
+				publish: noteJSON.Published,
 			}),
 			dataType: "json",
-		}).then(data => {
-			console.log(data);
+		}).then(() => {
 			modal.alert("Note Saved", 3000);
 		}).fail(err => {
 			console.log(err);
@@ -47,9 +49,8 @@ $(() => {
 				publish: true,
 			}),
 			dataType: "json",
-		}).then(data => {
-			console.log(data);
-			modal.alert("Note Published", 3000);
+		}).then(() => {
+			window.location.reload();
 		}).fail(err => {
 			console.log(err);
 			modal.alert(err.responseText, 3000);

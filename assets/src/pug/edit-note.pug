@@ -10,6 +10,14 @@ block writer-panel-body
 	div.panel.new-note-container
 		h2.panel-heading Edit Note
 		div.panel-body
+			h4.panel-field-header Status: {{if.note.Published}}Published{{else}}Draft{{end}}
+			p
+				| {{if.note.Published}}
+				| This note is public and can be seen by everyone.
+				| {{else}}
+				| This note is a draft and can only be seen by you.
+				| {{end}}
+			div.panel-seperator
 			h4.panel-field-header Title
 			input.new-note-title.form-input(placeholder="Enter note title...", value="{{.note.Title}}")
 			h4.panel-field-header Content

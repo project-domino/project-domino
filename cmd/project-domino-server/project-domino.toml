@@ -1,12 +1,12 @@
 [assets]
-dev = true
+dev = false
 path = "assets.zip"
 
 [database]
-debug = true
+debug = false
 type = "sqlite3"
 url = "domino.db"
 
 [http]
-debug = true
+debug = false
 port = 12345
