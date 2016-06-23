@@ -8,6 +8,7 @@ import (
 	// Internal Dependencies
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
+	"github.com/project-domino/project-domino/handlers/view"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
 
@@ -52,9 +53,9 @@ func main() {
 	// Authentication Routes
 	r.GET("/login", handlers.Simple("login.html"))
 	r.GET("/register", handlers.Simple("register.html"))
-	r.POST("/login", api.LoginHandler)
-	r.POST("/register", api.RegisterHandler)
-	r.POST("/logout", api.LogoutHandler)
+	r.POST("/login", api.Login)
+	r.POST("/register", api.Register)
+	r.POST("/logout", api.Logout)
 
 	// View Routes
 	r.GET("/", handlers.Simple("home.html"))
@@ -71,19 +72,13 @@ func main() {
 		GET("/:collectionID/note/:noteID", handlers.TODO).
 		GET("/:collectionID/note/:noteID/:noteName", handlers.TODO)
 
-	r.Group("/writer-panel").
-		GET("/",
-			middleware.RequireAuth,
-			middleware.RequireUserType(models.Writer, models.Admin),
-			handlers.Simple("writer-panel.html")).
-		GET("/note",
-			middleware.RequireAuth,
-			middleware.RequireUserType(models.Writer, models.Admin),
-			handlers.Simple("new-note.html")).
-		GET("/tag",
-			middleware.RequireAuth,
-			middleware.RequireUserType(models.Writer, models.Admin),
-			handlers.Simple("new-tag.html"))
+	r.Group("/writer-panel",
+		middleware.RequireAuth,
+		middleware.RequireUserType(models.Writer, models.Admin)).
+		GET("/", view.WriterPanelSimple("writer-panel.html")).
+		GET("/note", view.WriterPanelSimple("new-note.html")).
+		GET("/note/:noteID/edit", view.EditNote).
+		GET("/tag", view.WriterPanelSimple("new-tag.html"))
 
 	// API
 	r.Group("/api/v1").
@@ -92,11 +87,14 @@ func main() {
 			middleware.RequireAuth,
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewNote).
+		PUT("/note/:noteID",
+			middleware.RequireAuth,
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.EditNote).
 		POST("/tag",
 			middleware.RequireAuth,
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewTag).
-		PUT("/note", handlers.TODO).
 		POST("/collection", handlers.TODO).
 		PUT("/collection", handlers.TODO)
 

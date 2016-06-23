@@ -1,50 +1,14 @@
 import $ from "jquery";
-import "select2";
-import getModal from "../js/modal.js";
+import WriterPanelUtil from "./writer-panel-util.js";
+import getModal from "./modal.js";
 
+const util = new WriterPanelUtil();
 const modal = getModal();
 
 $(() => {
-	window.quill = new Quill("#editor", { // eslint-disable-line no-undef
-		modules: {
-			"toolbar": {
-				container: "#editor-toolbar",
-			},
-			"image-tooltip": true,
-			"link-tooltip":  true,
-		},
-		theme: "snow",
-	});
-	$(".tag-selector").select2({
-		ajax: {
-			url:      "/api/v1/search/tag",
-			dataType: "json",
-			delay:    250,
-			cache:    true,
-			width:    "100%",
-			data:     function (params) {
-				return {
-					q: params.term,
-				};
-			},
-			processResults: function (data) {
-				if(data) {
-					return {
-						results: data.map(function (e) {
-							return {
-								id:   e.ID,
-								text: e.Name + " - " + e.Description,
-							};
-						}),
-					};
-				}
-				return {results: []};
-			},
-		},
-		placeholder: "Type to search for tags...",
-		allowClear:  true,
-	});
-	$(".save-draft-btn").click(() => {
+	util.initQuill();
+	util.initTagSelector();
+	$(".save-btn").click(() => {
 		$.ajax({
 			type: "POST",
 			url:  "/api/v1/note",

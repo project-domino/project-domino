@@ -13,9 +13,9 @@ import (
 	"github.com/project-domino/project-domino/models"
 )
 
-// LoginHandler handles requests to log a user in.
+// Login handles requests to log a user in.
 // If credentials are valid, sets an auth cookie.
-func LoginHandler(c *gin.Context) {
+func Login(c *gin.Context) {
 	// Get needed variables from request.
 	userName := c.PostForm("userName")
 	email := c.PostForm("email")
@@ -53,16 +53,16 @@ func LoginHandler(c *gin.Context) {
 	AuthCookie(c.Writer, c.Request, user, db)
 }
 
-// LogoutHandler handles requests to log a user out.
-func LogoutHandler(c *gin.Context) {
+// Logout handles requests to log a user out.
+func Logout(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:   "auth",
 		MaxAge: -1,
 	})
 }
 
-// RegisterHandler handles requests to handle a new user.
-func RegisterHandler(c *gin.Context) {
+// Register handles requests to handle a new user.
+func Register(c *gin.Context) {
 	// Get needed variables from request.
 	email := c.PostForm("email")
 	userName := c.PostForm("userName")

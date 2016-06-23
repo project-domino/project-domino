@@ -6,6 +6,8 @@ import "github.com/gin-gonic/gin"
 var KeysList = []string{
 	"loggedIn",
 	"user",
+	"note",
+	"noteJSON",
 }
 
 // Keys returns the variables which have been set via gin.Context.Set. This is

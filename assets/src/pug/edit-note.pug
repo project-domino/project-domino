@@ -1,26 +1,33 @@
 extends ./writer-panel.pug
 
 block writer-panel-head
-	title New Note
+	title Edit Note
 	link(rel="stylesheet", href="/assets/select2.css")
 	link(rel="stylesheet", href="//cdn.quilljs.com/0.20.1/quill.snow.css")
 	link(rel="stylesheet", href="/assets/writer-panel-note.css")
 
 block writer-panel-body
 	div.panel.new-note-container
-		h2.panel-heading Create a new note
+		h2.panel-heading Edit Note
 		div.panel-body
 			h4.panel-field-header Title
-			input.new-note-title.form-input(placeholder="Enter note title...")
-			h4.panel-field-header Type your note's content below...
+			input.new-note-title.form-input(placeholder="Enter note title...", value="{{.note.Title}}")
+			h4.panel-field-header Content
 			include ./quill.pug
-			h4.panel-field-header Pick some tags for your note...
+			h4.panel-field-header Tags
 			div.tag-selector-container
 				select.tag-selector(multiple="multiple", style="width: 100%;")
+					| {{range .note.Tags}}
+					option(value="{{.ID}}") {{.Name}} - {{.Description}}
+					| {{end}}
 		div.panel-footer
+			| {{if .note.Published}}{{else}}
 			button.btn.btn-success.publish-btn Publish
+			| {{end}}
 			button.btn.btn-primary.save-btn Save
+	div.hidden.data
+		div#note-data {{.noteJSON}}
 
 block scripts
 	script(src="//cdn.quilljs.com/0.20.1/quill.js")
-	script(src="/assets/new-note.js")
+	script(src="/assets/edit-note.js")

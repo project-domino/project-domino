@@ -15,10 +15,13 @@ block body
 		div.sidebar-section-container
 			h4.sidebar-header My Notes
 			| {{range .user.Notes}}
+			| {{if .Published}}{{else}}
+			a.sidebar-link.draft(href="/writer-panel/note/{{.ID}}/edit") {{.Title}} - Draft
+			| {{end}}{{end}}
+			| {{range .user.Notes}}
 			| {{if .Published}}
-			a.sidebar-link(href="/writer-panel/edit/note/{{.ID}}") {{.Title}}
-			| {{end}}
-			| {{end}}
+			a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") {{.Title}}
+			| {{end}}{{end}}
 		div.sidebar-section-container
 			h4.sidebar-header My Collections
 			| {{range .user.Collections}}
@@ -28,13 +31,6 @@ block body
 			h4.sidebar-header My Textbooks
 			| {{range .user.Collections}}
 			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
-			| {{end}}
-		div.sidebar-section-container
-			h4.sidebar-header Drafts
-			| {{range .user.Collections}}
-			| {{if .Published}}{{else}}
-			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
-			| {{end}}
 			| {{end}}
 	div.writer-body
 		block writer-panel-body
