@@ -19,7 +19,8 @@ func NewTag(c *gin.Context) {
 
 	// Check for valid values
 	if name == "" || description == "" {
-		panic(errors.New("There are empty fields"))
+		c.AbortWithError(400, errors.New("There are empty fields"))
+		return
 	}
 
 	// Check if tag exists
@@ -28,7 +29,8 @@ func NewTag(c *gin.Context) {
 
 	// If tag exists, return error
 	if len(checkTags) != 0 {
-		panic(errors.New("Tag with same name already exists"))
+		c.AbortWithError(400, errors.New("Tag with same name already exists"))
+		return
 	}
 
 	// Get request user

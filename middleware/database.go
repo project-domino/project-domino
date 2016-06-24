@@ -5,9 +5,9 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// DatabaseMiddleware adds the provided database handle to all requests.
+// Database  adds the provided database handle to all requests.
 // Deprecated: Poor design... At this point, a global is better...
-func DatabaseMiddleware(db *gorm.DB) gin.HandlerFunc {
+func Database(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("db", db)
 		c.Next()

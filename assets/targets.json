@@ -16,6 +16,7 @@
 	},
 	"pug": {
 		"editor":       "src/pug/editor.pug",
+		"error":        "src/pug/error.pug",
 		"home":         "src/pug/home.pug",
 		"search":       "src/pug/search.pug",
 		"login":        "src/pug/login.pug",

@@ -2,8 +2,8 @@ package main
 
 import (
 	// Standard Library
+	"errors"
 	"fmt"
-	"os"
 
 	// Internal Dependencies
 	"github.com/project-domino/project-domino/handlers"
@@ -46,8 +46,9 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-	r.Use(middleware.DatabaseMiddleware(db))
-	r.Use(middleware.LoginMiddleware)
+	r.Use(middleware.ErrorHandler())
+	r.Use(middleware.Database(db))
+	r.Use(middleware.Login())
 	Must(SetupAssets(r))
 
 	// Authentication Routes
@@ -84,7 +85,7 @@ func main() {
 	r.Group("/api/v1").
 		GET("/search/tag", api.SearchTags).
 		POST("/note",
-			middleware.RequireAuth,
+			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewNote).
 		PUT("/note/:noteID",
@@ -92,18 +93,24 @@ func main() {
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.EditNote).
 		POST("/tag",
-			middleware.RequireAuth,
+			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewTag).
 		POST("/collection", handlers.TODO).
 		PUT("/collection", handlers.TODO)
 
 	// Debug Routes
-	debug := r.Group("/debug")
-	debug.GET("/editor", handlers.Simple("editor.html"))
-	debug.GET("/env", func(c *gin.Context) { c.JSON(200, os.Environ()) })
-	debug.GET("/config", func(c *gin.Context) { c.JSON(200, viper.AllSettings()) })
-	debug.GET("/new/note", handlers.Simple("new-note.html"))
+	if viper.GetBool("http.debug") {
+		r.Group("/debug").
+			GET("/editor", handlers.Simple("editor.html")).
+			GET("/error", func(c *gin.Context) {
+				c.AbortWithError(500, errors.New("teh internets are asplode"))
+			}).
+			GET("/config", func(c *gin.Context) {
+				c.JSON(200, viper.AllSettings())
+			}).
+			GET("/new/note", handlers.Simple("new-note.html"))
+	}
 
 	// Start serving.
 	Must(r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))))

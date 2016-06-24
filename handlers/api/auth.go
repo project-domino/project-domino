@@ -23,7 +23,8 @@ func Login(c *gin.Context) {
 
 	// If there are blank fields, return bad request
 	if password == "" || (userName == "" && email == "") {
-		panic(errors.New("Missing Parameters"))
+		c.AbortWithError(400, errors.New("Missing Parameters"))
+		return
 	}
 
 	// Acquire DB handle from request context.
@@ -40,17 +41,19 @@ func Login(c *gin.Context) {
 
 	// If a user with these credentials does not exist, return error
 	if len(users) == 0 {
-		panic(errors.New("Invalid Credentials"))
+		c.AbortWithError(400, errors.New("Invalid Credentials"))
+		return
 	}
 
 	// Otherwise, check password and assign cookie
 	user := users[0]
 	if !user.CheckPassword(password) {
-		panic(errors.New("Invalid Credentials"))
+		c.AbortWithError(400, errors.New("Invalid Credentials"))
+		return
 	}
 
 	// TODO unlegacy
-	AuthCookie(c.Writer, c.Request, user, db)
+	AuthCookie(c, user, db)
 }
 
 // Logout handles requests to log a user out.
@@ -71,12 +74,14 @@ func Register(c *gin.Context) {
 
 	// Check if the request is missing needed parameters
 	if userName == "" || password == "" || retypePassword == "" {
-		panic(errors.New("Missing Parameters"))
+		c.AbortWithError(400, errors.New("Missing Parameters"))
+		return
 	}
 
 	// Check if password matches retype password
 	if retypePassword != password {
-		panic(errors.New("Passwords do not match."))
+		c.AbortWithError(400, errors.New("Passwords do not match."))
+		return
 	}
 
 	// Acquire db handle from request context.
@@ -90,7 +95,8 @@ func Register(c *gin.Context) {
 		UserName: userName,
 	}).Find(&checkUsers)
 	if len(checkUsers) != 0 {
-		panic(errors.New("User with same email/username already exists."))
+		c.AbortWithError(400, errors.New("User with same email/username already exists."))
+		return
 	}
 
 	// Create the user.
@@ -100,7 +106,8 @@ func Register(c *gin.Context) {
 		Type:     models.General,
 	}
 	if err := user.SetPassword(password); err != nil {
-		panic(err)
+		c.AbortWithError(500, err)
+		return
 	}
 
 	// Add user to database.
@@ -108,23 +115,24 @@ func Register(c *gin.Context) {
 
 	// Set an auth cookie for the user
 	// TODO unlegacy
-	AuthCookie(c.Writer, c.Request, user, db)
+	AuthCookie(c, user, db)
 	c.Redirect(http.StatusFound, "/")
 }
 
 // AuthCookie creates an authentication token and sends it to the client.
-func AuthCookie(w http.ResponseWriter, r *http.Request, user models.User, db *gorm.DB) {
+func AuthCookie(c *gin.Context, user models.User, db *gorm.DB) {
 	var authToken models.AuthToken
 	var err error
 
-	if strings.Contains(r.UserAgent(), "Domino") {
+	if strings.Contains(c.Request.UserAgent(), "Domino") {
 		authToken, err = newAuthToken(user)
 	} else {
 		authToken, err = newAuthTokenExpires(user, time.Now().Add(time.Hour*24*7))
 	}
 
 	if err != nil {
-		panic(err)
+		c.AbortWithError(500, err)
+		return
 	}
 
 	db.Create(&authToken)
@@ -135,8 +143,7 @@ func AuthCookie(w http.ResponseWriter, r *http.Request, user models.User, db *go
 		Value:   authToken.Token,
 		Expires: authToken.Expires,
 	}
-
-	http.SetCookie(w, &cookie)
+	http.SetCookie(c.Writer, &cookie)
 }
 
 // newAuthToken creates a new AuthToken that never expires.
