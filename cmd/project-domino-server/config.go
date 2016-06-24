@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -38,6 +39,6 @@ func init() {
 
 	// Read config or die.
 	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }

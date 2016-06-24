@@ -33,6 +33,7 @@ func ErrorHandler() gin.HandlerFunc {
 					gin.MIMEHTML,
 					gin.MIMEXML,
 					gin.MIMEJSON,
+					gin.MIMEPlain,
 				},
 				HTMLName: "error.html",
 				Data:     c.Errors,

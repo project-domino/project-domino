@@ -26,12 +26,14 @@ func NewNote(c *gin.Context) {
 	// Get request variables
 	var requestVars NoteRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		panic(err)
+		c.AbortWithError(400, err)
+		return
 	}
 
 	sanitizedRequest, err := sanitizeRequest(requestVars)
 	if err != nil {
-		panic(err)
+		c.AbortWithError(500, err)
+		return
 	}
 
 	// Query db for tags
@@ -62,12 +64,14 @@ func EditNote(c *gin.Context) {
 	// Get request variables
 	var requestVars NoteRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		panic(err)
+		c.AbortWithError(400, err)
+		return
 	}
 
 	sanitizedRequest, err := sanitizeRequest(requestVars)
 	if err != nil {
-		panic(err)
+		c.AbortWithError(500, err)
+		return
 	}
 
 	// Query db for tags
@@ -78,12 +82,14 @@ func EditNote(c *gin.Context) {
 	var note models.Note
 	db.Preload("Author").Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
-		panic(errors.New("Note not found"))
+		c.AbortWithError(404, errors.New("Note not found"))
+		return
 	}
 
 	// Check if request user is the owner of the note
 	if note.Author.ID != user.ID {
-		panic(errors.New("You are not the owner of this note"))
+		c.AbortWithError(403, errors.New("You are not the owner of this note"))
+		return
 	}
 
 	// Clear current note-tag relationships
@@ -105,7 +111,7 @@ func sanitizeRequest(request NoteRequest) (NoteRequest, error) {
 	// TODO 10 seems like a good number for max tags?
 	// Especially if some tags depend on others.
 	if len(request.Tags) > 10 {
-		return NoteRequest{}, errors.New("To many tags.")
+		return NoteRequest{}, errors.New("Too many tags.")
 	}
 
 	// Remove duplicate tags

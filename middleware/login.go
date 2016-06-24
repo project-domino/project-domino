@@ -25,7 +25,8 @@ func Login() gin.HandlerFunc {
 			notLoggedIn(c)
 			return
 		} else if err != nil {
-			panic(err)
+			c.AbortWithError(500, err)
+			return
 		}
 
 		// If the cookie is present, search the database for the token.

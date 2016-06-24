@@ -19,6 +19,6 @@ func RequireUserType(types ...string) gin.HandlerFunc {
 			}
 		}
 
-		panic(errors.New("You do not have access to this feature."))
+		c.AbortWithError(403, errors.New("You do not have access to this feature."))
 	}
 }

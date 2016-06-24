@@ -42,18 +42,21 @@ func EditNote(c *gin.Context) {
 		Preload("Tags").
 		Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
-		panic(errors.New("Note not found"))
+		c.AbortWithError(404, errors.New("Note not found"))
+		return
 	}
 
 	// Check if request user is the owner of the note
 	if note.Author.ID != user.ID {
-		panic(errors.New("You are not the owner of this note"))
+		c.AbortWithError(403, errors.New("You are not the owner of this note"))
+		return
 	}
 
 	// Format note in JSON
 	noteJSON, err := json.Marshal(note)
 	if err != nil {
-		panic("Could not convert note to json")
+		c.AbortWithError(500, errors.New("Could not convert note to json"))
+		return
 	}
 
 	// Set request context and render html

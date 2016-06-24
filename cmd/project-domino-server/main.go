@@ -74,7 +74,7 @@ func main() {
 		GET("/:collectionID/note/:noteID/:noteName", handlers.TODO)
 
 	r.Group("/writer-panel",
-		middleware.RequireAuth,
+		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin)).
 		GET("/", view.WriterPanelSimple("writer-panel.html")).
 		GET("/note", view.WriterPanelSimple("new-note.html")).
@@ -89,7 +89,7 @@ func main() {
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.NewNote).
 		PUT("/note/:noteID",
-			middleware.RequireAuth,
+			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.EditNote).
 		POST("/tag",
