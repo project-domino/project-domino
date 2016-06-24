@@ -10,31 +10,12 @@ import (
 	"github.com/project-domino/project-domino/models"
 )
 
-// WriterPanelSimple returns a handler for a specified writer panel page
-func WriterPanelSimple(template string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Acquire variables from request context.
-		db := c.MustGet("db").(*gorm.DB)
-		user := c.MustGet("user").(models.User)
-
-		// Load Notes into the user
-		db.Model(&user).Association("Notes").Find(&user.Notes)
-
-		// Save user to request context and render template
-		c.Set("user", user)
-		c.HTML(200, template, vars.Default(c))
-	}
-}
-
 // EditNote returns the page to edit a given note
 func EditNote(c *gin.Context) {
 	// Acquire variables from request context.
 	db := c.MustGet("db").(*gorm.DB)
 	user := c.MustGet("user").(models.User)
 	noteID := c.Param("noteID")
-
-	// Load Notes into the user
-	db.Model(&user).Association("Notes").Find(&user.Notes)
 
 	// Query db for note
 	var note models.Note

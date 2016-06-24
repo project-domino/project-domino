@@ -75,11 +75,12 @@ func main() {
 
 	r.Group("/writer-panel",
 		middleware.RequireAuth(),
-		middleware.RequireUserType(models.Writer, models.Admin)).
-		GET("/", view.WriterPanelSimple("writer-panel.html")).
-		GET("/note", view.WriterPanelSimple("new-note.html")).
+		middleware.RequireUserType(models.Writer, models.Admin),
+		middleware.LoadUser("Notes")).
+		GET("/", handlers.Simple("writer-panel.html")).
+		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit", view.EditNote).
-		GET("/tag", view.WriterPanelSimple("new-tag.html"))
+		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
 	r.Group("/api/v1").
