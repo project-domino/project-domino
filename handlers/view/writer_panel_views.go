@@ -5,21 +5,23 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/handlers/vars"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // EditNote returns the page to edit a given note
+// TODO This got merged, check for correctness.
 func EditNote(c *gin.Context) {
-	// Acquire variables from request context.
-	db := c.MustGet("db").(*gorm.DB)
 	user := c.MustGet("user").(models.User)
 	noteID := c.Param("noteID")
 
+	// Load Notes into the user
+	util.DB.Model(&user).Association("Notes").Find(&user.Notes)
+
 	// Query db for note
 	var note models.Note
-	db.Preload("Author").
+	util.DB.Preload("Author").
 		Preload("Tags").
 		Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {

@@ -5,17 +5,14 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // Login adds a user struct to the request context based on the authentication
 // token provided in a cookie. Also sets a loggedIn boolean.
 func Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Acquire database handle from request context.
-		db := c.MustGet("db").(*gorm.DB)
-
 		// Check if auth cookie is present.
 		authCookie, err := c.Cookie("auth")
 
@@ -32,7 +29,7 @@ func Login() gin.HandlerFunc {
 		// If the cookie is present, search the database for the token.
 		var authEntries []models.AuthToken
 
-		db.Limit(1).Preload("User").Where(&models.AuthToken{
+		util.DB.Limit(1).Preload("User").Where(&models.AuthToken{
 			Token: authCookie,
 		}).Where("Expires > ?", time.Now()).Find(&authEntries)
 		if len(authEntries) == 0 {

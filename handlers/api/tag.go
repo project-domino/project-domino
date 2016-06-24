@@ -4,15 +4,12 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // NewTag creates a tag with a specified values
 func NewTag(c *gin.Context) {
-	// Acquire db handle from request context.
-	db := c.MustGet("db").(*gorm.DB)
-
 	// Get request variables
 	name := c.PostForm("name")
 	description := c.PostForm("description")
@@ -25,7 +22,7 @@ func NewTag(c *gin.Context) {
 
 	// Check if tag exists
 	var checkTags []models.Tag
-	db.Where("name = ?", name).Find(&checkTags)
+	util.DB.Where("name = ?", name).Find(&checkTags)
 
 	// If tag exists, return error
 	if len(checkTags) != 0 {
@@ -37,7 +34,7 @@ func NewTag(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 
 	// Create and save tag
-	db.Create(&models.Tag{
+	util.DB.Create(&models.Tag{
 		Name:        name,
 		Description: description,
 		Author:      user,

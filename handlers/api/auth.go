@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // Login handles requests to log a user in.
@@ -27,12 +27,9 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// Acquire DB handle from request context.
-	db := c.MustGet("db").(*gorm.DB)
-
 	// Find user in the database
 	var users []models.User
-	db.Limit(1).
+	util.DB.Limit(1).
 		Where(&models.User{
 			Email: email,
 		}).Or(&models.User{
@@ -53,7 +50,7 @@ func Login(c *gin.Context) {
 	}
 
 	// TODO unlegacy
-	AuthCookie(c, user, db)
+	AuthCookie(c, user)
 }
 
 // Logout handles requests to log a user out.
@@ -84,12 +81,9 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	// Acquire db handle from request context.
-	db := c.MustGet("db").(*gorm.DB)
-
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
-	db.Where(&models.User{
+	util.DB.Where(&models.User{
 		Email: email,
 	}).Or(&models.User{
 		UserName: userName,
@@ -111,16 +105,16 @@ func Register(c *gin.Context) {
 	}
 
 	// Add user to database.
-	db.Create(&user)
+	util.DB.Create(&user)
 
 	// Set an auth cookie for the user
 	// TODO unlegacy
-	AuthCookie(c, user, db)
+	AuthCookie(c, user)
 	c.Redirect(http.StatusFound, "/")
 }
 
 // AuthCookie creates an authentication token and sends it to the client.
-func AuthCookie(c *gin.Context, user models.User, db *gorm.DB) {
+func AuthCookie(c *gin.Context, user models.User) {
 	var authToken models.AuthToken
 	var err error
 
@@ -135,7 +129,7 @@ func AuthCookie(c *gin.Context, user models.User, db *gorm.DB) {
 		return
 	}
 
-	db.Create(&authToken)
+	util.DB.Create(&authToken)
 
 	// Create cookie
 	cookie := http.Cookie{

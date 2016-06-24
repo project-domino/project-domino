@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // NoteRequest holds the request object for NewNote and EditNote
@@ -19,8 +19,6 @@ type NoteRequest struct {
 
 // NewNote creates a note with a specified values
 func NewNote(c *gin.Context) {
-	// Acquire variables from request context.
-	db := c.MustGet("db").(*gorm.DB)
 	user := c.MustGet("user").(models.User)
 
 	// Get request variables
@@ -38,7 +36,7 @@ func NewNote(c *gin.Context) {
 
 	// Query db for tags
 	var tags []models.Tag
-	db.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
+	util.DB.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
 
 	// Create and save note
 	newNote := models.Note{
@@ -48,7 +46,7 @@ func NewNote(c *gin.Context) {
 		Published: false,
 		Tags:      tags,
 	}
-	db.Create(&newNote)
+	util.DB.Create(&newNote)
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, newNote)
@@ -56,8 +54,6 @@ func NewNote(c *gin.Context) {
 
 // EditNote edits a note with specified values
 func EditNote(c *gin.Context) {
-	// Acquire variables from request context.
-	db := c.MustGet("db").(*gorm.DB)
 	user := c.MustGet("user").(models.User)
 	noteID := c.Param("noteID")
 
@@ -76,11 +72,11 @@ func EditNote(c *gin.Context) {
 
 	// Query db for tags
 	var tags []models.Tag
-	db.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
+	util.DB.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
 
 	// Query db for note
 	var note models.Note
-	db.Preload("Author").Where("id = ?", noteID).First(&note)
+	util.DB.Preload("Author").Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
 		c.AbortWithError(404, errors.New("Note not found"))
 		return
@@ -93,7 +89,7 @@ func EditNote(c *gin.Context) {
 	}
 
 	// Clear current note-tag relationships
-	db.Model(&note).Association("Tags").Clear()
+	util.DB.Model(&note).Association("Tags").Clear()
 
 	// Save note
 	note.Title = sanitizedRequest.Title
@@ -101,7 +97,7 @@ func EditNote(c *gin.Context) {
 	note.Tags = tags
 	note.Published = sanitizedRequest.Publish
 
-	db.Save(&note)
+	util.DB.Save(&note)
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)

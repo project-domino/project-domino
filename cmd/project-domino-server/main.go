@@ -11,6 +11,7 @@ import (
 	"github.com/project-domino/project-domino/handlers/view"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
@@ -26,14 +27,15 @@ import (
 
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(
+	var err error
+	util.DB, err = gorm.Open(
 		viper.GetString("database.type"),
 		viper.GetString("database.url"),
 	)
 	Must(err)
-	defer db.Close()
-	db.LogMode(viper.GetBool("database.debug"))
-	Must(SetupDatabase(db))
+	defer util.DB.Close()
+	util.DB.LogMode(viper.GetBool("database.debug"))
+	Must(SetupDatabase(util.DB))
 
 	// Enable/disable gin's debug mode.
 	if viper.GetBool("http.debug") {
@@ -47,7 +49,6 @@ func main() {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	r.Use(middleware.ErrorHandler())
-	r.Use(middleware.Database(db))
 	r.Use(middleware.Login())
 	Must(SetupAssets(r))
 

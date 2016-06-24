@@ -5,15 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/util"
 )
 
 // SearchTags searches for tags that match a certain search query
 func SearchTags(c *gin.Context) {
-	// Acquire db handle from request context.
-	db := c.MustGet("db").(*gorm.DB)
-
 	// Acquire variables from request
 	query := c.DefaultQuery("q", "")
 
@@ -23,7 +20,7 @@ func SearchTags(c *gin.Context) {
 		sqlString := fmt.Sprintf("%%%s%%", query)
 
 		// Query db
-		db.Limit(10).
+		util.DB.Limit(10).
 			Where("name LIKE ?", sqlString).
 			Or("description LIKE ?", sqlString).Find(&tags)
 	}
