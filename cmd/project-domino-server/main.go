@@ -49,32 +49,35 @@ func main() {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 	r.Use(middleware.ErrorHandler())
-	r.Use(middleware.Login())
 	Must(SetupAssets(r))
 
+	// Routes that require user object
+	m := r.Group("/")
+	m.Use(middleware.Login())
+
 	// Authentication Routes
-	r.GET("/login", handlers.Simple("login.html"))
-	r.GET("/register", handlers.Simple("register.html"))
-	r.POST("/login", api.Login)
-	r.POST("/register", api.Register)
-	r.POST("/logout", api.Logout)
+	m.GET("/login", handlers.Simple("login.html"))
+	m.GET("/register", handlers.Simple("register.html"))
+	m.POST("/login", api.Login)
+	m.POST("/register", api.Register)
+	m.POST("/logout", api.Logout)
 
 	// View Routes
-	r.GET("/", handlers.Simple("home.html"))
-	r.GET("/u/:username", handlers.TODO)
-	r.GET("/uni/:uni-short-name", handlers.TODO)
-	r.GET("/search", handlers.TODO)
+	m.GET("/", handlers.Simple("home.html"))
+	m.GET("/u/:username", handlers.TODO)
+	m.GET("/uni/:uni-short-name", handlers.TODO)
+	m.GET("/search", handlers.TODO)
 
-	r.Group("/note").
+	m.Group("/note").
 		GET("/:note-id", handlers.TODO).
 		GET("/:note-id/:note-name", handlers.TODO)
 
-	r.Group("/collection").
+	m.Group("/collection").
 		GET("/:collectionID", handlers.TODO).
 		GET("/:collectionID/note/:noteID", handlers.TODO).
 		GET("/:collectionID/note/:noteID/:noteName", handlers.TODO)
 
-	r.Group("/writer-panel",
+	m.Group("/writer-panel",
 		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin),
 		middleware.LoadUser("Notes")).
@@ -84,7 +87,7 @@ func main() {
 		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
-	r.Group("/api/v1").
+	m.Group("/api/v1").
 		GET("/search/tag", api.SearchTags).
 		POST("/note",
 			middleware.RequireAuth(),
@@ -103,7 +106,7 @@ func main() {
 
 	// Debug Routes
 	if viper.GetBool("http.debug") {
-		r.Group("/debug").
+		m.Group("/debug").
 			GET("/editor", handlers.Simple("editor.html")).
 			GET("/error", func(c *gin.Context) {
 				c.AbortWithError(500, errors.New("teh internets are asplode"))
