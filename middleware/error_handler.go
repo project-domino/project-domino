@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/util"
 )
 
 // ErrorHandler is a middleware that handles errors.
@@ -28,21 +29,7 @@ func ErrorHandler() gin.HandlerFunc {
 				errCode = c.Writer.Status()
 			}
 
-			switch c.NegotiateFormat(
-				gin.MIMEHTML,
-				gin.MIMEJSON,
-				gin.MIMEPlain,
-				gin.MIMEXML,
-			) {
-			case gin.MIMEHTML:
-				c.HTML(errCode, "error.html", c.Errors)
-			case gin.MIMEJSON:
-				c.JSON(errCode, c.Errors)
-			case gin.MIMEPlain:
-				c.String(errCode, "%s", c.Errors)
-			case gin.MIMEXML:
-				c.XML(errCode, c.Errors)
-			}
+			util.RenderStatus(c, errCode, "error.html", c.Errors)
 		}
 	}
 }
