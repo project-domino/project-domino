@@ -29,7 +29,7 @@ func ErrorHandler() gin.HandlerFunc {
 				errCode = c.Writer.Status()
 			}
 
-			util.RenderStatus(c, errCode, "error.html", c.Errors)
+			util.RenderStatusData(c, errCode, "error.html", c.Errors)
 		}
 	}
 }
