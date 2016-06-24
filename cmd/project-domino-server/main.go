@@ -81,7 +81,7 @@ func main() {
 		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin),
 		middleware.LoadUser("Notes")).
-		GET("/", handlers.Simple("writer-panel.html")).
+		GET("/", view.WriterPanelRedirect).
 		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit", view.EditNote).
 		GET("/tag", handlers.Simple("new-tag.html"))
@@ -90,17 +90,17 @@ func main() {
 	m.Group("/api/v1").
 		GET("/search/tag", api.SearchTags).
 		POST("/note",
-			middleware.RequireAuth(),
-			middleware.RequireUserType(models.Writer, models.Admin),
-			api.NewNote).
+		middleware.RequireAuth(),
+		middleware.RequireUserType(models.Writer, models.Admin),
+		api.NewNote).
 		PUT("/note/:noteID",
-			middleware.RequireAuth(),
-			middleware.RequireUserType(models.Writer, models.Admin),
-			api.EditNote).
+		middleware.RequireAuth(),
+		middleware.RequireUserType(models.Writer, models.Admin),
+		api.EditNote).
 		POST("/tag",
-			middleware.RequireAuth(),
-			middleware.RequireUserType(models.Writer, models.Admin),
-			api.NewTag).
+		middleware.RequireAuth(),
+		middleware.RequireUserType(models.Writer, models.Admin),
+		api.NewTag).
 		POST("/collection", handlers.TODO).
 		PUT("/collection", handlers.TODO)
 
@@ -109,11 +109,11 @@ func main() {
 		m.Group("/debug").
 			GET("/editor", handlers.Simple("editor.html")).
 			GET("/error", func(c *gin.Context) {
-				c.AbortWithError(500, errors.New("teh internets are asplode"))
-			}).
+			c.AbortWithError(500, errors.New("teh internets are asplode"))
+		}).
 			GET("/config", func(c *gin.Context) {
-				c.JSON(200, viper.AllSettings())
-			}).
+			c.JSON(200, viper.AllSettings())
+		}).
 			GET("/new/note", handlers.Simple("new-note.html"))
 	}
 

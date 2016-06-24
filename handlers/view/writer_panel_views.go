@@ -3,12 +3,19 @@ package view
 import (
 	"encoding/json"
 	"errors"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/project-domino/project-domino/handlers/vars"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
 )
+
+// WriterPanelRedirect redirects the user to a page in the writer panel
+// TODO redirect to latest draft
+func WriterPanelRedirect(c *gin.Context) {
+	c.Redirect(http.StatusFound, "/writer-panel/note")
+}
 
 // EditNote returns the page to edit a given note
 // TODO This got merged, check for correctness.
