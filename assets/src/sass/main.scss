@@ -1,9 +1,9 @@
-@import "variables.scss";
-@import "grid.scss";
-@import "modal.scss";
-@import "header.scss";
-@import "form.scss";
-@import "panel.scss";
+@import "util/variables.scss";
+@import "util/grid.scss";
+@import "util/modal.scss";
+@import "util/header.scss";
+@import "util/form.scss";
+@import "util/panel.scss";
 
 // Main styles for the whole website
 html, body {

@@ -30,12 +30,9 @@
 	"sass": {
 		"editor":            "src/sass/editor.scss",
 		"home":              "src/sass/home.scss",
-		"header":            "src/sass/header.scss",
 		"main":              "src/sass/main.scss",
 		"login":             "src/sass/login.scss",
 		"writer-panel-note": "src/sass/writer-panel-note.scss",
-		"new-tag":           "src/sass/new-tag.scss",
-		"sidebar":           "src/sass/sidebar.scss",
-		"writer-panel":      "src/sass/writer-panel.scss"
+		"new-tag":           "src/sass/new-tag.scss"
 	}
 }

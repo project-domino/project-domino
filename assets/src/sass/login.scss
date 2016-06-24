@@ -1,4 +1,5 @@
-@import "variables.scss";
+@import "util/variables.scss";
+@import "main.scss";
 
 .login-panel, button, input {
 	margin-left: auto;

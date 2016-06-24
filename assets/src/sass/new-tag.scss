@@ -1,4 +1,7 @@
-@import "variables.scss";
+@import "util/variables.scss";
+@import "main.scss";
+
+@import "util/writer-panel.scss";
 
 .form-input {
 	width: 100%;
