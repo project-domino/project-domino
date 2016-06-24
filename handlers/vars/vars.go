@@ -19,9 +19,3 @@ func (vars Vars) Merge(other Vars) Vars {
 	}
 	return vars
 }
-
-// Set sets a variable in the Vars and returns itself.
-func (vars Vars) Set(key string, value interface{}) Vars {
-	vars[key] = value
-	return vars
-}

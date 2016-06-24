@@ -2,12 +2,20 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/project-domino/project-domino/handlers/vars"
+	"github.com/project-domino/project-domino/util"
 )
 
 // Simple creates a new handler that renders based on the given template name.
 func Simple(template string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.HTML(200, template, vars.Default(c))
+		util.Render(c, template, "")
+	}
+}
+
+// Value creates a new handler that renders a page, with the given value from
+// the context attached.
+func Value(template, key string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		util.Render(c, template, key)
 	}
 }
