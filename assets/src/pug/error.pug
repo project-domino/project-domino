@@ -1,9 +1,9 @@
-doctype html
+extends ./template.pug
 
-html
-	head
-		title Error
-	body
-		h1 gg
-		pre {{ . }}
-		h1 no re
+block head
+	title Error
+
+block body
+	h1 gg
+	pre {{ .errors }}
+	h1 no re
