@@ -28,16 +28,21 @@ func ErrorHandler() gin.HandlerFunc {
 				errCode = c.Writer.Status()
 			}
 
-			c.Negotiate(errCode, gin.Negotiate{
-				Offered: []string{
-					gin.MIMEHTML,
-					gin.MIMEXML,
-					gin.MIMEJSON,
-					gin.MIMEPlain,
-				},
-				HTMLName: "error.html",
-				Data:     c.Errors,
-			})
+			switch c.NegotiateFormat(
+				gin.MIMEHTML,
+				gin.MIMEJSON,
+				gin.MIMEPlain,
+				gin.MIMEXML,
+			) {
+			case gin.MIMEHTML:
+				c.HTML(errCode, "error.html", c.Errors)
+			case gin.MIMEJSON:
+				c.JSON(errCode, c.Errors)
+			case gin.MIMEPlain:
+				c.String(errCode, "%s", c.Errors)
+			case gin.MIMEXML:
+				c.XML(errCode, c.Errors)
+			}
 		}
 	}
 }
