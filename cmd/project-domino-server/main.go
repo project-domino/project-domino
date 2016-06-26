@@ -2,10 +2,10 @@ package main
 
 import (
 	// Standard Library
-	"errors"
 	"fmt"
 
 	// Internal Dependencies
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/handlers/view"
@@ -125,7 +125,7 @@ func main() {
 		m.Group("/debug").
 			GET("/editor", handlers.Simple("editor.html")).
 			GET("/error", func(c *gin.Context) {
-				c.AbortWithError(500, errors.New("teh internets are asplode"))
+				errors.Debug.Apply(c)
 			}).
 			GET("/config", func(c *gin.Context) {
 				util.RenderData(c, "debug.html", "data", viper.AllSettings())

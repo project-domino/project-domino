@@ -1,9 +1,8 @@
 package api
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
 )
@@ -16,7 +15,7 @@ func NewTag(c *gin.Context) {
 
 	// Check for valid values
 	if name == "" || description == "" {
-		c.AbortWithError(400, errors.New("There are empty fields"))
+		errors.MissingParameters.Apply(c)
 		return
 	}
 
@@ -26,7 +25,7 @@ func NewTag(c *gin.Context) {
 
 	// If tag exists, return error
 	if len(checkTags) != 0 {
-		c.AbortWithError(400, errors.New("Tag with same name already exists"))
+		errors.TagExists.Apply(c)
 		return
 	}
 

@@ -3,12 +3,12 @@ package api
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"errors"
 	"net/http"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
 )
@@ -23,7 +23,7 @@ func Login(c *gin.Context) {
 
 	// If there are blank fields, return bad request
 	if password == "" || (userName == "" && email == "") {
-		c.AbortWithError(400, errors.New("Missing Parameters"))
+		errors.MissingParameters.Apply(c)
 		return
 	}
 
@@ -31,21 +31,21 @@ func Login(c *gin.Context) {
 	var users []models.User
 	util.DB.Limit(1).
 		Where(&models.User{
-		Email: email,
-	}).Or(&models.User{
+			Email: email,
+		}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users)
 
 	// If a user with these credentials does not exist, return error
 	if len(users) == 0 {
-		c.AbortWithError(400, errors.New("Invalid Credentials"))
+		errors.InvalidCredentials.Apply(c)
 		return
 	}
 
 	// Otherwise, check password and assign cookie
 	user := users[0]
 	if !user.CheckPassword(password) {
-		c.AbortWithError(400, errors.New("Invalid Credentials"))
+		errors.InvalidCredentials.Apply(c)
 		return
 	}
 
@@ -71,13 +71,13 @@ func Register(c *gin.Context) {
 
 	// Check if the request is missing needed parameters
 	if userName == "" || password == "" || retypePassword == "" {
-		c.AbortWithError(400, errors.New("Missing Parameters"))
+		errors.MissingParameters.Apply(c)
 		return
 	}
 
 	// Check if password matches retype password
 	if retypePassword != password {
-		c.AbortWithError(400, errors.New("Passwords do not match."))
+		errors.PasswordsDoNotMatch.Apply(c)
 		return
 	}
 
@@ -89,7 +89,7 @@ func Register(c *gin.Context) {
 		UserName: userName,
 	}).Find(&checkUsers)
 	if len(checkUsers) != 0 {
-		c.AbortWithError(400, errors.New("User with same email/username already exists."))
+		errors.UserExists.Apply(c)
 		return
 	}
 

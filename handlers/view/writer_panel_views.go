@@ -2,10 +2,10 @@ package view
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers/vars"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
@@ -32,20 +32,21 @@ func EditNote(c *gin.Context) {
 		Preload("Tags").
 		Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
-		c.AbortWithError(404, errors.New("Note not found"))
+		errors.NoteNotFound.Apply(c)
 		return
 	}
 
 	// Check if request user is the owner of the note
 	if note.Author.ID != user.ID {
-		c.AbortWithError(403, errors.New("You are not the owner of this note"))
+		errors.NotNoteOwner.Apply(c)
 		return
 	}
 
 	// Format note in JSON
 	noteJSON, err := json.Marshal(note)
 	if err != nil {
-		c.AbortWithError(500, errors.New("Could not convert note to json"))
+		c.Error(err)
+		errors.JSON.Apply(c)
 		return
 	}
 

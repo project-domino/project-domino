@@ -1,9 +1,8 @@
 package middleware
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 )
 
@@ -19,6 +18,6 @@ func RequireUserType(types ...string) gin.HandlerFunc {
 			}
 		}
 
-		c.AbortWithError(403, errors.New("You do not have access to this feature."))
+		errors.BadUserType.Apply(c)
 	}
 }

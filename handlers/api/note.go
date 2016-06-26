@@ -1,10 +1,10 @@
 package api
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
 )
@@ -58,13 +58,13 @@ func EditNote(c *gin.Context) {
 	var note models.Note
 	util.DB.Preload("Author").Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
-		c.AbortWithError(404, errors.New("Note not found"))
+		errors.NoteNotFound.Apply(c)
 		return
 	}
 
 	// Check if request user is the owner of the note
 	if note.Author.ID != user.ID {
-		c.AbortWithError(403, errors.New("You are not the owner of this note"))
+		errors.NotNoteOwner.Apply(c)
 		return
 	}
 

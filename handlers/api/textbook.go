@@ -1,10 +1,10 @@
 package api
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 	"github.com/project-domino/project-domino/util"
 )
@@ -60,13 +60,13 @@ func EditTextbook(c *gin.Context) {
 	var textbook models.Textbook
 	util.DB.Preload("Author").Where("id = ?", textbookID).First(&textbook)
 	if textbook.ID == 0 {
-		c.AbortWithError(404, errors.New("Collection not found"))
+		errors.TextbookNotFound.Apply(c)
 		return
 	}
 
 	// Check if request user is the owner of the textbook
 	if textbook.Author.ID != user.ID {
-		c.AbortWithError(403, errors.New("You are not the owner of this textbook"))
+		errors.NotTextbookOwner.Apply(c)
 		return
 	}
 
