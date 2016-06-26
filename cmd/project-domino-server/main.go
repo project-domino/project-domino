@@ -125,11 +125,11 @@ func main() {
 		m.Group("/debug").
 			GET("/editor", handlers.Simple("editor.html")).
 			GET("/error", func(c *gin.Context) {
-			c.AbortWithError(500, errors.New("teh internets are asplode"))
-		}).
+				c.AbortWithError(500, errors.New("teh internets are asplode"))
+			}).
 			GET("/config", func(c *gin.Context) {
-			c.JSON(200, viper.AllSettings())
-		}).
+				util.RenderData(c, "debug.html", "data", viper.AllSettings())
+			}).
 			GET("/new/note", handlers.Simple("new-note.html"))
 	}
 

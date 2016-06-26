@@ -1,8 +1,10 @@
 extends ./template.pug
 
 block head
-	link(rel="stylesheet", href="/assets/sidebar.css")
 	title Note
+
+block css
+	link(rel="stylesheet", href="/assets/sidebar.css")
 
 block sidebar-btn
 	div.sidebar-btn-container
@@ -10,8 +12,6 @@ block sidebar-btn
 
 block sidebar
 	div#sidebar.sidebar
-
-block body
 
 block scripts
 	script(src="/assets/sidebar.js")

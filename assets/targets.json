@@ -16,6 +16,7 @@
 		"new-collection": "src/js/new-collection.js"
 	},
 	"pug": {
+		"debug":          "src/pug/debug.pug",
 		"editor":         "src/pug/editor.pug",
 		"error":          "src/pug/error.pug",
 		"home":           "src/pug/home.pug",
