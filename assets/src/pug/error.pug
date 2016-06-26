@@ -4,6 +4,7 @@ block head
 	title Error
 
 block body
-	h1 gg
-	pre {{ .errors }}
-	h1 no re
+	h1 Error {{ .errors.Status }} ({{ .errors.StatusText }})
+	| {{ range .errors.Errors }}
+	pre {{ . }}
+	| {{ end }}

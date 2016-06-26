@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
 )
 
@@ -20,16 +21,19 @@ func ErrorHandler() gin.HandlerFunc {
 		c.Next()
 
 		if len(c.Errors) > 0 {
-			var errCode = 500
-			switch err := c.Errors[0]; err {
-			default:
-				log.Printf("Unknown error: %T %v", err, err)
+			var status = 500
+			if err, ok := c.Errors.Last().Err.(*errors.Error); ok {
+				status = err.Status
 			}
 			if c.Writer.Written() {
-				errCode = c.Writer.Status()
+				status = c.Writer.Status()
 			}
 
-			handlers.RenderStatusData(c, errCode, "error.html", "errors", c.Errors)
+			handlers.RenderStatusData(c, status, "error.html", "errors", struct {
+				Errors     []string
+				Status     int
+				StatusText string
+			}{c.Errors.Errors(), status, http.StatusText(status)})
 		}
 	}
 }
