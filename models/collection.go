@@ -6,12 +6,14 @@ import "github.com/jinzhu/gorm"
 type Collection struct {
 	gorm.Model
 
-	Title    string
-	Intro    string
-	Featured bool
+	Title       string
+	Description string
+	Featured    bool
 
 	AuthorID uint
 	Author   User
+
+	Published bool
 
 	Notes     []Note     `gorm:"many2many:note_collection;"`
 	Textbooks []Textbook `gorm:"many2many:textbook_collection;"`

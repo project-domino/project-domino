@@ -1,0 +1,32 @@
+@import "util/variables.scss";
+@import "main.scss";
+
+@import "util/writer-panel.scss";
+
+.form-input {
+	width: 100%;
+}
+
+.publish-btn {
+	margin-left: 10px;
+}
+
+.new-collection-description {
+	border: 1px solid $input-border-color;
+	box-sizing: border-box;
+	max-width: 100%;
+	min-height: 100px;
+	min-width: 100%;
+	width: 100%;
+}
+
+.tag-selector-container {
+	margin-bottom: 20px;
+	width: 100%;
+
+	.tag-selector {
+		width: 100%;
+	}
+}
+
+.result-notification, .no-notes-text { color: $darker; }

@@ -31,8 +31,8 @@ func Login(c *gin.Context) {
 	var users []models.User
 	util.DB.Limit(1).
 		Where(&models.User{
-			Email: email,
-		}).Or(&models.User{
+		Email: email,
+	}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users)
 

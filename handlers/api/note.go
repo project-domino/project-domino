@@ -28,23 +28,13 @@ func NewNote(c *gin.Context) {
 		return
 	}
 
-	sanitizedRequest, err := sanitizeRequest(requestVars)
-	if err != nil {
-		c.AbortWithError(500, err)
-		return
-	}
-
-	// Query db for tags
-	var tags []models.Tag
-	util.DB.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
-
 	// Create and save note
 	newNote := models.Note{
-		Title:     sanitizedRequest.Title,
-		Body:      sanitizedRequest.Body,
+		Title:     requestVars.Title,
+		Body:      requestVars.Body,
 		Author:    user,
 		Published: false,
-		Tags:      tags,
+		Tags:      util.GetTags(requestVars.Tags),
 	}
 	util.DB.Create(&newNote)
 
@@ -64,16 +54,6 @@ func EditNote(c *gin.Context) {
 		return
 	}
 
-	sanitizedRequest, err := sanitizeRequest(requestVars)
-	if err != nil {
-		c.AbortWithError(500, err)
-		return
-	}
-
-	// Query db for tags
-	var tags []models.Tag
-	util.DB.Where("id in (?)", sanitizedRequest.Tags).Find(&tags)
-
 	// Query db for note
 	var note models.Note
 	util.DB.Preload("Author").Where("id = ?", noteID).First(&note)
@@ -92,41 +72,13 @@ func EditNote(c *gin.Context) {
 	util.DB.Model(&note).Association("Tags").Clear()
 
 	// Save note
-	note.Title = sanitizedRequest.Title
-	note.Body = sanitizedRequest.Body
-	note.Tags = tags
-	note.Published = sanitizedRequest.Publish
+	note.Title = requestVars.Title
+	note.Body = requestVars.Body
+	note.Tags = util.GetTags(requestVars.Tags)
+	note.Published = requestVars.Publish
 
 	util.DB.Save(&note)
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)
-}
-
-func sanitizeRequest(request NoteRequest) (NoteRequest, error) {
-	// TODO 10 seems like a good number for max tags?
-	// Especially if some tags depend on others.
-	if len(request.Tags) > 10 {
-		return NoteRequest{}, errors.New("Too many tags.")
-	}
-
-	// Remove duplicate tags
-	var tempTags []uint
-	for _, tag := range request.Tags {
-		if !contains(tempTags, tag) {
-			tempTags = append(tempTags, tag)
-		}
-	}
-	request.Tags = tempTags
-
-	return request, nil
-}
-
-func contains(set []uint, element uint) bool {
-	for _, e := range set {
-		if e == element {
-			return true
-		}
-	}
-	return false
 }

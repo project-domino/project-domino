@@ -1,0 +1,41 @@
+extends ./writer-panel.pug
+
+block head
+	title New Collection
+	link(rel="stylesheet", href="/assets/select2.css")
+	link(rel="stylesheet", href="//cdn.quilljs.com/0.20.1/quill.snow.css")
+	link(rel="stylesheet", href="/assets/writer-panel-collection.css")
+
+block writer-panel-body
+	div.panel.new-note-container
+		h2.panel-heading Create a new collection
+		div.panel-body
+			h4.panel-field-header Title
+			input.new-note-title.form-input(placeholder="Enter collection title...")
+			h4.panel-field-header Type a short description for your collection
+			textarea.new-collection-description
+			h4.panel-field-header Search for notes to place in your collection
+			div.input-btn-container
+				input.note-search-container(placeholder="Search for a note...")
+				button.note-search.btn.btn-primary
+					span.fa.fa-search.note-search-btn-icon
+			table.tag-search-table.hidden
+				tr
+					th
+					th Name
+					th Description
+			span.result-notification Please enter a search term
+			div.search-table-control.hidden
+				button.btn.btn-success.add-selection-btn Add Selection
+			h4.panel-field-header Selected Notes
+			span.no-notes-text No notes selected...
+			div.selected-notes
+			h4.panel-field-header Pick some tags for your collection
+			div.tag-selector-container
+				select.tag-selector(multiple="multiple", style="width: 100%;")
+		div.panel-footer
+			button.btn.btn-success.publish-btn Publish
+			button.btn.btn-primary.save-btn Save
+
+block scripts
+	script(src="/assets/new-collection.js")

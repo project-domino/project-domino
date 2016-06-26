@@ -84,25 +84,41 @@ func main() {
 		GET("/", view.WriterPanelRedirect).
 		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit", view.EditNote).
+		GET("/collection", handlers.Simple("new-collection.html")).
 		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
 	m.Group("/api/v1").
 		GET("/search/tag", api.SearchTags).
+		GET("/search/note", api.SearchNotes).
 		POST("/note",
-		middleware.RequireAuth(),
-		middleware.RequireUserType(models.Writer, models.Admin),
-		api.NewNote).
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewNote).
 		PUT("/note/:noteID",
-		middleware.RequireAuth(),
-		middleware.RequireUserType(models.Writer, models.Admin),
-		api.EditNote).
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.EditNote).
+		POST("/collection",
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewCollection).
+		PUT("/collection/:collectionID",
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.EditCollection).
+		POST("/textbook",
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewTextbook).
+		PUT("/textbook/:textbookID",
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.EditTextbook).
 		POST("/tag",
-		middleware.RequireAuth(),
-		middleware.RequireUserType(models.Writer, models.Admin),
-		api.NewTag).
-		POST("/collection", handlers.TODO).
-		PUT("/collection", handlers.TODO)
+			middleware.RequireAuth(),
+			middleware.RequireUserType(models.Writer, models.Admin),
+			api.NewTag)
 
 	// Debug Routes
 	if viper.GetBool("http.debug") {

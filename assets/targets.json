@@ -4,35 +4,38 @@
 		"quill.css":   "node_modules/quill/dist/quill.snow.css"
 	},
 	"js": {
-		"editor":    "src/editor/main.js",
-		"main":      "src/js/main.js",
-		"login":     "src/js/login.js",
-		"register":  "src/js/register.js",
-		"new-note":  "src/js/new-note.js",
-		"edit-note": "src/js/edit-note.js",
-		"new-tag":   "src/js/new-tag.js",
-		"note":      "src/js/note.js",
-		"sidebar":   "src/js/sidebar.js"
+		"editor":         "src/editor/main.js",
+		"main":           "src/js/main.js",
+		"login":          "src/js/login.js",
+		"register":       "src/js/register.js",
+		"new-note":       "src/js/new-note.js",
+		"edit-note":      "src/js/edit-note.js",
+		"new-tag":        "src/js/new-tag.js",
+		"note":           "src/js/note.js",
+		"sidebar":        "src/js/sidebar.js",
+		"new-collection": "src/js/new-collection.js"
 	},
 	"pug": {
-		"editor":       "src/pug/editor.pug",
-		"error":        "src/pug/error.pug",
-		"home":         "src/pug/home.pug",
-		"search":       "src/pug/search.pug",
-		"login":        "src/pug/login.pug",
-		"register":     "src/pug/register.pug",
-		"new-note":     "src/pug/new-note.pug",
-		"edit-note":    "src/pug/edit-note.pug",
-		"new-tag":      "src/pug/new-tag.pug",
-		"note":         "src/pug/note.pug",
-		"writer-panel": "src/pug/writer-panel.pug"
+		"editor":         "src/pug/editor.pug",
+		"error":          "src/pug/error.pug",
+		"home":           "src/pug/home.pug",
+		"search":         "src/pug/search.pug",
+		"login":          "src/pug/login.pug",
+		"register":       "src/pug/register.pug",
+		"new-note":       "src/pug/new-note.pug",
+		"edit-note":      "src/pug/edit-note.pug",
+		"new-tag":        "src/pug/new-tag.pug",
+		"note":           "src/pug/note.pug",
+		"writer-panel":   "src/pug/writer-panel.pug",
+		"new-collection": "src/pug/new-collection.pug"
 	},
 	"sass": {
-		"editor":            "src/sass/editor.scss",
-		"home":              "src/sass/home.scss",
-		"main":              "src/sass/main.scss",
-		"login":             "src/sass/login.scss",
-		"writer-panel-note": "src/sass/writer-panel-note.scss",
-		"new-tag":           "src/sass/new-tag.scss"
+		"editor":                  "src/sass/editor.scss",
+		"home":                    "src/sass/home.scss",
+		"main":                    "src/sass/main.scss",
+		"login":                   "src/sass/login.scss",
+		"writer-panel-note":       "src/sass/writer-panel-note.scss",
+		"new-tag":                 "src/sass/new-tag.scss",
+		"writer-panel-collection": "src/sass/writer-panel-collection.scss"
 	}
 }
