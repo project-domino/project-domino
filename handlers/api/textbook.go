@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // TextbookRequest holds the request object for NewTextbook and EditTextbook
@@ -33,12 +33,12 @@ func NewTextbook(c *gin.Context) {
 	newTextbook := models.Textbook{
 		Title:       requestVars.Title,
 		Description: requestVars.Description,
-		Collections: util.GetCollections(requestVars.Collections),
+		Collections: db.GetCollections(requestVars.Collections),
 		Author:      user,
 		Published:   false,
-		Tags:        util.GetTags(requestVars.Tags),
+		Tags:        db.GetTags(requestVars.Tags),
 	}
-	util.DB.Create(&newTextbook)
+	db.DB.Create(&newTextbook)
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, newTextbook)
@@ -58,7 +58,7 @@ func EditTextbook(c *gin.Context) {
 
 	// Query db for textbook
 	var textbook models.Textbook
-	util.DB.Preload("Author").Where("id = ?", textbookID).First(&textbook)
+	db.DB.Preload("Author").Where("id = ?", textbookID).First(&textbook)
 	if textbook.ID == 0 {
 		errors.TextbookNotFound.Apply(c)
 		return
@@ -71,18 +71,18 @@ func EditTextbook(c *gin.Context) {
 	}
 
 	// Clear current textbook-collection and textbook-tag relationships
-	util.DB.Model(&textbook).Association("Tags").Clear()
-	util.DB.Model(&textbook).Association("Collections").Clear()
+	db.DB.Model(&textbook).Association("Tags").Clear()
+	db.DB.Model(&textbook).Association("Collections").Clear()
 
 	// Edit and save textbook
 	textbook.Title = requestVars.Title
 	textbook.Description = requestVars.Description
-	textbook.Collections = util.GetCollections(requestVars.Collections)
+	textbook.Collections = db.GetCollections(requestVars.Collections)
 	textbook.Author = user
 	textbook.Published = requestVars.Publish
-	textbook.Tags = util.GetTags(requestVars.Tags)
+	textbook.Tags = db.GetTags(requestVars.Tags)
 
-	util.DB.Save(&textbook)
+	db.DB.Save(&textbook)
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, textbook)

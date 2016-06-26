@@ -1,4 +1,4 @@
-package util
+package db
 
 import "github.com/project-domino/project-domino/models"
 

@@ -1,14 +1,11 @@
 package handlers
 
-import (
-	"github.com/gin-gonic/gin"
-	"github.com/project-domino/project-domino/util"
-)
+import "github.com/gin-gonic/gin"
 
 // Simple creates a new handler that renders based on the given template name.
 func Simple(template string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		util.Render(c, template, "")
+		Render(c, template, "")
 	}
 }
 
@@ -16,6 +13,6 @@ func Simple(template string) gin.HandlerFunc {
 // the context attached.
 func Value(template, key string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		util.Render(c, template, key)
+		Render(c, template, key)
 	}
 }

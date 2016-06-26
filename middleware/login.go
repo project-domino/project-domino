@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // Login adds a user struct to the request context based on the authentication
@@ -29,7 +29,7 @@ func Login() gin.HandlerFunc {
 		// If the cookie is present, search the database for the token.
 		var authEntries []models.AuthToken
 
-		util.DB.Limit(1).Preload("User").Where(&models.AuthToken{
+		db.DB.Limit(1).Preload("User").Where(&models.AuthToken{
 			Token: authCookie,
 		}).Where("Expires > ?", time.Now()).Find(&authEntries)
 		if len(authEntries) == 0 {

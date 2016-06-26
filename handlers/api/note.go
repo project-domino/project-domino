@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // NoteRequest holds the request object for NewNote and EditNote
@@ -34,9 +34,9 @@ func NewNote(c *gin.Context) {
 		Body:      requestVars.Body,
 		Author:    user,
 		Published: false,
-		Tags:      util.GetTags(requestVars.Tags),
+		Tags:      db.GetTags(requestVars.Tags),
 	}
-	util.DB.Create(&newNote)
+	db.DB.Create(&newNote)
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, newNote)
@@ -56,7 +56,7 @@ func EditNote(c *gin.Context) {
 
 	// Query db for note
 	var note models.Note
-	util.DB.Preload("Author").Where("id = ?", noteID).First(&note)
+	db.DB.Preload("Author").Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
 		errors.NoteNotFound.Apply(c)
 		return
@@ -69,15 +69,15 @@ func EditNote(c *gin.Context) {
 	}
 
 	// Clear current note-tag relationships
-	util.DB.Model(&note).Association("Tags").Clear()
+	db.DB.Model(&note).Association("Tags").Clear()
 
 	// Save note
 	note.Title = requestVars.Title
 	note.Body = requestVars.Body
-	note.Tags = util.GetTags(requestVars.Tags)
+	note.Tags = db.GetTags(requestVars.Tags)
 	note.Published = requestVars.Publish
 
-	util.DB.Save(&note)
+	db.DB.Save(&note)
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)

@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // CollectionRequest holds the request object for NewCollection and EditCollection
@@ -33,12 +33,12 @@ func NewCollection(c *gin.Context) {
 	newCollection := models.Collection{
 		Title:       requestVars.Title,
 		Description: requestVars.Description,
-		Notes:       util.GetNotes(requestVars.Notes),
+		Notes:       db.GetNotes(requestVars.Notes),
 		Author:      user,
 		Published:   false,
-		Tags:        util.GetTags(requestVars.Tags),
+		Tags:        db.GetTags(requestVars.Tags),
 	}
-	util.DB.Create(&newCollection)
+	db.DB.Create(&newCollection)
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, newCollection)
@@ -58,7 +58,7 @@ func EditCollection(c *gin.Context) {
 
 	// Query db for collection
 	var collection models.Collection
-	util.DB.Preload("Author").Where("id = ?", collectionID).First(&collection)
+	db.DB.Preload("Author").Where("id = ?", collectionID).First(&collection)
 	if collection.ID == 0 {
 		errors.NoteNotFound.Apply(c)
 		return
@@ -71,18 +71,18 @@ func EditCollection(c *gin.Context) {
 	}
 
 	// Clear current collection-tag and collection-note relationships
-	util.DB.Model(&collection).Association("Tags").Clear()
-	util.DB.Model(&collection).Association("Notes").Clear()
+	db.DB.Model(&collection).Association("Tags").Clear()
+	db.DB.Model(&collection).Association("Notes").Clear()
 
 	// Edit and save collection
 	collection.Title = requestVars.Title
 	collection.Description = requestVars.Description
-	collection.Notes = util.GetNotes(requestVars.Notes)
+	collection.Notes = db.GetNotes(requestVars.Notes)
 	collection.Author = user
 	collection.Published = requestVars.Publish
-	collection.Tags = util.GetTags(requestVars.Tags)
+	collection.Tags = db.GetTags(requestVars.Tags)
 
-	util.DB.Save(&collection)
+	db.DB.Save(&collection)
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, collection)

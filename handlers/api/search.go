@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // SearchTags searches for tags that match a certain search query
@@ -29,7 +29,7 @@ func noteSearch(q string) []models.Note {
 		sqlString := fmt.Sprintf("%%%s%%", q)
 
 		// Query db
-		util.DB.Limit(10).
+		db.DB.Limit(10).
 			Where("name LIKE ?", sqlString).Find(&notes)
 	}
 	return notes
@@ -42,7 +42,7 @@ func tagSearch(q string) []models.Tag {
 		sqlString := fmt.Sprintf("%%%s%%", q)
 
 		// Query db
-		util.DB.Limit(10).
+		db.DB.Limit(10).
 			Where("name LIKE ?", sqlString).
 			Or("description LIKE ?", sqlString).Find(&tags)
 	}

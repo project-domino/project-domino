@@ -5,13 +5,13 @@ import (
 	"fmt"
 
 	// Internal Dependencies
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
 	"github.com/project-domino/project-domino/handlers/view"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 
 	// Third-Party Dependencies
 	"github.com/gin-gonic/gin"
@@ -28,14 +28,14 @@ import (
 func main() {
 	// Open database connection.
 	var err error
-	util.DB, err = gorm.Open(
+	db.DB, err = gorm.Open(
 		viper.GetString("database.type"),
 		viper.GetString("database.url"),
 	)
 	Must(err)
-	defer util.DB.Close()
-	util.DB.LogMode(viper.GetBool("database.debug"))
-	Must(SetupDatabase(util.DB))
+	defer db.DB.Close()
+	db.DB.LogMode(viper.GetBool("database.debug"))
+	Must(SetupDatabase(db.DB))
 
 	// Enable/disable gin's debug mode.
 	if viper.GetBool("http.debug") {
@@ -128,7 +128,7 @@ func main() {
 				errors.Debug.Apply(c)
 			}).
 			GET("/config", func(c *gin.Context) {
-				util.RenderData(c, "debug.html", "data", viper.AllSettings())
+				handlers.RenderData(c, "debug.html", "data", viper.AllSettings())
 			}).
 			GET("/new/note", handlers.Simple("new-note.html"))
 	}

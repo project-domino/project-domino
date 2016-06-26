@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // Login handles requests to log a user in.
@@ -29,7 +29,7 @@ func Login(c *gin.Context) {
 
 	// Find user in the database
 	var users []models.User
-	util.DB.Limit(1).
+	db.DB.Limit(1).
 		Where(&models.User{
 			Email: email,
 		}).Or(&models.User{
@@ -83,7 +83,7 @@ func Register(c *gin.Context) {
 
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
-	util.DB.Where(&models.User{
+	db.DB.Where(&models.User{
 		Email: email,
 	}).Or(&models.User{
 		UserName: userName,
@@ -105,7 +105,7 @@ func Register(c *gin.Context) {
 	}
 
 	// Add user to database.
-	util.DB.Create(&user)
+	db.DB.Create(&user)
 
 	// Set an auth cookie for the user
 	// TODO unlegacy
@@ -129,7 +129,7 @@ func AuthCookie(c *gin.Context, user models.User) {
 		return
 	}
 
-	util.DB.Create(&authToken)
+	db.DB.Create(&authToken)
 
 	// Create cookie
 	cookie := http.Cookie{

@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // LoadUser loads certain objects in the request context's user
@@ -13,7 +13,7 @@ func LoadUser(objects ...string) gin.HandlerFunc {
 		user := c.MustGet("user").(models.User)
 
 		// Set objects to be preloaded to db
-		preloadedDB := util.DB.Where("id = ?", user.ID)
+		preloadedDB := db.DB.Where("id = ?", user.ID)
 		for _, object := range objects {
 			preloadedDB = preloadedDB.Preload(object)
 		}

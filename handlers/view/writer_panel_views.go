@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers/vars"
 	"github.com/project-domino/project-domino/models"
-	"github.com/project-domino/project-domino/util"
 )
 
 // WriterPanelRedirect redirects the user to a page in the writer panel
@@ -24,11 +24,11 @@ func EditNote(c *gin.Context) {
 	noteID := c.Param("noteID")
 
 	// Load Notes into the user
-	util.DB.Model(&user).Association("Notes").Find(&user.Notes)
+	db.DB.Model(&user).Association("Notes").Find(&user.Notes)
 
 	// Query db for note
 	var note models.Note
-	util.DB.Preload("Author").
+	db.DB.Preload("Author").
 		Preload("Tags").
 		Where("id = ?", noteID).First(&note)
 	if note.ID == 0 {
