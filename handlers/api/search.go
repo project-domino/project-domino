@@ -30,7 +30,7 @@ func noteSearch(q string) []models.Note {
 
 		// Query db
 		db.DB.Limit(10).
-			Where("name LIKE ?", sqlString).Find(&notes)
+			Where("title LIKE ?", sqlString).Find(&notes)
 	}
 	return notes
 }

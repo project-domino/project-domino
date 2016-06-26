@@ -18,15 +18,12 @@ block writer-panel-body
 			textarea.new-collection-description
 			h4.panel-field-header Search for notes to place in your collection
 			div.input-btn-container
-				input.note-search-container(placeholder="Search for a note...")
-				button.note-search.btn.btn-primary
+				input.note-search-field(placeholder="Search for a note...")
+				button.note-search-btn.btn.btn-primary
 					span.fa.fa-search.note-search-btn-icon
-			table.tag-search-table.hidden
-				tr
-					th
-					th Name
-					th Description
-			span.result-notification Please enter a search term
+			h4.panel-field-header Results
+			div.search-result-container.item-list
+			span.result-notification Please enter a search term...
 			div.search-table-control.hidden
 				button.btn.btn-success.add-selection-btn Add Selection
 			h4.panel-field-header Selected Notes

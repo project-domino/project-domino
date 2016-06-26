@@ -5,8 +5,7 @@ import getModal from "../js/modal.js";
 const modal = getModal();
 
 // Changes resultNotification and resultTable based on results from tag search query
-var tagResultHandler = data => {
-	var json = JSON.parse(data);
+var tagResultHandler = json => {
 	var resultNotification = $(".result-notification");
 	var resultTable = $(".tag-search-table");
 	if($(".new-tag-name-field").val() === "") {
@@ -55,7 +54,7 @@ $(() => {
 			data: {
 				q: $(".new-tag-name-field").val(),
 			},
-			dataType: "text",
+			dataType: "json",
 		}).then(tagResultHandler).fail(err => {
 			console.log(err);
 			modal.alert(err.responseText, 3000);
