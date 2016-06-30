@@ -2,6 +2,7 @@
 
 import $ from "jquery";
 import "select2";
+import _ from "lodash";
 
 import getModal from "../js/modal.js";
 import WriterPanelUtil from "./writer-panel-util.js";
@@ -19,14 +20,20 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 		super();
 		if(selectedNotes)
 			this.selectedNotes = selectedNotes;
+		else
+			this.selectedNotes = [];
 		this.resultNotes = [];
+
+		super.initTagSelector();
+		var handler = $.proxy(this.searchHandler, this);
+		$(".note-search-field").on("keyup", _.debounce(handler, 250));
+		$(".note-search-btn").click(handler);
 	}
 
 	/**
-	 * toggleSelectedNoteVisibility hides the selectedNote div if there are
-	 * no selected notes
+	 * renderSelectNotes renders all selected notes in selectNotes
 	 */
-	toggleSelectedNoteVisibility() {
+	renderSelectNotes() {
 		if(this.selectedNotes.length > 0) {
 			$(".selected-notes").removeClass("hidden");
 			$(".no-notes-text").addClass("hidden");
@@ -34,52 +41,39 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			$(".selected-notes").addClass("hidden");
 			$(".no-notes-text").removeClass("hidden");
 		}
-	}
-	/**
-	 * numberSelections numbers selected notes in the DOM
-	 */
-	numberSelections() {
-		$(".select-note-number").each(function (i) {
-			$(this).text(i + 1);
-		});
-	}
-	/**
-	 * refreshSelectArray updates select array from DOM
-	 */
-	refreshSelectArray() {
-		this.selectedNotes = $.makeArray($(".selected-notes").children()).map(e => {
-			return JSON.parse($(e).data("note"));
-		});
-	}
-
-	/**
-	 * renderSelectNotes renders all selected notes in selectNotes
-	 */
-	renderSelectNotes() {
-		this.toggleSelectedNotes();
 		$(".selected-notes").empty().append(this.selectedNotes.map((note, i) => {
 			return $("<div>").append(
 				$("<div>").append(
 					$("<div>").append(
-						$("<span>").addClass("fa fa-trash").click(function () {
-							$(this).closest(".list-item").remove();
-							this.numberSelections();
-							this.refreshSelectArray();
-							this.toggleSelectedNotes();
+						$("<span>").addClass("fa fa-trash").click(() => {
+							_.remove(this.selectedNotes, e => {
+								return e.ID === note.ID;
+							});
+							this.renderSelectNotes();
 						})
 					).addClass("select-options-left"),
 					$("<div>").append(
-						$("<span>").addClass("fa fa-chevron-up").click(function () {
-							var current = $(this).closest(".list-item");
-							current.prev(".list-item").before(current);
-							this.numberSelections();
-							this.refreshSelectArray();
+						$("<span>").addClass("fa fa-chevron-up").click(() => {
+							var i = _.findIndex(this.selectedNotes, e => {
+								return e.ID === note.ID;
+							});
+							if(i > 0) {
+								var temp = this.selectedNotes[i - 1];
+								this.selectedNotes[i - 1] = this.selectedNotes[i];
+								this.selectedNotes[i] = temp;
+							}
+							this.renderSelectNotes();
 						}),
-						$("<span>").addClass("fa fa-chevron-down").click(function () {
-							var current = $(this).closest(".list-item");
-							current.next(".list-item").after(current);
-							this.numberSelections();
-							this.refreshSelectArray();
+						$("<span>").addClass("fa fa-chevron-down").click(() => {
+							var i = _.findIndex(this.selectedNotes, e => {
+								return e.ID === note.ID;
+							});
+							if(i < this.selectedNotes.length) {
+								var temp = this.selectedNotes[i + 1];
+								this.selectedNotes[i + 1] = this.selectedNotes[i];
+								this.selectedNotes[i] = temp;
+							}
+							this.renderSelectNotes();
 						})
 					).addClass("select-options-right")
 				).addClass("item-left select-options-container"),
@@ -98,7 +92,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 							.addClass("item-description")
 					).addClass("item-description")
 				).addClass("item-right")
-			).addClass("list-item").data("note", JSON.stringify(note));
+			).addClass("list-item").data("note-id", note.ID);
 		}));
 	}
 
@@ -113,8 +107,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			$(".search-result-container").append(this.resultNotes.map(note => {
 				return $("<div>").append(
 					$("<div>").append(
-						$("<button>").click(function () {
-							var note = JSON.parse($(this).parent().parent().data("note"));
+						$("<button>").click(() => {
 							if(this.selectedNotes.map(e => e.ID).includes(note.ID)) {
 								modal.alert("This note has already been selected", 3000);
 								return;
@@ -165,7 +158,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 				q: query,
 			},
 			dataType: "json",
-		}).then(function (data) {
+		}).then(data => {
 			this.resultNotes = data;
 			this.renderResultNotes();
 		}).fail(err => {
