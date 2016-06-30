@@ -1,1 +1,39 @@
 @import "variables.scss";
+
+.item-list {
+	border-left: 1px solid $border-color;
+	border-right: 1px solid $border-color;
+	border-top: 1px solid $border-color;
+	margin: 0 auto;
+	width: 90%;
+}
+
+.list-item {
+	border-bottom: 1px solid $border-color;
+	display: flex;
+	height: 50px;
+	width: 100%;
+
+	.item-left {
+		border-right: 1px solid $border-color;
+		display: flex;
+		align-items: center;
+		width: 50px;
+
+		button {
+			height: 60%;
+			margin: 0 auto;
+			width: 60%;
+		}
+	}
+	.item-right {
+		display:flex;
+		flex-grow: 1;
+		flex-direction: column;
+		justify-content: space-evenly;
+		padding: 5px;
+
+		.item-title { padding-bottom: 3px; }
+		.item-description { margin: 0; }
+	}
+}

@@ -13,22 +13,19 @@ block writer-panel-body
 		h2.panel-heading Create a new collection
 		div.panel-body
 			h4.panel-field-header Title
-			input.new-note-title.form-input(placeholder="Enter collection title...")
+			input.new-note-title.form-input(placeholder="Enter collection title...", autocomplete="off")
 			h4.panel-field-header Type a short description for your collection
 			textarea.new-collection-description
 			h4.panel-field-header Search for notes to place in your collection
 			div.input-btn-container
-				input.note-search-field(placeholder="Search for a note...")
+				input.note-search-field(placeholder="Search for a note...", autocomplete="off")
 				button.note-search-btn.btn.btn-primary
 					span.fa.fa-search.note-search-btn-icon
-			h4.panel-field-header Results
-			div.search-result-container.item-list
+			div.search-result-container.hidden.item-list
 			span.result-notification Please enter a search term...
-			div.search-table-control.hidden
-				button.btn.btn-success.add-selection-btn Add Selection
 			h4.panel-field-header Selected Notes
+			div.selected-notes.hidden.item-list
 			span.no-notes-text No notes selected...
-			div.selected-notes
 			h4.panel-field-header Pick some tags for your collection
 			div.tag-selector-container
 				select.tag-selector(multiple="multiple", style="width: 100%;")
