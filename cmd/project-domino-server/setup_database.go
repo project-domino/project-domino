@@ -13,7 +13,7 @@ func SetupDatabase(db *gorm.DB) error {
 	setupTable(db, &models.Comment{})
 	setupTable(db, &models.Note{})
 	setupTable(db, &models.Collection{})
-	setupTable(db, &models.Textbook{})
+	setupTable(db, &models.CollectionNote{})
 	setupTable(db, &models.University{})
 	setupTable(db, &models.Tag{})
 	return db.Error

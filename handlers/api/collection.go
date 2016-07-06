@@ -25,7 +25,13 @@ func NewCollection(c *gin.Context) {
 	// Get request variables
 	var requestVars CollectionRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		c.AbortWithError(400, err)
+		errors.BadParameters.Apply(c)
+		return
+	}
+
+	// Verify request validity
+	if err, ok := verifyCollectionRequest(requestVars); !ok {
+		err.Apply(c)
 		return
 	}
 
@@ -33,12 +39,14 @@ func NewCollection(c *gin.Context) {
 	newCollection := models.Collection{
 		Title:       requestVars.Title,
 		Description: requestVars.Description,
-		Notes:       db.GetNotes(requestVars.Notes),
 		Author:      user,
 		Published:   false,
 		Tags:        db.GetTags(requestVars.Tags),
 	}
 	db.DB.Create(&newCollection)
+
+	// Save collection-note relationships
+	saveNoteRelations(newCollection, requestVars.Notes)
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, newCollection)
@@ -52,7 +60,13 @@ func EditCollection(c *gin.Context) {
 	// Get request variables
 	var requestVars CollectionRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		c.AbortWithError(400, err)
+		errors.BadParameters.Apply(c)
+		return
+	}
+
+	// Verify request validity
+	if err, ok := verifyCollectionRequest(requestVars); !ok {
+		err.Apply(c)
 		return
 	}
 
@@ -60,7 +74,7 @@ func EditCollection(c *gin.Context) {
 	var collection models.Collection
 	db.DB.Preload("Author").Where("id = ?", collectionID).First(&collection)
 	if collection.ID == 0 {
-		errors.NoteNotFound.Apply(c)
+		errors.CollectionNotFound.Apply(c)
 		return
 	}
 
@@ -72,18 +86,71 @@ func EditCollection(c *gin.Context) {
 
 	// Clear current collection-tag and collection-note relationships
 	db.DB.Model(&collection).Association("Tags").Clear()
-	db.DB.Model(&collection).Association("Notes").Clear()
+	db.DB.Where("collection_id = ?", collection.ID).Delete(models.CollectionNote{})
 
 	// Edit and save collection
 	collection.Title = requestVars.Title
 	collection.Description = requestVars.Description
-	collection.Notes = db.GetNotes(requestVars.Notes)
 	collection.Author = user
 	collection.Published = requestVars.Publish
 	collection.Tags = db.GetTags(requestVars.Tags)
 
 	db.DB.Save(&collection)
 
+	// Save collection-note relationships
+	saveNoteRelations(collection, requestVars.Notes)
+
 	// Return collection in JSON
 	c.JSON(http.StatusOK, collection)
+}
+
+// verifyCollectionRequest verifies if values in collection request are okay
+// returns error and ok value
+func verifyCollectionRequest(request CollectionRequest) (*errors.Error, bool) {
+	// check for missing parameters
+	if request.Description == "" || request.Title == "" {
+		return errors.MissingParameters, false
+	}
+
+	// check for duplicate notes
+	var temp []uint
+	for _, e := range request.Notes {
+		if !contains(temp, e) {
+			temp = append(temp, e)
+		} else {
+			return errors.BadParameters, false
+		}
+	}
+
+	// verify notes exist
+	if err := db.VerifyNotes(request.Notes); err != nil {
+		return errors.NoteNotFound, false
+	}
+
+	return &errors.Error{}, true
+}
+
+// contains checks if array "a" contains uint "e"
+func contains(a []uint, e uint) bool {
+	for _, i := range a {
+		if i == e {
+			return true
+		}
+	}
+	return false
+}
+
+// saveNoteRelations saves the relationships between a collection and notes
+func saveNoteRelations(collection models.Collection, notes []uint) {
+	for i, noteID := range notes {
+		var note models.Note
+		db.DB.Where("id = ?", noteID).First(&note)
+
+		var relation models.CollectionNote
+		relation.Collection = collection
+		relation.Note = note
+		relation.Order = uint(i) + 1
+
+		db.DB.Create(&relation)
+	}
 }

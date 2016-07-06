@@ -5,7 +5,6 @@ block body
 		h4.sidebar-header Create
 		a.sidebar-link(href="/writer-panel/note") New Note
 		a.sidebar-link(href="/writer-panel/collection") New Collection
-		a.sidebar-link(href="/writer-panel/textbook") New Textbook
 		a.sidebar-link(href="/writer-panel/tag") New Tag
 		div.sidebar-section-container
 			h4.sidebar-header My Notes
@@ -20,12 +19,12 @@ block body
 		div.sidebar-section-container
 			h4.sidebar-header My Collections
 			| {{range .user.Collections}}
-			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
-			| {{end}}
-		div.sidebar-section-container
-			h4.sidebar-header My Textbooks
+			| {{if .Published}}{{else}}
+			a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") {{.Title}} - Draft
+			| {{end}}{{end}}
 			| {{range .user.Collections}}
-			a.sidebar-link(href="/writer-panel/edit/collection/{{.ID}}") {{.Title}}
-			| {{end}}
+			| {{if .Published}}
+			a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") {{.Title}}
+			| {{end}}{{end}}
 	div.writer-body
 		block writer-panel-body

@@ -15,9 +15,7 @@ type Collection struct {
 
 	Published bool
 
-	Notes     []Note     `gorm:"many2many:note_collection;"`
-	Textbooks []Textbook `gorm:"many2many:textbook_collection;"`
-	Tags      []Tag      `gorm:"many2many:collection_tag;"`
+	Tags []Tag `gorm:"many2many:collection_tag;"`
 
 	// Ranking Info
 	Upvotes       uint

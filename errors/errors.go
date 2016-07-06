@@ -12,6 +12,7 @@ var (
 
 // 400 errors
 var (
+	BadParameters     = &Error{400, "Bad Parameters"}
 	MissingParameters = &Error{400, "Missing Parameters"}
 	TagExists         = &Error{400, "Tag already exists"}
 )
@@ -27,7 +28,6 @@ var (
 var (
 	NoteNotFound       = &Error{404, "Note Not Found"}
 	CollectionNotFound = &Error{404, "Collection Not Found"}
-	TextbookNotFound   = &Error{404, "Textbook Not Found"}
 )
 
 // 5xx errors

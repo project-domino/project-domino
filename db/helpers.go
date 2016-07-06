@@ -1,6 +1,9 @@
 package db
 
-import "github.com/project-domino/project-domino/models"
+import (
+	"github.com/project-domino/project-domino/errors"
+	"github.com/project-domino/project-domino/models"
+)
 
 // GetTags gets tags from the db whose ids are in a specified slice
 func GetTags(ids []uint) []models.Tag {
@@ -16,9 +19,14 @@ func GetNotes(ids []uint) []models.Note {
 	return notes
 }
 
-// GetCollections gets collections from the db whose ids are in a specified slice
-func GetCollections(ids []uint) []models.Collection {
-	var collections []models.Collection
-	DB.Where("id in (?)", ids).Find(&collections)
-	return collections
+// VerifyNotes checks if notes with given ids exist
+func VerifyNotes(ids []uint) error {
+	for _, id := range ids {
+		var note models.Note
+		DB.Where("id = ?", id).Find(&note)
+		if note.ID == 0 {
+			return errors.NoteNotFound
+		}
+	}
+	return nil
 }

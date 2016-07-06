@@ -18,10 +18,12 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 	// Constructs new WriterPanelCollectionUtil
 	constructor(selectedNotes) {
 		super();
-		if(selectedNotes)
+		if(selectedNotes) {
 			this.selectedNotes = selectedNotes;
-		else
+			this.renderSelectNotes();
+		} else {
 			this.selectedNotes = [];
+		}
 		this.resultNotes = [];
 
 		super.initTagSelector();
@@ -165,6 +167,18 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			console.log(err);
 			modal.alert(err.responseText, 3000);
 		});
+	}
+
+	/**
+	 * getData returns data from collection page
+	 */
+	getData() {
+		return {
+			title:       $(".new-collection-title").val(),
+			description: $(".new-collection-description").val(),
+			notes:       this.selectedNotes.map(note => {return note.ID;}),
+			tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
+		};
 	}
 
 }

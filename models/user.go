@@ -27,7 +27,6 @@ type User struct {
 	University   University
 	Notes        []Note       `gorm:"ForeignKey:AuthorID"`
 	Collections  []Collection `gorm:"ForeignKey:AuthorID"`
-	Textbooks    []Textbook   `gorm:"ForeignKey:AuthorID"`
 
 	Email          string
 	EmailVerified  bool
@@ -42,9 +41,6 @@ type User struct {
 
 	UpvoteNotes   []Note `gorm:"many2many:upvotenote_user;"`
 	DownvoteNotes []Note `gorm:"many2many:downvotenote_user;"`
-
-	UpvoteTextbooks   []Textbook `gorm:"many2many:upvotetextbook_user;"`
-	DownvoteTextbooks []Textbook `gorm:"many2many:downvotetextbook_user;"`
 }
 
 // CheckPassword checks if the provided password is correct. Note that it will

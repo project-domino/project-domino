@@ -28,6 +28,12 @@ func NewNote(c *gin.Context) {
 		return
 	}
 
+	// Verify request validity
+	if err, ok := verifyNoteRequest(requestVars); !ok {
+		err.Apply(c)
+		return
+	}
+
 	// Create and save note
 	newNote := models.Note{
 		Title:     requestVars.Title,
@@ -51,6 +57,12 @@ func EditNote(c *gin.Context) {
 	var requestVars NoteRequest
 	if err := c.BindJSON(&requestVars); err != nil {
 		c.AbortWithError(400, err)
+		return
+	}
+
+	// Verify request validity
+	if err, ok := verifyNoteRequest(requestVars); !ok {
+		err.Apply(c)
 		return
 	}
 
@@ -81,4 +93,15 @@ func EditNote(c *gin.Context) {
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)
+}
+
+// verifyNoteRequest verifies if values in note request are okay
+// returns error and ok value
+func verifyNoteRequest(request NoteRequest) (*errors.Error, bool) {
+	// check for missing parameters
+	if request.Body == "" || request.Title == "" {
+		return errors.MissingParameters, false
+	}
+
+	return &errors.Error{}, true
 }

@@ -18,13 +18,9 @@ func WriterPanelRedirect(c *gin.Context) {
 }
 
 // EditNote returns the page to edit a given note
-// TODO This got merged, check for correctness.
 func EditNote(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 	noteID := c.Param("noteID")
-
-	// Load Notes into the user
-	db.DB.Model(&user).Association("Notes").Find(&user.Notes)
 
 	// Query db for note
 	var note models.Note
@@ -55,4 +51,41 @@ func EditNote(c *gin.Context) {
 	c.Set("note", note)
 	c.Set("noteJSON", string(noteJSON))
 	c.HTML(200, "edit-note.html", vars.Default(c))
+}
+
+// EditCollection returns the page to edit a given collection
+func EditCollection(c *gin.Context) {
+	user := c.MustGet("user").(models.User)
+	collectionID := c.Param("collectionID")
+
+	// Query db for collection
+	var collection models.Collection
+	db.DB.Preload("Author").
+		Preload("Tags").
+		Preload("Notes").
+		Where("id = ?", collectionID).First(&collection)
+	if collection.ID == 0 {
+		errors.CollectionNotFound.Apply(c)
+		return
+	}
+
+	// Check if request user is the owner of the collection
+	if collection.Author.ID != user.ID {
+		errors.NotNoteOwner.Apply(c)
+		return
+	}
+
+	// Format collection in JSON
+	collectionJSON, err := json.Marshal(collection)
+	if err != nil {
+		c.Error(err)
+		errors.JSON.Apply(c)
+		return
+	}
+
+	// Set request context and render html
+	c.Set("user", user)
+	c.Set("collection", collection)
+	c.Set("collectionJSON", string(collectionJSON))
+	c.HTML(200, "edit-collection.html", vars.Default(c))
 }

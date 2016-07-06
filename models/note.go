@@ -14,8 +14,7 @@ type Note struct {
 
 	Published bool
 
-	Collections []Collection `gorm:"many2many:note_collection;"`
-	Tags        []Tag        `gorm:"many2many:note_tag;"`
+	Tags []Tag `gorm:"many2many:note_tag;"`
 
 	// Ranking Info
 	Upvotes       uint

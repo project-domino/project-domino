@@ -80,11 +80,12 @@ func main() {
 	m.Group("/writer-panel",
 		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin),
-		middleware.LoadUser("Notes")).
+		middleware.LoadUser("Notes", "Collections")).
 		GET("/", view.WriterPanelRedirect).
 		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit", view.EditNote).
 		GET("/collection", handlers.Simple("new-collection.html")).
+		GET("/collection/:collectionID/edit", view.EditCollection).
 		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
@@ -107,14 +108,6 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.EditCollection).
-		POST("/textbook",
-			middleware.RequireAuth(),
-			middleware.RequireUserType(models.Writer, models.Admin),
-			api.NewTextbook).
-		PUT("/textbook/:textbookID",
-			middleware.RequireAuth(),
-			middleware.RequireUserType(models.Writer, models.Admin),
-			api.EditTextbook).
 		POST("/tag",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
