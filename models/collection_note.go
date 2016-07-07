@@ -11,7 +11,7 @@ type CollectionNote struct {
 	NoteID uint
 
 	Collection   Collection
-	CollectionID uint
+	CollectionID uint `gorm:"index"`
 
 	Order uint
 }

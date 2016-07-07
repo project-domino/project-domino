@@ -80,13 +80,12 @@ func EditNote(c *gin.Context) {
 		return
 	}
 
-	// Clear current note-tag relationships
-	db.DB.Model(&note).Association("Tags").Clear()
+	// Save note-tag relationships
+	db.DB.Model(&note).Association("Tags").Replace(db.GetTags(requestVars.Tags))
 
 	// Save note
 	note.Title = requestVars.Title
 	note.Body = requestVars.Body
-	note.Tags = db.GetTags(requestVars.Tags)
 	note.Published = requestVars.Publish
 
 	db.DB.Save(&note)

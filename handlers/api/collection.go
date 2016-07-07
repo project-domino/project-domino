@@ -84,16 +84,17 @@ func EditCollection(c *gin.Context) {
 		return
 	}
 
-	// Clear current collection-tag and collection-note relationships
-	db.DB.Model(&collection).Association("Tags").Clear()
+	// Clear current collection-note relationships
 	db.DB.Where("collection_id = ?", collection.ID).Delete(models.CollectionNote{})
+
+	// Save collection-tag relationships
+	db.DB.Model(&collection).Association("Tags").Replace(db.GetTags(requestVars.Tags))
 
 	// Edit and save collection
 	collection.Title = requestVars.Title
 	collection.Description = requestVars.Description
 	collection.Author = user
 	collection.Published = requestVars.Publish
-	collection.Tags = db.GetTags(requestVars.Tags)
 
 	db.DB.Save(&collection)
 
@@ -143,12 +144,9 @@ func contains(a []uint, e uint) bool {
 // saveNoteRelations saves the relationships between a collection and notes
 func saveNoteRelations(collection models.Collection, notes []uint) {
 	for i, noteID := range notes {
-		var note models.Note
-		db.DB.Where("id = ?", noteID).First(&note)
-
 		var relation models.CollectionNote
 		relation.Collection = collection
-		relation.Note = note
+		relation.NoteID = noteID
 		relation.Order = uint(i) + 1
 
 		db.DB.Create(&relation)
