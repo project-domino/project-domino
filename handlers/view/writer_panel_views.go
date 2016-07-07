@@ -1,11 +1,9 @@
 package view
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers/vars"
 	"github.com/project-domino/project-domino/models"
@@ -20,17 +18,7 @@ func WriterPanelRedirect(c *gin.Context) {
 // EditNote returns the page to edit a given note
 func EditNote(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
-	noteID := c.Param("noteID")
-
-	// Query db for note
-	var note models.Note
-	db.DB.Preload("Author").
-		Preload("Tags").
-		Where("id = ?", noteID).First(&note)
-	if note.ID == 0 {
-		errors.NoteNotFound.Apply(c)
-		return
-	}
+	note := c.MustGet("note").(models.Note)
 
 	// Check if request user is the owner of the note
 	if note.Author.ID != user.ID {
@@ -38,38 +26,14 @@ func EditNote(c *gin.Context) {
 		return
 	}
 
-	// Format note in JSON
-	noteJSON, err := json.Marshal(note)
-	if err != nil {
-		c.Error(err)
-		errors.JSON.Apply(c)
-		return
-	}
-
-	// Set request context and render html
-	c.Set("user", user)
-	c.Set("note", note)
-	c.Set("noteJSON", string(noteJSON))
+	// Render HTML
 	c.HTML(200, "edit-note.html", vars.Default(c))
 }
 
 // EditCollection returns the page to edit a given collection
 func EditCollection(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
-	collectionID := c.Param("collectionID")
-
-	// Query db for collection
-	var collection models.Collection
-	db.DB.Preload("Author").
-		Preload("Tags").
-		Where("id = ?", collectionID).First(&collection)
-	if collection.ID == 0 {
-		errors.CollectionNotFound.Apply(c)
-		return
-	}
-
-	// Load notes into the collection
-	db.LoadCollectionNotes(&collection)
+	collection := c.MustGet("collection").(models.Collection)
 
 	// Check if request user is the owner of the collection
 	if collection.Author.ID != user.ID {
@@ -77,17 +41,6 @@ func EditCollection(c *gin.Context) {
 		return
 	}
 
-	// Format collection in JSON
-	collectionJSON, err := json.Marshal(collection)
-	if err != nil {
-		c.Error(err)
-		errors.JSON.Apply(c)
-		return
-	}
-
-	// Set request context and render html
-	c.Set("user", user)
-	c.Set("collection", collection)
-	c.Set("collectionJSON", string(collectionJSON))
+	// Render HTML
 	c.HTML(200, "edit-collection.html", vars.Default(c))
 }

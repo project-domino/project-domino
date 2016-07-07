@@ -83,9 +83,13 @@ func main() {
 		middleware.LoadUser("Notes", "Collections")).
 		GET("/", view.WriterPanelRedirect).
 		GET("/note", handlers.Simple("new-note.html")).
-		GET("/note/:noteID/edit", view.EditNote).
+		GET("/note/:noteID/edit",
+			middleware.LoadNote("Author", "Tags"),
+			view.EditNote).
 		GET("/collection", handlers.Simple("new-collection.html")).
-		GET("/collection/:collectionID/edit", view.EditCollection).
+		GET("/collection/:collectionID/edit",
+			middleware.LoadCollection("Author", "Tags"),
+			view.EditCollection).
 		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
