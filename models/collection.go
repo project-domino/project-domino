@@ -16,6 +16,7 @@ type Collection struct {
 	Published bool
 
 	Tags []Tag `gorm:"many2many:collection_tag;"`
+	Notes []Note `gorm:"-"`
 
 	// Ranking Info
 	Upvotes       uint

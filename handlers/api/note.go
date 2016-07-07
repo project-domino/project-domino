@@ -39,7 +39,7 @@ func NewNote(c *gin.Context) {
 		Title:     requestVars.Title,
 		Body:      requestVars.Body,
 		Author:    user,
-		Published: false,
+		Published: requestVars.Publish,
 		Tags:      db.GetTags(requestVars.Tags),
 	}
 	db.DB.Create(&newNote)

@@ -30,3 +30,18 @@ func VerifyNotes(ids []uint) error {
 	}
 	return nil
 }
+
+// LoadCollectionNotes loads the notes into a collection
+func LoadCollectionNotes(c *models.Collection) {
+	// Find collection note relationships
+	var collectioNotes []models.CollectionNote
+	DB.Preload("Note").
+		Where("collection_id = ?", c.ID).
+		Order("order").
+		Find(&collectioNotes)
+
+	// Load notes into collection
+	for _, collectionNote := range collectioNotes {
+		c.Notes = append(c.Notes, collectionNote.Note)
+	}
+}

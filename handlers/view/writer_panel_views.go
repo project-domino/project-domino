@@ -62,12 +62,14 @@ func EditCollection(c *gin.Context) {
 	var collection models.Collection
 	db.DB.Preload("Author").
 		Preload("Tags").
-		Preload("Notes").
 		Where("id = ?", collectionID).First(&collection)
 	if collection.ID == 0 {
 		errors.CollectionNotFound.Apply(c)
 		return
 	}
+
+	// Load notes into the collection
+	db.LoadCollectionNotes(&collection)
 
 	// Check if request user is the owner of the collection
 	if collection.Author.ID != user.ID {
