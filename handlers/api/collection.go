@@ -108,7 +108,7 @@ func EditCollection(c *gin.Context) {
 // returns error and ok value
 func verifyCollectionRequest(request CollectionRequest) (*errors.Error, bool) {
 	// check for missing parameters
-	if request.Description == "" || request.Title == "" {
+	if request.Description == "" || request.Title == "" || len(request.Notes) == 0 {
 		return errors.MissingParameters, false
 	}
 

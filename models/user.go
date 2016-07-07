@@ -20,7 +20,7 @@ type User struct {
 	FirstName string
 	LastName  string
 	UserName  string
-	Passhash  string
+	Passhash  string `json:"-" xml:"-"`
 
 	// Only for writer
 	UniversityID uint
