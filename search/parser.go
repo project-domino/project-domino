@@ -18,13 +18,13 @@ var parser = parcom.Map(
 		return i
 	})),
 	func(in []interface{}) *Query {
-		q := &Query{make(map[string]string), nil}
+		q := &Query{make(map[string][]string), nil}
 		for _, component := range in {
 			switch c := component.(type) {
 			case string:
 				q.Text = append(q.Text, c)
 			case []string:
-				q.Selectors[c[0]] = c[1]
+				q.Selectors[c[0]] = append(q.Selectors[c[0]], c[1])
 			}
 		}
 		return q
