@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +15,6 @@ import (
 // :noteID must be in the URL
 func LoadNote(objects ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		fmt.Println("hello")
 		// Acquire noteID from URL
 		noteID := c.Param("noteID")
 
