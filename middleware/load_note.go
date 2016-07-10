@@ -3,6 +3,7 @@ package middleware
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 
 	"github.com/gin-gonic/gin"
 	"github.com/project-domino/project-domino/db"
@@ -44,6 +45,8 @@ func LoadNote(objects ...string) gin.HandlerFunc {
 		// Add note and noteJSON to request context
 		c.Set("note", note)
 		c.Set("noteJSON", string(noteJSON))
+		// TODO remove only scripts
+		c.Set("noteHTML", template.HTML(note.Body))
 
 		c.Next()
 	}

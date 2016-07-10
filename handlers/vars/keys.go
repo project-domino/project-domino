@@ -8,6 +8,7 @@ var KeysList = []string{
 	"user",
 	"note",
 	"noteJSON",
+	"noteHTML",
 	"collection",
 	"collectionJSON",
 }

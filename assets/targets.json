@@ -39,6 +39,7 @@
 		"login":                   "src/sass/login.scss",
 		"writer-panel-note":       "src/sass/writer-panel-note.scss",
 		"new-tag":                 "src/sass/new-tag.scss",
-		"writer-panel-collection": "src/sass/writer-panel-collection.scss"
+		"writer-panel-collection": "src/sass/writer-panel-collection.scss",
+		"note":                    "src/sass/note.scss"
 	}
 }

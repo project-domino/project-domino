@@ -68,9 +68,10 @@ func main() {
 	m.GET("/uni/:uni-short-name", handlers.TODO)
 	m.GET("/search", handlers.TODO)
 
-	m.Group("/note").
-		GET("/:note-id", handlers.TODO).
-		GET("/:note-id/:note-name", handlers.TODO)
+	m.Group("/note",
+		middleware.LoadNote("Author", "Tags")).
+		GET("/:noteID", handlers.Simple("note.html")).
+		GET("/:noteID/:note-name", handlers.Simple("note.html"))
 
 	m.Group("/collection").
 		GET("/:collectionID", handlers.TODO).

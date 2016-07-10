@@ -1,0 +1,34 @@
+@import "util/variables.scss";
+@import "main.scss";
+
+.note-container {
+	margin: 20px auto;
+	width: 1000px;
+}
+
+@media only screen and (max-width: 1040px) {
+	.note-container {
+		margin: 20px;
+		width: calc(100% - 40px);
+	}
+}
+
+.note-heading {
+	border-bottom: 1px solid $border-color;
+	display: flex;
+	margin-bottom: 20px;
+
+	.note-title {
+		display: inline-block;
+		margin: 20px 0px 10px;
+	}
+
+	.note-heading-right {
+		color: $darker;
+		display: flex;
+		flex-direction: column-reverse;
+		font-size: 13px;
+		margin-left: auto;
+		padding: 5px;
+	}
+}
