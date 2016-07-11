@@ -1,0 +1,24 @@
+extends ./template.pug
+
+block head
+	title {{.collection.Title}} - {{.note.Title}}
+
+block css
+	link(rel="stylesheet", href="/assets/collection-note.css")
+
+block body
+	div.collection-sidebar
+		| {{range .collection.Notes}}
+		| {{if eq .ID $.note.ID}}
+		div.sidebar-item.active
+			a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+		| {{else}}
+		div.sidebar-item
+			a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+		| {{end}}
+		| {{end}}
+	div.collection-body
+		include ./note.pug
+
+block scripts
+	script(src="/assets/note.js")

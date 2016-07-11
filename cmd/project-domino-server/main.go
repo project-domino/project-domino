@@ -70,13 +70,20 @@ func main() {
 
 	m.Group("/note",
 		middleware.LoadNote("Author", "Tags")).
-		GET("/:noteID", handlers.Simple("note.html")).
-		GET("/:noteID/:note-name", handlers.Simple("note.html"))
+		GET("/:noteID", handlers.Simple("individual-note.html")).
+		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
+	// TODO redirect to first note for collection
 	m.Group("/collection").
 		GET("/:collectionID", handlers.TODO).
-		GET("/:collectionID/note/:noteID", handlers.TODO).
-		GET("/:collectionID/note/:noteID/:noteName", handlers.TODO)
+		GET("/:collectionID/note/:noteID",
+			middleware.LoadNote("Author", "Tags"),
+			middleware.LoadCollection("Author", "Tags"),
+			handlers.Simple("collection-note.html")).
+		GET("/:collectionID/note/:noteID/:noteName",
+			middleware.LoadNote("Author", "Tags"),
+			middleware.LoadCollection("Author", "Tags"),
+			handlers.Simple("collection-note.html"))
 
 	m.Group("/writer-panel",
 		middleware.RequireAuth(),

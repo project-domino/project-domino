@@ -1,20 +1,8 @@
-extends ./template.pug
-
-block head
-	title {{.note.Title}}
-
-block css
-	link(rel="stylesheet", href="/assets/note.css")
-
-block body
-	div.panel.note-container
-		div.note-heading
-			h2.note-title {{.note.Title}}
-			div.note-heading-right
-				span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
-		div.panel-body {{.noteHTML}}
-	div.hidden.data
-		div#note-data {{.noteJSON}}
-
-block scripts
-	script(src="/assets/note.js")
+div.panel.note-container
+	div.note-heading
+		h2.note-title {{.note.Title}}
+		div.note-heading-right
+			span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
+	div.panel-body {{.noteHTML}}
+div.hidden.data
+	div#note-data {{.noteJSON}}

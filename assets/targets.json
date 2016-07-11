@@ -27,7 +27,8 @@
 		"new-note":        "src/pug/new-note.pug",
 		"edit-note":       "src/pug/edit-note.pug",
 		"new-tag":         "src/pug/new-tag.pug",
-		"note":            "src/pug/note.pug",
+		"individual-note": "src/pug/individual-note.pug",
+		"collection-note": "src/pug/collection-note.pug",
 		"writer-panel":    "src/pug/writer-panel.pug",
 		"new-collection":  "src/pug/new-collection.pug",
 		"edit-collection": "src/pug/edit-collection.pug"
@@ -40,6 +41,8 @@
 		"writer-panel-note":       "src/sass/writer-panel-note.scss",
 		"new-tag":                 "src/sass/new-tag.scss",
 		"writer-panel-collection": "src/sass/writer-panel-collection.scss",
-		"note":                    "src/sass/note.scss"
+		"note":                    "src/sass/note.scss",
+		"collection-note":         "src/sass/collection-note.scss",
+		"individual-note":         "src/sass/individual-note.scss"
 	}
 }

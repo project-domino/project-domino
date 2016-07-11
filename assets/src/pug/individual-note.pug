@@ -1,0 +1,13 @@
+extends ./template.pug
+
+block head
+	title {{.note.Title}}
+
+block css
+	link(rel="stylesheet", href="/assets/individual-note.css")
+
+block body
+	include ./note.pug
+
+block scripts
+	script(src="/assets/note.js")
