@@ -6,7 +6,7 @@ div.panel.note-container
 	div.panel-body {{.noteHTML}}
 	div.panel-seperator
 	div.contributor-container
-		span.note-author Created By -
-			a(href="/u/{{.note.Author.ID}}") {{.note.Author.UserName}}
+		span.note-author Created By - 
+			a(href="/u/{{.note.Author.UserName}}") {{.note.Author.UserName}}
 div.hidden.data
 	div#note-data {{.noteJSON}}

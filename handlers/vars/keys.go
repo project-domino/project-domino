@@ -6,6 +6,7 @@ import "github.com/gin-gonic/gin"
 var KeysList = []string{
 	"loggedIn",
 	"user",
+	"pageUser",
 	"note",
 	"noteJSON",
 	"noteHTML",

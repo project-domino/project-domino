@@ -1,0 +1,10 @@
+extends ./writer-panel.pug
+
+block head
+	title {{.pageUser.UserName}}
+
+block css
+	link(rel="stylesheet", href="/assets/user.css")
+
+block body
+	| {{.pageUser}}

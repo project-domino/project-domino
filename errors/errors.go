@@ -28,6 +28,7 @@ var (
 var (
 	NoteNotFound       = &Error{404, "Note Not Found"}
 	CollectionNotFound = &Error{404, "Collection Not Found"}
+	UserNotFound       = &Error{404, "User Not Found"}
 )
 
 // 5xx errors

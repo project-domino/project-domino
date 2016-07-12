@@ -64,7 +64,9 @@ func main() {
 
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
-	m.GET("/u/:username", handlers.TODO)
+	m.GET("/u/:username",
+		middleware.LoadUser("Notes", "Collections"),
+		handlers.Simple("user.html"))
 	m.GET("/uni/:uni-short-name", handlers.TODO)
 	m.GET("/search", handlers.TODO)
 
@@ -88,7 +90,7 @@ func main() {
 	m.Group("/writer-panel",
 		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin),
-		middleware.LoadUser("Notes", "Collections")).
+		middleware.LoadRequestUser("Notes", "Collections")).
 		GET("/", view.WriterPanelRedirect).
 		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit",
