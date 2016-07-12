@@ -3,6 +3,35 @@
 
 @import "note.scss";
 
+.sidebar-links {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.sidebar-heading {
+	font-size: 20px;
+	padding: 10px 20px;
+
+	a {
+		text-decoration: none;
+		color: black;
+	}
+}
+
+.sidebar-item {
+	color: $darker;
+	display: block;
+	padding: 5px 20px;
+	text-decoration: none;
+
+	&.active {
+		background-color: $primary-color;
+		color: white;
+	}
+}
+
 .collection-sidebar, .collection-body {
 	box-sizing: border-box;
 	float: left;
@@ -14,7 +43,6 @@
 	box-sizing: border-box;
 	height: calc(100vh - 50px);
 	left: 0;
-	padding: 20px;
 	position: fixed;
 	top: 50px;
 	width: 230px;

@@ -8,15 +8,18 @@ block css
 
 block body
 	div.collection-sidebar
-		| {{range .collection.Notes}}
-		| {{if eq .ID $.note.ID}}
-		div.sidebar-item.active
-			a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
-		| {{else}}
-		div.sidebar-item
-			a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
-		| {{end}}
-		| {{end}}
+		div.sidebar-heading
+			a(href="/collection/{{.collection.ID}}") {{.collection.Title}}
+		ul.sidebar-links
+			| {{range .collection.Notes}}
+			| {{if eq .ID $.note.ID}}
+			li
+				a.sidebar-item.active(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+			| {{else}}
+			li
+				a.sidebar-item(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+			| {{end}}
+			| {{end}}
 	div.collection-body
 		include ./note.pug
 
