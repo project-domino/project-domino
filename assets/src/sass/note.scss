@@ -20,3 +20,9 @@
 		padding: 5px;
 	}
 }
+
+.contributor-container {
+	display: flex;
+	flex-direction: row-reverse;
+	width: 100%;
+}
