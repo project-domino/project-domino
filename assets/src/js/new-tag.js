@@ -59,7 +59,7 @@ $(() => {
 			console.log(err);
 			modal.alert(err.responseText, 3000);
 		});
-	}, 250));
+	}, 100));
 	$(".new-tag-create-btn").click(() => {
 		$.ajax({
 			type: "POST",

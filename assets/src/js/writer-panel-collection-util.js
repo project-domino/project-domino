@@ -28,7 +28,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 
 		super.initTagSelector();
 		var handler = $.proxy(this.searchHandler, this);
-		$(".note-search-field").on("keyup", _.debounce(handler, 250));
+		$(".note-search-field").on("keyup", _.debounce(handler, 100));
 		$(".note-search-btn").click(handler);
 	}
 

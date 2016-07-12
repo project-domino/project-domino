@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/models"
 )
@@ -29,9 +30,14 @@ func Login() gin.HandlerFunc {
 		// If the cookie is present, search the database for the token.
 		var authEntries []models.AuthToken
 
-		db.DB.Limit(1).Preload("User").Where(&models.AuthToken{
+		if err := db.DB.Limit(1).
+			Preload("User").Where(&models.AuthToken{
 			Token: authCookie,
-		}).Where("Expires > ?", time.Now()).Find(&authEntries)
+		}).Where("Expires > ?", time.Now()).
+			Find(&authEntries).Error; err != nil && err != gorm.ErrRecordNotFound {
+			c.AbortWithError(500, err)
+			return
+		}
 		if len(authEntries) == 0 {
 			// Clear the invalid/expired authtoken.
 			http.SetCookie(c.Writer, &http.Cookie{

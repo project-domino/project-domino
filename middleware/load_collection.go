@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -25,14 +26,20 @@ func LoadCollection(objects ...string) gin.HandlerFunc {
 
 		// Query for collection
 		var collection models.Collection
-		preloadedDB.First(&collection)
-		if collection.ID == 0 {
-			errors.CollectionNotFound.Apply(c)
+		if err := preloadedDB.First(&collection).Error; err != nil {
+			if err == gorm.ErrRecordNotFound {
+				errors.CollectionNotFound.Apply(c)
+				return
+			}
+			c.AbortWithError(500, err)
 			return
 		}
 
 		// Load notes into the collection
-		db.LoadCollectionNotes(&collection)
+		if err := db.LoadCollectionNotes(&collection); err != nil {
+			c.AbortWithError(500, err)
+			return
+		}
 
 		// Format collection in JSON
 		collectionJSON, err := json.Marshal(collection)

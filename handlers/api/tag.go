@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -21,7 +22,11 @@ func NewTag(c *gin.Context) {
 
 	// Check if tag exists
 	var checkTags []models.Tag
-	db.DB.Where("name = ?", name).Find(&checkTags)
+	if err := db.DB.Where("name = ?", name).
+		Find(&checkTags).Error; err != nil && err != gorm.ErrRecordNotFound {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// If tag exists, return error
 	if len(checkTags) != 0 {
@@ -33,9 +38,12 @@ func NewTag(c *gin.Context) {
 	user := c.MustGet("user").(models.User)
 
 	// Create and save tag
-	db.DB.Create(&models.Tag{
+	if err := db.DB.Create(&models.Tag{
 		Name:        name,
 		Description: description,
 		Author:      user,
-	})
+	}).Error; err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 }

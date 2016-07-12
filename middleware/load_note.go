@@ -5,6 +5,7 @@ import (
 	"html/template"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -26,9 +27,12 @@ func LoadNote(objects ...string) gin.HandlerFunc {
 
 		// Query for note
 		var note models.Note
-		preloadedDB.First(&note)
-		if note.ID == 0 {
-			errors.NoteNotFound.Apply(c)
+		if err := preloadedDB.First(&note).Error; err != nil {
+			if err == gorm.ErrRecordNotFound {
+				errors.NoteNotFound.Apply(c)
+				return
+			}
+			c.AbortWithError(500, err)
 			return
 		}
 

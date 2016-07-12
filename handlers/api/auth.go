@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -29,14 +30,17 @@ func Login(c *gin.Context) {
 
 	// Find user in the database
 	var users []models.User
-	db.DB.Limit(1).
+	if err := db.DB.Limit(1).
 		Where(&models.User{
-			Email: email,
-		}).Or(&models.User{
+		Email: email,
+	}).Or(&models.User{
 		UserName: userName,
-	}).Find(&users)
+	}).Find(&users).Error; err != nil && err != gorm.ErrRecordNotFound {
+		c.AbortWithError(500, err)
+		return
+	}
 
-	// If a user with these credentials does not exist, return error
+	// If there are no users with specified username/email return error
 	if len(users) == 0 {
 		errors.InvalidCredentials.Apply(c)
 		return
@@ -83,11 +87,14 @@ func Register(c *gin.Context) {
 
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
-	db.DB.Where(&models.User{
+	if err := db.DB.Where(&models.User{
 		Email: email,
 	}).Or(&models.User{
 		UserName: userName,
-	}).Find(&checkUsers)
+	}).Find(&checkUsers).Error; err != nil || err != gorm.ErrRecordNotFound {
+		c.AbortWithError(500, err)
+	}
+
 	if len(checkUsers) != 0 {
 		errors.UserExists.Apply(c)
 		return
@@ -105,7 +112,10 @@ func Register(c *gin.Context) {
 	}
 
 	// Add user to database.
-	db.DB.Create(&user)
+	if err := db.DB.Create(&user).Error; err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Set an auth cookie for the user
 	// TODO unlegacy
@@ -129,7 +139,10 @@ func AuthCookie(c *gin.Context, user models.User) {
 		return
 	}
 
-	db.DB.Create(&authToken)
+	if err := db.DB.Create(&authToken).Error; err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Create cookie
 	cookie := http.Cookie{

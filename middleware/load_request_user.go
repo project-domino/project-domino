@@ -20,7 +20,10 @@ func LoadRequestUser(objects ...string) gin.HandlerFunc {
 
 		// Query for user and set context
 		var loadedUser models.User
-		preloadedDB.First(&loadedUser)
+		if err := preloadedDB.First(&loadedUser).Error; err != nil {
+			c.AbortWithError(500, err)
+			return
+		}
 		c.Set("user", loadedUser)
 
 		c.Next()

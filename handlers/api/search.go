@@ -12,39 +12,55 @@ import (
 // SearchTags searches for tags that match a certain search query
 func SearchTags(c *gin.Context) {
 	// Return tags in JSON
-	c.JSON(http.StatusOK, tagSearch(c.DefaultQuery("q", "")))
+	tags, err := tagSearch(c.DefaultQuery("q", ""))
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+	c.JSON(http.StatusOK, tags)
 }
 
 // SearchNotes searches for notes that match a certain search query
 func SearchNotes(c *gin.Context) {
 	// Return notes in JSON
-	c.JSON(http.StatusOK, noteSearch(c.DefaultQuery("q", "")))
+	notes, err := noteSearch(c.DefaultQuery("q", ""))
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+	c.JSON(http.StatusOK, notes)
 }
 
 // TODO refine search functions
-func noteSearch(q string) []models.Note {
+func noteSearch(q string) ([]models.Note, error) {
 	var notes []models.Note
 	if q != "" {
 		// Create SQL search string
 		sqlString := fmt.Sprintf("%%%s%%", q)
 
 		// Query db
-		db.DB.Limit(10).
-			Where("title LIKE ?", sqlString).Find(&notes)
+		if err := db.DB.Limit(10).
+			Where("title LIKE ?", sqlString).
+			Find(&notes).Error; err != nil {
+			return notes, err
+		}
 	}
-	return notes
+	return notes, nil
 }
 
-func tagSearch(q string) []models.Tag {
+func tagSearch(q string) ([]models.Tag, error) {
 	var tags []models.Tag
 	if q != "" {
 		// Create SQL search string
 		sqlString := fmt.Sprintf("%%%s%%", q)
 
 		// Query db
-		db.DB.Limit(10).
+		if err := db.DB.Limit(10).
 			Where("name LIKE ?", sqlString).
-			Or("description LIKE ?", sqlString).Find(&tags)
+			Or("description LIKE ?", sqlString).
+			Find(&tags).Error; err != nil {
+			return tags, err
+		}
 	}
-	return tags
+	return tags, nil
 }

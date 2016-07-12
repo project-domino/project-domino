@@ -34,15 +34,25 @@ func NewNote(c *gin.Context) {
 		return
 	}
 
+	// Get request tags
+	tags, err := db.GetTags(requestVars.Tags)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
 	// Create and save note
 	newNote := models.Note{
 		Title:     requestVars.Title,
 		Body:      requestVars.Body,
 		Author:    user,
 		Published: requestVars.Publish,
-		Tags:      db.GetTags(requestVars.Tags),
+		Tags:      tags,
 	}
-	db.DB.Create(&newNote)
+	if err := db.DB.Create(&newNote).Error; err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, newNote)
@@ -66,6 +76,13 @@ func EditNote(c *gin.Context) {
 		return
 	}
 
+	// Get request tags
+	tags, err := db.GetTags(requestVars.Tags)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
 	// Query db for note
 	var note models.Note
 	db.DB.Preload("Author").Where("id = ?", noteID).First(&note)
@@ -80,15 +97,30 @@ func EditNote(c *gin.Context) {
 		return
 	}
 
+	// Create transaction to save note
+	tx := db.DB.Begin()
+
 	// Save note-tag relationships
-	db.DB.Model(&note).Association("Tags").Replace(db.GetTags(requestVars.Tags))
+	if err := tx.Model(&note).
+		Association("Tags").
+		Replace(tags).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Save note
 	note.Title = requestVars.Title
 	note.Body = requestVars.Body
 	note.Published = requestVars.Publish
 
-	db.DB.Save(&note)
+	if err := tx.Save(&note).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
+
+	tx.Commit()
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)

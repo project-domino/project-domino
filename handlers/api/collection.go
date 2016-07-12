@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -35,18 +36,45 @@ func NewCollection(c *gin.Context) {
 		return
 	}
 
+	// Get request tags
+	tags, err := db.GetTags(requestVars.Tags)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	// Create transaction to create collection
+	tx := db.DB.Begin()
+
 	// Create and save collection
 	newCollection := models.Collection{
 		Title:       requestVars.Title,
 		Description: requestVars.Description,
 		Author:      user,
 		Published:   false,
-		Tags:        db.GetTags(requestVars.Tags),
+		Tags:        tags,
 	}
-	db.DB.Create(&newCollection)
+	if err := tx.Create(&newCollection).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Save collection-note relationships
-	saveNoteRelations(newCollection, requestVars.Notes)
+	for i, noteID := range requestVars.Notes {
+		var relation models.CollectionNote
+		relation.Collection = newCollection
+		relation.NoteID = noteID
+		relation.Order = uint(i) + 1
+
+		if err := tx.Create(&relation).Error; err != nil {
+			tx.Rollback()
+			c.AbortWithError(500, err)
+			return
+		}
+	}
+
+	tx.Commit()
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, newCollection)
@@ -70,11 +98,22 @@ func EditCollection(c *gin.Context) {
 		return
 	}
 
+	// Get request tags
+	tags, err := db.GetTags(requestVars.Tags)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
 	// Query db for collection
 	var collection models.Collection
-	db.DB.Preload("Author").Where("id = ?", collectionID).First(&collection)
-	if collection.ID == 0 {
-		errors.CollectionNotFound.Apply(c)
+	if err := db.DB.Preload("Author").
+		Where("id = ?", collectionID).First(&collection).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			errors.CollectionNotFound.Apply(c)
+			return
+		}
+		c.AbortWithError(500, err)
 		return
 	}
 
@@ -84,11 +123,25 @@ func EditCollection(c *gin.Context) {
 		return
 	}
 
+	// Create transaction to save collection
+	tx := db.DB.Begin()
+
 	// Clear current collection-note relationships
-	db.DB.Where("collection_id = ?", collection.ID).Delete(models.CollectionNote{})
+	if err := tx.Where("collection_id = ?", collection.ID).
+		Delete(models.CollectionNote{}).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Save collection-tag relationships
-	db.DB.Model(&collection).Association("Tags").Replace(db.GetTags(requestVars.Tags))
+	if err := tx.Model(&collection).
+		Association("Tags").
+		Replace(tags).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Edit and save collection
 	collection.Title = requestVars.Title
@@ -96,10 +149,27 @@ func EditCollection(c *gin.Context) {
 	collection.Author = user
 	collection.Published = requestVars.Publish
 
-	db.DB.Save(&collection)
+	if err := tx.Save(&collection).Error; err != nil {
+		tx.Rollback()
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Save collection-note relationships
-	saveNoteRelations(collection, requestVars.Notes)
+	for i, noteID := range requestVars.Notes {
+		var relation models.CollectionNote
+		relation.Collection = collection
+		relation.NoteID = noteID
+		relation.Order = uint(i) + 1
+
+		if err := tx.Create(&relation).Error; err != nil {
+			tx.Rollback()
+			c.AbortWithError(500, err)
+			return
+		}
+	}
+
+	tx.Commit()
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, collection)
@@ -139,16 +209,4 @@ func contains(a []uint, e uint) bool {
 		}
 	}
 	return false
-}
-
-// saveNoteRelations saves the relationships between a collection and notes
-func saveNoteRelations(collection models.Collection, notes []uint) {
-	for i, noteID := range notes {
-		var relation models.CollectionNote
-		relation.Collection = collection
-		relation.NoteID = noteID
-		relation.Order = uint(i) + 1
-
-		db.DB.Create(&relation)
-	}
 }
