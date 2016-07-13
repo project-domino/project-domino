@@ -32,8 +32,8 @@ func Login(c *gin.Context) {
 	var users []models.User
 	if err := db.DB.Limit(1).
 		Where(&models.User{
-		Email: email,
-	}).Or(&models.User{
+			Email: email,
+		}).Or(&models.User{
 		UserName: userName,
 	}).Find(&users).Error; err != nil && err != gorm.ErrRecordNotFound {
 		c.AbortWithError(500, err)
@@ -87,11 +87,10 @@ func Register(c *gin.Context) {
 
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
-	if err := db.DB.Where(&models.User{
-		Email: email,
-	}).Or(&models.User{
-		UserName: userName,
-	}).Find(&checkUsers).Error; err != nil && err != gorm.ErrRecordNotFound {
+	if err := db.DB.Where("email = ?", email).
+		Or("user_name = ?", userName).
+		Find(&checkUsers).
+		Error; err != nil && err != gorm.ErrRecordNotFound {
 		c.AbortWithError(500, err)
 		return
 	}

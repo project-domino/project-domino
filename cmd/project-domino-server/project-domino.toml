@@ -4,8 +4,8 @@ path = "assets.zip"
 
 [database]
 debug = false
-type = "sqlite3"
-url = "domino.db"
+type = "postgres"
+url = "dbname=domino sslmode=disable"
 
 [http]
 debug = false

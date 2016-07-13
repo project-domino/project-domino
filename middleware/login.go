@@ -31,10 +31,11 @@ func Login() gin.HandlerFunc {
 		var authEntries []models.AuthToken
 
 		if err := db.DB.Limit(1).
-			Preload("User").Where(&models.AuthToken{
-			Token: authCookie,
-		}).Where("Expires > ?", time.Now()).
-			Find(&authEntries).Error; err != nil && err != gorm.ErrRecordNotFound {
+			Preload("User").
+			Where("token = ?", authCookie).
+			Where("expires > ?", time.Now()).
+			Find(&authEntries).
+			Error; err != nil && err != gorm.ErrRecordNotFound {
 			c.AbortWithError(500, err)
 			return
 		}

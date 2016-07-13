@@ -17,8 +17,8 @@ func init() {
 	})
 	viper.SetDefault("database", map[string]interface{}{
 		"debug": false,
-		"type":  "sqlite3",
-		"url":   "domino.db",
+		"type":  "postgres",
+		"url":   "dbname=domino sslmode=disable",
 	})
 	viper.SetDefault("http", map[string]interface{}{
 		"debug": false,
