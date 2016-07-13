@@ -91,8 +91,9 @@ func Register(c *gin.Context) {
 		Email: email,
 	}).Or(&models.User{
 		UserName: userName,
-	}).Find(&checkUsers).Error; err != nil || err != gorm.ErrRecordNotFound {
+	}).Find(&checkUsers).Error; err != nil && err != gorm.ErrRecordNotFound {
 		c.AbortWithError(500, err)
+		return
 	}
 
 	if len(checkUsers) != 0 {
