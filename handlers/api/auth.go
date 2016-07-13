@@ -31,11 +31,10 @@ func Login(c *gin.Context) {
 	// Find user in the database
 	var users []models.User
 	if err := db.DB.Limit(1).
-		Where(&models.User{
-			Email: email,
-		}).Or(&models.User{
-		UserName: userName,
-	}).Find(&users).Error; err != nil && err != gorm.ErrRecordNotFound {
+		Where("email = ?", email).
+		Or("user_name = ?", userName).
+		Find(&users).
+		Error; err != nil && err != gorm.ErrRecordNotFound {
 		c.AbortWithError(500, err)
 		return
 	}
