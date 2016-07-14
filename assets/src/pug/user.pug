@@ -7,4 +7,18 @@ block css
 	link(rel="stylesheet", href="/assets/user.css")
 
 block body
-	| {{.pageUser}}
+	div.user-info-container
+		div.panel.user-info
+			div.panel-body
+				| {{if ne .pageUser.Name ""}}
+				div.user-info-field.user-full-name {{.pageUser.Name}}
+				| {{end}}
+				div.user-info-field.user-name {{.pageUser.UserName}}
+				div.user-info-field.joined-date
+					| Joined - {{.pageUser.CreatedAt.Format "2006-01-02"}}
+		div.panel.user-items
+			ul.h-control-list
+				li.h-control
+					a(href="/u/{{.pageUser.UserName}}/notes") Notes
+				li.h-control
+					a(href="/u/{{.pageUser.UserName}}/collections") Collections

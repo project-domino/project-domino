@@ -1,0 +1,23 @@
+@import "util/variables.scss";
+
+.h-control-list {
+	border-bottom: 1px solid $border-color;
+	list-style-type: none;
+	margin: 0;
+	padding: 10px 0;
+
+	li {
+		display: inline;
+
+		a {
+			color: $darker;
+			padding: 10px;
+			text-decoration: none;
+		}
+
+		a.active {
+			color: $primary-color;
+			border-bottom: 2px solid $primary-color;
+		}
+	}
+}

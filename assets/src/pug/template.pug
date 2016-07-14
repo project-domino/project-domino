@@ -24,11 +24,8 @@ html
 				| {{end}}
 				div.dropdown.account-dropdown
 					span.dropdown-btn.account-dropdown-btn
-						| {{if ne .user.FirstName ""}}
-						| 	{{.user.FirstName}}
-						| 	{{if ne .user.LastName ""}}
-						| 		{{.user.LastName}}
-						| 	{{end}}
+						| {{if ne .user.Name ""}}
+						| 	{{.user.Name}}
 						| {{else}}
 						| 	{{.user.UserName}}
 						| {{end}}

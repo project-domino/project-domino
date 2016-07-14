@@ -16,11 +16,10 @@ const (
 type User struct {
 	gorm.Model
 
-	Type      string
-	FirstName string
-	LastName  string
-	UserName  string
-	Passhash  string `json:"-" xml:"-"`
+	Type     string
+	Name     string
+	UserName string
+	Passhash string `json:"-" xml:"-"`
 
 	// Only for writer
 	UniversityID uint
