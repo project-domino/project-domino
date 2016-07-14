@@ -20,6 +20,8 @@
 		align-items: center;
 		width: 50px;
 
+		.item-number { margin: auto; }
+
 		button {
 			height: 60%;
 			margin: 0 auto;
@@ -33,7 +35,7 @@
 		justify-content: space-evenly;
 		padding: 5px;
 
-		.item-title { padding-bottom: 3px; }
+		.item-title, .item-description { height: 50%; }
 		.item-description { margin: 0; }
 	}
 }

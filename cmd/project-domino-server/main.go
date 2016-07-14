@@ -64,18 +64,20 @@ func main() {
 
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
-	m.GET("/u/:username",
-		middleware.LoadUser("Notes", "Collections"),
-		handlers.Simple("user.html"))
 	m.GET("/uni/:uni-short-name", handlers.TODO)
 	m.GET("/search", handlers.TODO)
+
+	m.Group("/u/:username",
+		middleware.LoadUser("Notes", "Collections")).
+		GET("/", handlers.Simple("user-notes.html")).
+		GET("/notes", handlers.Simple("user-notes.html")).
+		GET("/collections", handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
 		middleware.LoadNote("Author", "Tags")).
 		GET("/:noteID", handlers.Simple("individual-note.html")).
 		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
-	// TODO redirect to first note for collection
 	m.Group("/collection").
 		GET("/:collectionID", handlers.TODO).
 		GET("/:collectionID/note/:noteID",

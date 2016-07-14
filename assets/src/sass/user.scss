@@ -2,6 +2,7 @@
 @import "main.scss";
 
 @import "util/horizontal-control.scss";
+@import "util/item-list.scss";
 
 .user-info-container {
 	margin: 20px auto;
@@ -32,4 +33,8 @@
 		margin: 0 0 20px 0;
 		width: 100%;
 	}
+}
+
+.item-list {
+	margin: 20px auto;
 }
