@@ -60,7 +60,9 @@ func Login(c *gin.Context) {
 func Logout(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
 		Name:   "auth",
-		MaxAge: -1,
+		Path:    "/",
+		Value:   "",
+		Expires: time.Unix(0, 0),
 	})
 }
 

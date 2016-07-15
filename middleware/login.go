@@ -43,8 +43,8 @@ func Login() gin.HandlerFunc {
 			// Clear the invalid/expired authtoken.
 			http.SetCookie(c.Writer, &http.Cookie{
 				Name:    "auth",
+				Path:    "/",
 				Value:   "",
-				MaxAge:  0,
 				Expires: time.Unix(0, 0),
 			})
 			notLoggedIn(c)
