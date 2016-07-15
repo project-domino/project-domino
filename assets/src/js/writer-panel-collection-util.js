@@ -69,56 +69,64 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			$(".selected-notes").addClass("hidden");
 			$(".no-notes-text").removeClass("hidden");
 		}
-		$(".selected-notes").empty().append(this.selectedNotes.map((note, i) => {
-			return $("<div>").append(
-				$("<div>").append(
+		$(".selected-notes").empty().append(
+			_(this.selectedNotes)
+			.map((note, i) => {
+				return [
 					$("<div>").append(
-						$("<span>").addClass("fa fa-trash").click(() => {
-							_.remove(this.selectedNotes, e => {
-								return e.ID === note.ID;
-							});
-							this.renderSelectNotes();
-						})
-					).addClass("select-options-left"),
-					$("<div>").append(
-						$("<span>").addClass("fa fa-chevron-up").click(() => {
-							var i = _.findIndex(this.selectedNotes, e => {
-								return e.ID === note.ID;
-							});
-							if(i > 0) {
-								var temp = this.selectedNotes[i - 1];
-								this.selectedNotes[i - 1] = this.selectedNotes[i];
-								this.selectedNotes[i] = temp;
-							}
-							this.renderSelectNotes();
-						}),
-						$("<span>").addClass("fa fa-chevron-down").click(() => {
-							var i = _.findIndex(this.selectedNotes, e => {
-								return e.ID === note.ID;
-							});
-							if(i < this.selectedNotes.length) {
-								var temp = this.selectedNotes[i + 1];
-								this.selectedNotes[i + 1] = this.selectedNotes[i];
-								this.selectedNotes[i] = temp;
-							}
-							this.renderSelectNotes();
-						})
-					).addClass("select-options-right")
-				).addClass("item-left select-options-container"),
-				$("<div>").append(
-					$("<span>").text(i + 1).addClass("select-note-number")
-				).addClass("item-left"),
-				$("<div>").append(
-					$("<div>").append(
-						$("<a>").attr({
-							href:   "/note/" + note.ID,
-							target: "_blank",
-						}).text(note.Title)
-					).addClass("item-title"),
-					$("<div>").text(note.Description).addClass("item-description")
-				).addClass("item-right")
-			).addClass("list-item").data("note-id", note.ID);
-		}));
+						$("<div>").append(
+							$("<div>").append(
+								$("<span>").addClass("fa fa-trash").click(() => {
+									_.remove(this.selectedNotes, e => {
+										return e.ID === note.ID;
+									});
+									this.renderSelectNotes();
+								})
+							).addClass("select-options-left"),
+							$("<div>").append(
+								$("<span>").addClass("fa fa-chevron-up").click(() => {
+									var i = _.findIndex(this.selectedNotes, e => {
+										return e.ID === note.ID;
+									});
+									if(i > 0) {
+										var temp = this.selectedNotes[i - 1];
+										this.selectedNotes[i - 1] = this.selectedNotes[i];
+										this.selectedNotes[i] = temp;
+									}
+									this.renderSelectNotes();
+								}),
+								$("<span>").addClass("fa fa-chevron-down").click(() => {
+									var i = _.findIndex(this.selectedNotes, e => {
+										return e.ID === note.ID;
+									});
+									if(i < (this.selectedNotes.length - 1)) {
+										var temp = this.selectedNotes[i + 1];
+										this.selectedNotes[i + 1] = this.selectedNotes[i];
+										this.selectedNotes[i] = temp;
+									}
+									this.renderSelectNotes();
+								})
+							).addClass("select-options-right")
+						).addClass("item-left select-options-container"),
+						$("<div>").append(
+							$("<span>").text(i + 1).addClass("item-number")
+						).addClass("item-left"),
+						$("<div>").append(
+							$("<div>").append(
+								$("<a>").attr({
+									href:   "/note/" + note.ID,
+									target: "_blank",
+								}).text(note.Title)
+							).addClass("item-title"),
+							$("<div>").text(note.Description).addClass("item-description")
+						).addClass("item-right")
+					).addClass("list-item").data("note-id", note.ID),
+					$("<div>").addClass("item-seperator"),
+				];
+			})
+			.flatten()
+			.value()
+		);
 	}
 
 	/**
@@ -129,30 +137,38 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 		if(this.resultNotes.length) {
 			$(".search-result-container").removeClass("hidden");
 			$(".result-notification").addClass("hidden");
-			$(".search-result-container").append(this.resultNotes.map(note => {
-				return $("<div>").append(
-					$("<div>").append(
-						$("<button>").click(() => {
-							if(this.selectedNotes.map(e => e.ID).includes(note.ID)) {
-								modal.alert("This note has already been selected", 3000);
-								return;
-							}
-							this.selectedNotes.push(note);
-							this.renderSelectNotes();
-						}).addClass("add-item-btn btn btn-primary fa fa-plus")
-							.data("note-id", note.ID)
-					).addClass("item-left"),
-					$("<div>").append(
+			$(".search-result-container").append(
+				_(this.resultNotes)
+				.map(note => {
+					return [
 						$("<div>").append(
-							$("<a>").attr({
-								href:   "/note/" + note.ID,
-								target: "_blank",
-							}).text(note.Title)
-						).addClass("item-title"),
-						$("<div>").text(note.Description).addClass("item-description")
-					).addClass("item-right")
-				).addClass("list-item").data("note", JSON.stringify(note));
-			}));
+							$("<div>").append(
+								$("<button>").click(() => {
+									if(this.selectedNotes.map(e => e.ID).includes(note.ID)) {
+										modal.alert("This note has already been selected", 3000);
+										return;
+									}
+									this.selectedNotes.push(note);
+									this.renderSelectNotes();
+								}).addClass("add-item-btn btn btn-primary fa fa-plus")
+									.data("note-id", note.ID)
+							).addClass("item-left"),
+							$("<div>").append(
+								$("<div>").append(
+									$("<a>").attr({
+										href:   "/note/" + note.ID,
+										target: "_blank",
+									}).text(note.Title)
+								).addClass("item-title"),
+								$("<div>").text(note.Description).addClass("item-description")
+							).addClass("item-right")
+						).addClass("list-item").data("note", JSON.stringify(note)),
+						$("<div>").addClass("item-seperator"),
+					];
+				})
+				.flatten()
+				.value()
+			);
 		} else {
 			$(".search-result-container").addClass("hidden");
 			$(".result-notification").removeClass("hidden").text(
