@@ -36,6 +36,10 @@
 		padding: 5px;
 
 		.item-title, .item-description { height: 50%; }
-		.item-description { margin: 0; }
+		.item-description {
+			margin: 0;
+			overflow: hidden;
+			width: 100%;
+		}
 	}
 }

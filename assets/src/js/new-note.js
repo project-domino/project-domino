@@ -11,10 +11,11 @@ var newNoteHandler = publish => {
 			type: "POST",
 			url:  "/api/v1/note",
 			data: JSON.stringify({
-				title:   $(".new-note-title").val(),
-				body:    window.quill.getHTML(),
-				tags:    $(".tag-selector").val().map(e => {return parseFloat(e);}),
-				publish: publish,
+				title:       $(".note-title").val(),
+				description: $(".note-description").val(),
+				body:        window.quill.getHTML(),
+				tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
+				publish:     publish,
 			}),
 			dataType: "json",
 		}).then(data => {

@@ -89,10 +89,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 							target: "_blank",
 						}).text(note.Title)
 					).addClass("item-title"),
-					$("<div>").append(
-						$("<p>").text("description")
-							.addClass("item-description")
-					).addClass("item-description")
+					$("<div>").text(note.Description).addClass("item-description")
 				).addClass("item-right")
 			).addClass("list-item").data("note-id", note.ID);
 		}));
@@ -126,10 +123,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 								target: "_blank",
 							}).text(note.Title)
 						).addClass("item-title"),
-						$("<div>").append(
-							$("<p>").text("description")
-								.addClass("item-description")
-						).addClass("item-description")
+						$("<div>").text(note.Description).addClass("item-description")
 					).addClass("item-right")
 				).addClass("list-item").data("note", JSON.stringify(note));
 			}));
@@ -174,8 +168,8 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 	 */
 	getData() {
 		return {
-			title:       $(".new-collection-title").val(),
-			description: $(".new-collection-description").val(),
+			title:       $(".collection-title").val(),
+			description: $(".collection-description").val(),
 			notes:       this.selectedNotes.map(note => {return note.ID;}),
 			tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
 		};

@@ -6,8 +6,9 @@ import "github.com/jinzhu/gorm"
 type Note struct {
 	gorm.Model
 
-	Title string
-	Body  string
+	Title       string
+	Description string
+	Body        string
 
 	AuthorID uint
 	Author   User

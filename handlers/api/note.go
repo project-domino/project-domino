@@ -11,10 +11,11 @@ import (
 
 // NoteRequest holds the request object for NewNote and EditNote
 type NoteRequest struct {
-	Body    string `json:"body" binding:"required"`
-	Publish bool   `json:"publish"`
-	Tags    []uint `json:"tags" binding:"required"`
-	Title   string `json:"title" binding:"required"`
+	Body        string `json:"body" binding:"required"`
+	Description string `json:"description" binding:"required"`
+	Publish     bool   `json:"publish"`
+	Tags        []uint `json:"tags" binding:"required"`
+	Title       string `json:"title" binding:"required"`
 }
 
 // NewNote creates a note with a specified values
@@ -43,11 +44,12 @@ func NewNote(c *gin.Context) {
 
 	// Create and save note
 	newNote := models.Note{
-		Title:     requestVars.Title,
-		Body:      requestVars.Body,
-		Author:    user,
-		Published: requestVars.Publish,
-		Tags:      tags,
+		Title:       requestVars.Title,
+		Body:        requestVars.Body,
+		Description: requestVars.Description,
+		Author:      user,
+		Published:   requestVars.Publish,
+		Tags:        tags,
 	}
 	if err := db.DB.Create(&newNote).Error; err != nil {
 		c.AbortWithError(500, err)
@@ -112,6 +114,7 @@ func EditNote(c *gin.Context) {
 	// Save note
 	note.Title = requestVars.Title
 	note.Body = requestVars.Body
+	note.Description = requestVars.Description
 	note.Published = requestVars.Publish
 
 	if err := tx.Save(&note).Error; err != nil {
@@ -130,7 +133,7 @@ func EditNote(c *gin.Context) {
 // returns error and ok value
 func verifyNoteRequest(request NoteRequest) (*errors.Error, bool) {
 	// check for missing parameters
-	if request.Body == "" || request.Title == "" {
+	if request.Body == "" || request.Title == "" || request.Description == "" {
 		return errors.MissingParameters, false
 	}
 

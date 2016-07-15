@@ -25,10 +25,11 @@ $(() => {
 			type: "PUT",
 			url:  "/api/v1/note/" + noteJSON.ID,
 			data: JSON.stringify({
-				title:   $(".new-note-title").val(),
-				body:    window.quill.getHTML(),
-				tags:    $(".tag-selector").val().map(e => {return parseFloat(e);}),
-				publish: noteJSON.Published,
+				title:       $(".note-title").val(),
+				description: $(".note-description").val(),
+				body:        window.quill.getHTML(),
+				tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
+				publish:     noteJSON.Published,
 			}),
 			dataType: "json",
 		}).then(() => {
@@ -43,10 +44,11 @@ $(() => {
 			type: "PUT",
 			url:  "/api/v1/note/" + noteJSON.ID,
 			data: JSON.stringify({
-				title:   $(".new-note-title").val(),
-				body:    window.quill.getHTML(),
-				tags:    $(".tag-selector").val().map(e => {return parseFloat(e);}),
-				publish: true,
+				title:       $(".note-title").val(),
+				description: $(".note-description").val(),
+				body:        window.quill.getHTML(),
+				tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
+				publish:     true,
 			}),
 			dataType: "json",
 		}).then(() => {
