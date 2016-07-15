@@ -9,7 +9,7 @@ import (
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
-	"github.com/project-domino/project-domino/handlers/view"
+	"github.com/project-domino/project-domino/handlers/redirect"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
 
@@ -93,15 +93,17 @@ func main() {
 		middleware.RequireAuth(),
 		middleware.RequireUserType(models.Writer, models.Admin),
 		middleware.LoadRequestUser("Notes", "Collections")).
-		GET("/", view.WriterPanelRedirect).
+		GET("/", redirect.WriterPanel).
 		GET("/note", handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit",
 			middleware.LoadNote("Author", "Tags"),
-			view.EditNote).
+			middleware.VerifyNoteOwner(),
+			handlers.Simple("edit-note.html")).
 		GET("/collection", handlers.Simple("new-collection.html")).
 		GET("/collection/:collectionID/edit",
 			middleware.LoadCollection("Author", "Tags"),
-			view.EditCollection).
+			middleware.VerifyCollectionOwner(),
+			handlers.Simple("edit-collection.html")).
 		GET("/tag", handlers.Simple("new-tag.html"))
 
 	// API
