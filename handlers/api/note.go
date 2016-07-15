@@ -137,5 +137,10 @@ func verifyNoteRequest(request NoteRequest) (*errors.Error, bool) {
 		return errors.MissingParameters, false
 	}
 
+	// Check description size
+	if len(request.Description) > 250 {
+		return errors.BadParameters, false
+	}
+
 	return &errors.Error{}, true
 }

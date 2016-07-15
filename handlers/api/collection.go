@@ -178,12 +178,17 @@ func EditCollection(c *gin.Context) {
 // verifyCollectionRequest verifies if values in collection request are okay
 // returns error and ok value
 func verifyCollectionRequest(request CollectionRequest) (*errors.Error, bool) {
-	// check for missing parameters
+	// Check for missing parameters
 	if request.Description == "" || request.Title == "" || len(request.Notes) == 0 {
 		return errors.MissingParameters, false
 	}
 
-	// check for duplicate notes
+	// Check description size
+	if len(request.Description) > 500 {
+		return errors.BadParameters, false
+	}
+
+	// Check for duplicate notes
 	var temp []uint
 	for _, e := range request.Notes {
 		if !contains(temp, e) {
@@ -193,7 +198,7 @@ func verifyCollectionRequest(request CollectionRequest) (*errors.Error, bool) {
 		}
 	}
 
-	// verify notes exist
+	// Verify notes exist
 	if err := db.VerifyNotes(request.Notes); err != nil {
 		return errors.NoteNotFound, false
 	}

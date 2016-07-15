@@ -9,6 +9,8 @@ import WriterPanelUtil from "./writer-panel-util.js";
 
 const modal = getModal();
 
+const maxDescriptionChars = 500;
+
 /**
  * WriterPanelCollectionUtil contains utility functions for
  * writer-panel-collection pages
@@ -18,6 +20,13 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 	// Constructs new WriterPanelCollectionUtil
 	constructor(selectedNotes) {
 		super();
+
+		// Get elements
+		this.title = $(".collection-title");
+		this.description = $(".collection-description");
+		this.remainChars = $(".char-remaining");
+
+		// If selected notes are passed set selected notes and render
 		if(selectedNotes) {
 			this.selectedNotes = selectedNotes;
 			this.renderSelectNotes();
@@ -26,10 +35,27 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 		}
 		this.resultNotes = [];
 
+		// Initialize tagSelector
 		super.initTagSelector();
+
+		// Initialize searchHandler
 		var handler = $.proxy(this.searchHandler, this);
 		$(".note-search-field").on("keyup", _.debounce(handler, 100));
 		$(".note-search-btn").click(handler);
+
+		// Set chars remaining
+		this.setRemainingChars();
+
+		// Set listener on description field
+		this.description.on("keyup", $.proxy(this.setRemainingChars, this));
+	}
+
+	/**
+	 * setRemainingChars sets the charRemaining notifier for the description
+	 */
+	setRemainingChars() {
+		var charRemaining = maxDescriptionChars - this.description.val().length;
+		this.remainChars.text(charRemaining + " characters remaining...");
 	}
 
 	/**
@@ -168,8 +194,8 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 	 */
 	getData() {
 		return {
-			title:       $(".collection-title").val(),
-			description: $(".collection-description").val(),
+			title:       this.title.val(),
+			description: this.description.val(),
 			notes:       this.selectedNotes.map(note => {return note.ID;}),
 			tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
 		};

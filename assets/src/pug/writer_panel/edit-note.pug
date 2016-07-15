@@ -24,6 +24,8 @@ block writer-panel-body
 			input.note-title.form-input(placeholder="Enter note title...", value="{{.note.Title}}")
 			h4.panel-field-header Description
 			textarea.note-description {{.note.Description}}
+			div.char-remaining-container
+				span.char-remaining
 			h4.panel-field-header Content
 			include ./quill.pug
 			h4.panel-field-header Tags

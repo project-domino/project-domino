@@ -27,3 +27,14 @@
 	.writer-sidebar { width: calc(100% - 40px); }
 	.writer-body { width: calc(100% - 40px); }
 }
+
+.char-remaining-container {
+	box-sizing: border-box;
+	padding: 10px;
+	width: 100%;
+
+	.char-remaining {
+		color: $darker;
+		float: right;
+	}
+}

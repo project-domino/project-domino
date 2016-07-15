@@ -5,6 +5,8 @@ import "select2";
 
 import WriterPanelUtil from "./writer-panel-util.js";
 
+const maxDescriptionChars = 250;
+
 /**
  * WriterPanelNoteUtil contains utility functions for
  * writer-panel-note pages
@@ -15,6 +17,12 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 	// If a note is passed the contents of the page will be set to the note
 	constructor(note) {
 		super();
+
+		// Get elements
+		this.title = $(".note-title");
+		this.description = $(".note-description");
+		this.tagSelector = $(".tag-selector");
+		this.remainChars = $(".char-remaining");
 
 		// Initialize tag selector
 		super.initTagSelector();
@@ -31,7 +39,7 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 			theme: "snow",
 		});
 
-		// If a note is passed, set contents of quill and tag-selector
+		// If a note is passed, set page contents
 		if(note) {
 			if(note.Tags) {
 				$(".tag-selector").val(note.Tags.map(e => {
@@ -40,6 +48,20 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 			}
 			this.quill.setHTML(note.Body);
 		}
+
+		// Set chars remaining
+		this.setRemainingChars();
+
+		// Set listener on description field
+		this.description.on("keyup", $.proxy(this.setRemainingChars, this));
+	}
+
+	/**
+	 * setRemainingChars sets the charRemaining notifier for the description
+	 */
+	setRemainingChars() {
+		var charRemaining = maxDescriptionChars - this.description.val().length;
+		this.remainChars.text(charRemaining + " characters remaining...");
 	}
 
 	/**
@@ -47,10 +69,10 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 	 */
 	getData() {
 		return {
-			title:       $(".note-title").val(),
-			description: $(".note-description").val(),
+			title:       this.title.val(),
+			description: this.description.val(),
 			body:        this.quill.getHTML(),
-			tags:        $(".tag-selector").val().map(e => {return parseFloat(e);}),
+			tags:        this.tagSelector.val().map(e => {return parseFloat(e);}),
 		};
 	}
 
