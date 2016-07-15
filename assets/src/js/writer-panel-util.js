@@ -8,20 +8,6 @@ import "select2";
  */
 class WriterPanelUtil {
 
-	// Initializes the quill editor
-	initQuill() {
-		window.quill = new Quill("#editor", { // eslint-disable-line no-undef
-			modules: {
-				"toolbar": {
-					container: "#editor-toolbar",
-				},
-				"image-tooltip": true,
-				"link-tooltip":  true,
-			},
-			theme: "snow",
-		});
-	}
-
 	// Initializes the tag selector
 	initTagSelector() {
 		$(".tag-selector").select2({
