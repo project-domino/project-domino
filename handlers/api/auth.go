@@ -146,6 +146,7 @@ func AuthCookie(c *gin.Context, user models.User) {
 	// Create cookie
 	cookie := http.Cookie{
 		Name:    "auth",
+		Path:    "/",
 		Value:   authToken.Token,
 		Expires: authToken.Expires,
 	}
