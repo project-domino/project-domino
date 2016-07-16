@@ -12,13 +12,13 @@ type Notification struct {
 	gorm.Model
 
 	SendorID uint
-	Sendor User
-	UserID uint
-	User   User
+	Sendor   User
+	UserID   uint
+	User     User
 
-	Title string
-	Type string
+	Title   string
+	Type    string
 	Payload string
 	Message string
-	Read bool
+	Read    bool
 }
