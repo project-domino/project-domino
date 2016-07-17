@@ -4,6 +4,20 @@ import $ from "jquery";
 
 $(() => {
 	// Wire up buttons
+	$(".search-btn").click(() => {
+		$.ajax({
+			type: "GET",
+			url:  "/api/v1/search",
+			data: {
+				q: $(".search-field").val(),
+			},
+			dataType: "json",
+		}).fail(err => {
+			console.log(err);
+		}).then(data => {
+			console.log(data);
+		});
+	});
 	$(".logout-btn").click(() => {
 		$.ajax({
 			type:     "POST",

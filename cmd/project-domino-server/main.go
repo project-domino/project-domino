@@ -18,11 +18,8 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
 
-	// Database Drivers
-	_ "github.com/denisenkom/go-mssqldb" // MS SQL
-	_ "github.com/go-sql-driver/mysql"   // MySQL, MariaDB
-	_ "github.com/lib/pq"                // PostgreSQL
-	_ "github.com/mattn/go-sqlite3"      // SQLite 3.x.y
+	// Database Driver
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -64,8 +61,10 @@ func main() {
 
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
+	m.GET("/account",
+		middleware.RequireAuth(),
+		handlers.TODO)
 	m.GET("/uni/:uni-short-name", handlers.TODO)
-	m.GET("/search", handlers.TODO)
 
 	m.Group("/u/:username",
 		middleware.LoadUser("Notes", "Collections")).
@@ -108,8 +107,7 @@ func main() {
 
 	// API
 	m.Group("/api/v1").
-		GET("/search/tag", api.SearchTags).
-		GET("/search/note", api.SearchNotes).
+		GET("/search", api.Search).
 		POST("/note",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),

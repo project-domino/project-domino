@@ -12,20 +12,20 @@ class WriterPanelUtil {
 	initTagSelector() {
 		$(".tag-selector").select2({
 			ajax: {
-				url:      "/api/v1/search/tag",
+				url:      "/api/v1/search",
 				dataType: "json",
 				delay:    250,
 				cache:    true,
 				width:    "100%",
 				data:     params => {
 					return {
-						q: params.term,
+						q: "type:tag " + params.term,
 					};
 				},
 				processResults: data => {
 					if(data) {
 						return {
-							results: data.map(e => {
+							results: data.Tags.map(e => {
 								return {
 									id:          e.ID,
 									name:        e.Name,
