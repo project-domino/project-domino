@@ -43,6 +43,7 @@
 		"main":                    "src/sass/main.scss",
 		"new-tag":                 "src/sass/new-tag.scss",
 		"note":                    "src/sass/note.scss",
+		"search":                  "src/sass/search.scss",
 		"user":                    "src/sass/user.scss",
 		"writer-panel-collection": "src/sass/writer-panel-collection.scss",
 		"writer-panel-note":       "src/sass/writer-panel-note.scss"

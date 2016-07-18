@@ -66,6 +66,10 @@ func main() {
 		handlers.TODO)
 	m.GET("/uni/:uni-short-name", handlers.TODO)
 
+	m.GET("/search",
+		middleware.LoadSearchItems(),
+		handlers.Simple("search.html"))
+
 	m.Group("/u/:username",
 		middleware.LoadUser("Notes", "Collections")).
 		GET("/", handlers.Simple("user-notes.html")).
