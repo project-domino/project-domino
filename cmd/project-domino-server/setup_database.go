@@ -36,15 +36,6 @@ func SetupDatabase(db *gorm.DB) error {
 			FOR EACH ROW EXECUTE PROCEDURE
 			tsvector_update_trigger('searchtext', 'pg_catalog.english', 'title', 'description')`)
 	}
-	if !db.HasTable(&models.University{}) {
-		setupTable(db, &models.University{})
-		db.Exec("ALTER TABLE universities ADD COLUMN searchtext TSVECTOR")
-		db.Exec("CREATE INDEX searchtext_university_gin ON universities USING GIN(searchtext)")
-		db.Exec(`CREATE TRIGGER ts_searchtext_university
-			BEFORE INSERT OR UPDATE ON universities
-			FOR EACH ROW EXECUTE PROCEDURE
-			tsvector_update_trigger('searchtext', 'pg_catalog.english', 'name', 'short_name')`)
-	}
 	if !db.HasTable(&models.Tag{}) {
 		setupTable(db, &models.Tag{})
 		db.Exec("ALTER TABLE tags ADD COLUMN searchtext TSVECTOR")

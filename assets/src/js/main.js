@@ -4,19 +4,14 @@ import $ from "jquery";
 
 $(() => {
 	// Wire up buttons
-	$(".search-btn").click(() => {
-		$.ajax({
-			type: "GET",
-			url:  "/api/v1/search",
-			data: {
-				q: $(".search-field").val(),
-			},
-			dataType: "json",
-		}).fail(err => {
-			console.log(err);
-		}).then(data => {
-			console.log(data);
-		});
+	var searchFunction = () => {
+		window.location.assign("/search/all?q=" +
+			encodeURIComponent($(".search-field").val()));
+	};
+	$(".search-btn").click(searchFunction);
+	$(".search-field").keyup(e => {
+		if(e.keyCode === 13)
+			searchFunction();
 	});
 	$(".logout-btn").click(() => {
 		$.ajax({

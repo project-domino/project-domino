@@ -1,5 +1,37 @@
 extends ./template.pug
 
+mixin noteList(list)
+	| {{if #{list}}}{{range #{list}}}
+	div.list-item
+		div.item-right
+			div.item-title
+				a(href="/note/{{.ID}}") {{.Title}}
+			div.item-description {{.Description}}
+	| {{end}}{{else}}
+	span.no-content-text No notes found...
+	| {{end}}
+
+mixin collectionList(list)
+	| {{if #{list}}}{{range #{list}}}
+	div.list-item
+		div.item-right
+			div.item-title
+				a(href="/collection/{{.ID}}") {{.Title}}
+			div.item-description {{.Description}}
+	| {{end}}{{else}}
+	span.no-content-text No collections found...
+	| {{end}}
+
+mixin userList(list)
+	| {{if #{list}}}{{range #{list}}}
+	div.list-item
+		div.item-right
+			div.item-title
+				a(href="/u/{{.UserName}}") {{.UserName}}
+	| {{end}}{{else}}
+	span.no-content-text No users found...
+	| {{end}}
+
 block head
 	title {{.query}}
 
@@ -7,3 +39,48 @@ block css
 	link(rel="stylesheet", href="/assets/search.css")
 
 block body
+	div.panel.search-result-container
+		div.panel-body
+			ul.h-control-list
+				li.h-control
+					| {{if eq .searchType "all"}}
+					a.active(href="/search/all?q={{.query}}") All
+					| {{else}}
+					a(href="/search/all?q={{.query}}") All
+					| {{end}}
+				li.h-control
+					| {{if eq .searchType "note"}}
+					a.active(href="/search/note?q={{.query}}") Notes
+					| {{else}}
+					a(href="/search/note?q={{.query}}") Notes
+					| {{end}}
+				li.h-control
+					| {{if eq .searchType "collection"}}
+					a.active(href="/search/collection?q={{.query}}") Collections
+					| {{else}}
+					a(href="/search/collection?q={{.query}}") Collections
+					| {{end}}
+				li.h-control
+					| {{if eq .searchType "user"}}
+					a.active(href="/search/user?q={{.query}}") Users
+					| {{else}}
+					a(href="/search/user?q={{.query}}") Users
+					| {{end}}
+			| {{if eq .searchType "all"}}
+			+noteList(".searchResult.Notes")
+			+collectionList(".searchResult.Collections")
+			+userList(".searchResult.Users")
+			| {{else}}
+			| {{if eq .searchType "note"}}
+			+noteList(".searchResult")
+			| {{else if eq .searchType "collection"}}
+			+collectionList(".searchResult")
+			| {{else if eq .searchType "user"}}
+			+userList(".searchResult")
+			| {{end}}
+			div.page-nav-links
+				a.prev-link(href="{{.prevPage}}")
+					span.fa.fa-chevron-left
+				a.next-link(href="{{.nextPage}}")
+					span.fa.fa-chevron-right
+			| {{end}}

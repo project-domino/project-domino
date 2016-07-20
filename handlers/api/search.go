@@ -4,18 +4,16 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/project-domino/project-domino/search"
+	"github.com/project-domino/project-domino/errors"
 )
 
 // Search handles searching the db
 func Search(c *gin.Context) {
-	// Get query from request
-	q := c.DefaultQuery("q", "")
-
-	// Search db
-	response, err := search.Search(q)
-	if err != nil {
-		c.AbortWithError(500, err)
+	// Get search results from context
+	response, ok := c.Get("searchResult")
+	if !ok {
+		errors.InternalError.Apply(c)
+		return
 	}
 
 	// Send back response in json

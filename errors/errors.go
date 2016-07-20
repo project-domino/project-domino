@@ -15,6 +15,8 @@ var (
 	BadParameters     = &Error{400, "Bad Parameters"}
 	MissingParameters = &Error{400, "Missing Parameters"}
 	TagExists         = &Error{400, "Tag already exists"}
+	InvalidPage       = &Error{400, "Page number is not valid"}
+	InvalidItems      = &Error{400, "Item count is not valid"}
 )
 
 // 403 errors
@@ -26,6 +28,7 @@ var (
 
 // 404 errors
 var (
+	NotFound           = &Error{404, "Page Not Found"}
 	NoteNotFound       = &Error{404, "Note Not Found"}
 	CollectionNotFound = &Error{404, "Collection Not Found"}
 	UserNotFound       = &Error{404, "User Not Found"}
@@ -33,6 +36,7 @@ var (
 
 // 5xx errors
 var (
-	Debug = &Error{500, "teh internets are asplode"}
-	JSON  = &Error{500, "Could not convert to JSON"}
+	InternalError = &Error{500, "Server Error"}
+	Debug         = &Error{500, "teh internets are asplode"}
+	JSON          = &Error{500, "Could not convert to JSON"}
 )

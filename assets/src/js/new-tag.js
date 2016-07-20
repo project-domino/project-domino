@@ -12,7 +12,7 @@ var tagResultHandler = json => {
 		resultTable.hide();
 		resultNotification.show();
 		resultNotification.text("Please enter your tag name...");
-	} else if(json.Tags.length === 0) {
+	} else if(json.length === 0) {
 		resultTable.hide();
 		resultNotification.show();
 		resultNotification.text("No similar tags found...");
@@ -20,7 +20,7 @@ var tagResultHandler = json => {
 		resultTable.show();
 		resultNotification.hide();
 		$(".result-table-element").remove();
-		resultTable.append(json.Tags.map(e => {
+		resultTable.append(json.map(e => {
 			return $("<tr>").append(
 				$("<td>").text(e.Name),
 				$("<td>").text(e.Description)
@@ -50,9 +50,9 @@ $(() => {
 	$(".new-tag-name-field").on("keyup", _.debounce(() => {
 		$.ajax({
 			type: "GET",
-			url:  "/api/v1/search",
+			url:  "/api/v1/search/tag",
 			data: {
-				q: "type:tag " + $(".new-tag-name-field").val(),
+				q: $(".new-tag-name-field").val(),
 			},
 			dataType: "json",
 		}).then(tagResultHandler).fail(err => {

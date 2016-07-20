@@ -64,10 +64,10 @@ func main() {
 	m.GET("/account",
 		middleware.RequireAuth(),
 		handlers.TODO)
-	m.GET("/uni/:uni-short-name", handlers.TODO)
 
-	m.GET("/search",
+	m.GET("/search/:searchType",
 		middleware.LoadSearchItems(),
+		middleware.LoadSearchVars(),
 		handlers.Simple("search.html"))
 
 	m.Group("/u/:username",
@@ -111,7 +111,9 @@ func main() {
 
 	// API
 	m.Group("/api/v1").
-		GET("/search", api.Search).
+		GET("/search/:searchType",
+			middleware.LoadSearchItems(),
+			api.Search).
 		POST("/note",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),

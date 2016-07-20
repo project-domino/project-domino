@@ -1,2 +1,17 @@
 @import "util/variables.scss";
 @import "main.scss";
+
+@import "util/horizontal-control.scss";
+@import "util/item-list.scss";
+
+.search-result-container {
+	margin: 20px auto;
+	width: 1000px;
+}
+
+@media only screen and (max-width: 1040px) {
+	.search-result-container {
+		margin: 20px;
+		width: calc(100% - 40px);
+	}
+}

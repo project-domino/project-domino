@@ -13,7 +13,10 @@ var KeysList = []string{
 	"collection",
 	"collectionJSON",
 	"query",
-	"searchItems",
+	"searchResult",
+	"nextPage",
+	"prevPage",
+	"items",
 }
 
 // Keys returns the variables which have been set via gin.Context.Set. This is

@@ -191,13 +191,13 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 		}
 		$.ajax({
 			type: "GET",
-			url:  "/api/v1/search",
+			url:  "/api/v1/search/note",
 			data: {
-				q: "type:note " + query,
+				q: query,
 			},
 			dataType: "json",
 		}).then(data => {
-			this.resultNotes = data.Notes;
+			this.resultNotes = data;
 			this.renderResultNotes();
 		}).fail(err => {
 			console.log(err);
