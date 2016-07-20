@@ -65,7 +65,12 @@
 }
 
 @media screen and (max-width: 1000px) {
-	.collection-sidebar, .collection-body { margin: 20px 20px 0 20px; }
+	.collection-sidebar {
+		margin: 20px 20px 10px 20px;
+	}
+	.collection-body {
+		margin: 10px 20px 20px 20px;
+	}
 	.collection-sidebar {
 		border: 1px solid $border-color;
 		height: auto;

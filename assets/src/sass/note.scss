@@ -1,26 +1,6 @@
 @import "util/variables.scss";
 @import "main.scss";
 
-.note-heading {
-	border-bottom: 1px solid $border-color;
-	display: flex;
-	margin-bottom: 20px;
-
-	.note-title {
-		display: inline-block;
-		margin: 20px 0px 10px;
-	}
-
-	.note-heading-right {
-		color: $darker;
-		display: flex;
-		flex-direction: column-reverse;
-		font-size: 13px;
-		margin-left: auto;
-		padding: 5px;
-	}
-}
-
 .contributor-container {
 	color: $darker;
 	display: flex;

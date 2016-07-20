@@ -1,0 +1,28 @@
+extends ./template.pug
+
+block head
+	title {{.collection.Title}}
+
+block css
+	link(rel="stylesheet", href="/assets/collection.css")
+
+block body
+	div.content
+		div.panel.collection-info
+			div.item-heading
+				h2.item-title {{.collection.Title}}
+				div.item-heading-right
+					span.collection-date Last Updated - {{.collection.UpdatedAt.Format "2006-01-02"}}
+			div.panel-body
+				p.collection-description {{.collection.Description}}
+		div.panel.collection-notes
+			div.panel-body
+				| {{if .collection.Notes}}{{range .collection.Notes}}
+				div.list-item
+					div.item-right
+						div.item-title
+							a(href="/note/{{.ID}}") {{.Title}}
+						div.item-description {{.Description}}
+				| {{end}}{{else}}
+				span.no-content-text There are no notes in this collection...
+				| {{end}}

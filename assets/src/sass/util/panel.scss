@@ -5,6 +5,26 @@
 	border: 1px solid $border-color;
 	box-sizing: border-box;
 	padding: 20px;
+
+	.item-heading {
+		border-bottom: 1px solid $border-color;
+		display: flex;
+		margin-bottom: 20px;
+
+		.item-title {
+			display: inline-block;
+			margin: 20px 0px 10px;
+		}
+
+		.item-heading-right {
+			color: $darker;
+			display: flex;
+			flex-direction: column-reverse;
+			font-size: 13px;
+			margin-left: auto;
+			padding: 5px;
+		}
+	}
 }
 
 .panel-heading {

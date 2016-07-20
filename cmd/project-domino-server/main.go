@@ -82,7 +82,9 @@ func main() {
 		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
 	m.Group("/collection").
-		GET("/:collectionID", handlers.TODO).
+		GET("/:collectionID",
+			middleware.LoadCollection("Author", "Tags"),
+			handlers.Simple("collection.html")).
 		GET("/:collectionID/note/:noteID",
 			middleware.LoadNote("Author", "Tags"),
 			middleware.LoadCollection("Author", "Tags"),

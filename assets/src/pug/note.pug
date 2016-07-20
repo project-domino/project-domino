@@ -1,12 +1,13 @@
 div.panel.note-container
-	div.note-heading
-		h2.note-title {{.note.Title}}
-		div.note-heading-right
+	div.item-heading
+		h2.item-title {{.note.Title}}
+		div.item-heading-right
 			span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
 	div.panel-body {{.noteHTML}}
 	div.panel-seperator
 	div.contributor-container
-		span.note-author Created By - 
+		span.note-author Created By -
+			= ' '
 			a(href="/u/{{.note.Author.UserName}}") {{.note.Author.UserName}}
 div.hidden.data
 	div#note-data {{.noteJSON}}

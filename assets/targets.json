@@ -32,7 +32,8 @@
 		"search":           "src/pug/search.pug",
 		"user-collections": "src/pug/user_page/user-collections.pug",
 		"user-notes":       "src/pug/user_page/user-notes.pug",
-		"writer-panel":     "src/pug/writer_panel/writer-panel.pug"
+		"writer-panel":     "src/pug/writer_panel/writer-panel.pug",
+		"collection":       "src/pug/collection.pug"
 	},
 	"sass": {
 		"collection-note":         "src/sass/collection-note.scss",
@@ -46,6 +47,7 @@
 		"search":                  "src/sass/search.scss",
 		"user":                    "src/sass/user.scss",
 		"writer-panel-collection": "src/sass/writer-panel-collection.scss",
-		"writer-panel-note":       "src/sass/writer-panel-note.scss"
+		"writer-panel-note":       "src/sass/writer-panel-note.scss",
+		"collection":              "src/sass/collection.scss"
 	}
 }
