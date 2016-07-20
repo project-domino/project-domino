@@ -21,7 +21,7 @@ block body
 				div.list-item
 					div.item-right
 						div.item-title
-							a(href="/note/{{.ID}}") {{.Title}}
+							a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
 						div.item-description {{.Description}}
 				| {{end}}{{else}}
 				span.no-content-text There are no notes in this collection...
