@@ -8,7 +8,7 @@ import (
 )
 
 // Users returns all users that match a given query
-func Users(q string, items uint, page uint) ([]models.User, error) {
+func Users(q string, items int, page int) ([]models.User, error) {
 	var users []models.User
 
 	searchQuery, err := ParseQuery(q)

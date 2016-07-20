@@ -8,7 +8,7 @@ import (
 )
 
 // Collections returns all collections that match a given query
-func Collections(q string, items uint, page uint) ([]models.Collection, error) {
+func Collections(q string, items int, page int) ([]models.Collection, error) {
 	var collections []models.Collection
 
 	searchQuery, err := ParseQuery(q)

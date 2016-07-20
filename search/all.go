@@ -12,7 +12,7 @@ type AllResponse struct {
 }
 
 // All returns a struct containing a search result for all items
-func All(q string, items uint) (AllResponse, error) {
+func All(q string, items int) (AllResponse, error) {
 	var response AllResponse
 	var searchErr error
 

@@ -22,14 +22,14 @@ func LoadSearchVars() gin.HandlerFunc {
 		searchResult := c.MustGet("searchResult")
 
 		// Convert page and items to uint
-		tempItems, convertErr1 := strconv.ParseUint(i, 10, 64)
-		tempPage, convertErr2 := strconv.ParseUint(p, 10, 64)
+		tItems, convertErr1 := strconv.ParseInt(i, 10, 64)
+		tPage, convertErr2 := strconv.ParseInt(p, 10, 64)
 		if convertErr1 != nil || convertErr2 != nil {
 			errors.BadParameters.Apply(c)
 			return
 		}
-		items := uint(tempItems)
-		page := uint(tempPage)
+		items := int(tItems)
+		page := int(tPage)
 
 		// Set query and items to request context
 		c.Set("items", items)
@@ -44,7 +44,7 @@ func LoadSearchVars() gin.HandlerFunc {
 			nextPage = "#"
 			prevPage = "#"
 		} else {
-			if reflect.ValueOf(searchResult).Len() <= int(items) || page == search.MaxPage {
+			if reflect.ValueOf(searchResult).Len() <= items || page == search.MaxPage {
 				nextPage = currentPage
 			} else {
 				nextPage = fmt.Sprintf("/search/%s?q=%s&items=%d&page=%d",

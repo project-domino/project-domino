@@ -8,7 +8,7 @@ import (
 )
 
 // Notes returns all notes that match a given query
-func Notes(q string, items uint, page uint) ([]models.Note, error) {
+func Notes(q string, items int, page int) ([]models.Note, error) {
 	var notes []models.Note
 
 	searchQuery, err := ParseQuery(q)

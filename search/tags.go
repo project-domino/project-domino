@@ -8,7 +8,7 @@ import (
 )
 
 // Tags returns all tags that match a given query
-func Tags(q string, items uint, page uint) ([]models.Tag, error) {
+func Tags(q string, items int, page int) ([]models.Tag, error) {
 	var tags []models.Tag
 
 	searchQuery, err := ParseQuery(q)

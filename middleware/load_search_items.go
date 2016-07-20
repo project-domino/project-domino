@@ -18,14 +18,14 @@ func LoadSearchItems() gin.HandlerFunc {
 		searchType := c.Param("searchType")
 
 		// Convert page and items to uint
-		tempItems, convertErr1 := strconv.ParseUint(i, 10, 64)
-		tempPage, convertErr2 := strconv.ParseUint(p, 10, 64)
+		tItems, convertErr1 := strconv.ParseInt(i, 10, 64)
+		tPage, convertErr2 := strconv.ParseInt(p, 10, 64)
 		if convertErr1 != nil || convertErr2 != nil {
 			errors.BadParameters.Apply(c)
 			return
 		}
-		items := uint(tempItems)
-		page := uint(tempPage)
+		items := int(tItems)
+		page := int(tPage)
 
 		// Verify item and page numbers
 		if items <= 0 || items > search.MaxItems {
