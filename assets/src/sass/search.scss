@@ -15,3 +15,14 @@
 		width: calc(100% - 40px);
 	}
 }
+
+.no-content-text {
+	color: $darker;
+	display: block;
+}
+
+.page-nav-links {
+	text-align: center;
+
+	.prev-link, .next-link { padding: 10px; }
+}

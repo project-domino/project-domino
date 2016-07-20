@@ -67,10 +67,14 @@ block body
 					a(href="/search/user?q={{.query}}") Users
 					| {{end}}
 			| {{if eq .searchType "all"}}
+			h4.panel-field-header Notes
 			+noteList(".searchResult.Notes")
+			h4.panel-field-header Collections
 			+collectionList(".searchResult.Collections")
+			h4.panel-field-header Users
 			+userList(".searchResult.Users")
 			| {{else}}
+			h4.panel-field-header Results
 			| {{if eq .searchType "note"}}
 			+noteList(".searchResult")
 			| {{else if eq .searchType "collection"}}
