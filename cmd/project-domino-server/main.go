@@ -63,7 +63,7 @@ func main() {
 	m.GET("/", handlers.Simple("home.html"))
 	m.GET("/account",
 		middleware.RequireAuth(),
-		handlers.TODO)
+		handlers.Simple("account.html"))
 
 	m.GET("/search/:searchType",
 		middleware.LoadSearchItems(),

@@ -28,8 +28,6 @@
 	.item-right {
 		display:flex;
 		flex-direction: column;
-
-		.item-description, .item-title { overflow: hidden; }
 	}
 }
 

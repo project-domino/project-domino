@@ -33,7 +33,8 @@
 		"user-collections": "src/pug/user_page/user-collections.pug",
 		"user-notes":       "src/pug/user_page/user-notes.pug",
 		"writer-panel":     "src/pug/writer_panel/writer-panel.pug",
-		"collection":       "src/pug/collection.pug"
+		"collection":       "src/pug/collection.pug",
+		"account":          "src/pug/account.pug"
 	},
 	"sass": {
 		"collection-note":         "src/sass/collection-note.scss",
@@ -48,6 +49,7 @@
 		"user":                    "src/sass/user.scss",
 		"writer-panel-collection": "src/sass/writer-panel-collection.scss",
 		"writer-panel-note":       "src/sass/writer-panel-note.scss",
-		"collection":              "src/sass/collection.scss"
+		"collection":              "src/sass/collection.scss",
+		"account":                 "src/sass/account.scss"
 	}
 }
