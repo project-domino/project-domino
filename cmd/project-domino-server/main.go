@@ -61,9 +61,13 @@ func main() {
 
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
-	m.GET("/account",
-		middleware.RequireAuth(),
-		handlers.Simple("account.html"))
+
+	m.Group("/account",
+		middleware.RequireAuth()).
+		GET("/", redirect.Account).
+		GET("/profile", handlers.Simple("account-profile.html")).
+		GET("/security", handlers.Simple("account-security.html")).
+		GET("/notifications", handlers.Simple("account-notifications.html"))
 
 	m.GET("/search/:searchType",
 		middleware.LoadSearchItems(),

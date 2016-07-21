@@ -1,0 +1,10 @@
+@import "../util/variables.scss";
+@import "../main.scss";
+
+@import "../util/page-sidebar.scss";
+
+.form-input { width: 60%; }
+
+@media screen and (max-width: 750px) { .form-input { width: 100%; } }
+
+.panel-body { padding: 10px 0; }

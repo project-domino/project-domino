@@ -1,0 +1,15 @@
+@import "../util/variables.scss";
+@import "../main.scss";
+
+@import "../util/page-sidebar.scss";
+
+.char-remaining-container {
+	box-sizing: border-box;
+	padding: 10px;
+	width: 100%;
+
+	.char-remaining {
+		color: $darker;
+		float: right;
+	}
+}

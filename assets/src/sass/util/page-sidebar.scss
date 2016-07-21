@@ -1,0 +1,29 @@
+.page-sidebar, .page-body {
+	box-sizing: border-box;
+	float: left;
+}
+
+.page-sidebar {
+	margin: 20px 10px 20px 40px;
+	width: 300px;
+
+	.sidebar-link {
+		display: block;
+	}
+}
+
+.page-body {
+	margin: 20px 40px 20px 10px;
+	width: calc(100% - 400px);
+}
+
+@media screen and (max-width: 1200px) {
+	.page-sidebar { width: 25%; }
+	.page-body { width: calc(75% - 100px); }
+}
+
+@media screen and (max-width: 750px) {
+	.page-sidebar, .page-body { margin: 20px; }
+	.page-sidebar { width: calc(100% - 40px); }
+	.page-body { width: calc(100% - 40px); }
+}

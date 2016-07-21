@@ -1,7 +1,7 @@
 extends ../template.pug
 
 block body
-	div.writer-sidebar.panel
+	div.page-sidebar.panel
 		h4.sidebar-header Create
 		a.sidebar-link(href="/writer-panel/note") New Note
 		a.sidebar-link(href="/writer-panel/collection") New Collection
@@ -26,5 +26,5 @@ block body
 			| {{if .Published}}
 			a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") {{.Title}}
 			| {{end}}{{end}}
-	div.writer-body
+	div.page-body
 		block writer-panel-body

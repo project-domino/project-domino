@@ -1,0 +1,16 @@
+extends ../template.pug
+
+block head
+	title {{.user.UserName}}
+
+block css
+	link(rel="stylesheet", href="/assets/account.css")
+
+block body
+	div.panel.page-sidebar
+		h4.sidebar-header Account Settings
+		a.sidebar-link(href="/account/profile") Profile
+		a.sidebar-link(href="/account/security") Security
+		a.sidebar-link(href="/account/notifications") Notifications
+	div.panel.page-body
+		block account-body
