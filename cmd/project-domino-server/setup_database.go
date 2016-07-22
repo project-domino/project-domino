@@ -22,10 +22,6 @@ func SetupDatabase(db *gorm.DB) error {
 		db.CreateTable(&models.Note{})
 		db.Exec("ALTER TABLE notes ADD COLUMN searchtext TSVECTOR")
 		db.Exec("CREATE INDEX searchtext_note_gin ON notes USING GIN(searchtext)")
-		db.Exec(`CREATE TRIGGER ts_searchtext_note
-			BEFORE INSERT OR UPDATE ON notes
-			FOR EACH ROW EXECUTE PROCEDURE
-			tsvector_update_trigger('searchtext', 'pg_catalog.english', 'title', 'description')`)
 	}
 	if !db.HasTable(&models.Collection{}) {
 		setupTable(db, &models.Collection{})

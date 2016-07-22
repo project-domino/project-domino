@@ -56,6 +56,12 @@ func NewNote(c *gin.Context) {
 		return
 	}
 
+	// Update searchtext field
+	if err := db.UpdateNoteSearchText(newNote.ID); err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
 	// Return note in JSON
 	c.JSON(http.StatusOK, newNote)
 }
@@ -124,6 +130,12 @@ func EditNote(c *gin.Context) {
 	}
 
 	tx.Commit()
+
+	// Update searchtext field
+	if err := db.UpdateNoteSearchText(note.ID); err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Return note in JSON
 	c.JSON(http.StatusOK, note)
