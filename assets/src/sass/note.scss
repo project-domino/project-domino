@@ -1,6 +1,8 @@
 @import "util/variables.scss";
 @import "main.scss";
 
+@import "util/tag-list.scss";
+
 .contributor-container {
 	color: $darker;
 	display: flex;

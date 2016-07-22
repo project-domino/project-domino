@@ -5,6 +5,12 @@ div.panel.note-container
 			span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
 	div.panel-body {{.noteHTML}}
 	div.panel-seperator
+	| {{if .note.Tags}}
+	div.tag-list
+		| {{range .note.Tags}}
+		div.tag {{.Name}}
+		| {{end}}
+	| {{end}}
 	div.contributor-container
 		span.note-author Created By -
 			= ' '

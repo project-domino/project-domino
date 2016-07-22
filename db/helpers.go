@@ -32,7 +32,9 @@ func VerifyNotes(ids []uint) error {
 func LoadCollectionNotes(c *models.Collection) error {
 	// Find collection note relationships
 	var collectioNotes []models.CollectionNote
-	if err := DB.Preload("Note").
+	if err := DB.
+		Preload("Note.Tags").
+		Preload("Note").
 		Where("collection_id = ?", c.ID).
 		Order("order").
 		Find(&collectioNotes).Error; err != nil && err != gorm.ErrRecordNotFound {

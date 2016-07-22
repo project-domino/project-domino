@@ -1,12 +1,23 @@
 extends ./template.pug
 
+mixin tagList()
+	| {{if .Tags}}
+	div.tag-list
+		| {{range .Tags}}
+		div.tag {{.Name}}
+		| {{end}}
+	| {{end}}
+
 mixin noteList(list)
 	| {{if #{list}}}{{range #{list}}}
 	div.list-item
 		div.item-right
 			div.item-title
 				a(href="/note/{{.ID}}") {{.Title}}
+			div.item-date
+				| Last Updated - {{.UpdatedAt.Format "2006-01-02"}}
 			div.item-description {{.Description}}
+			+tagList()
 	| {{end}}{{else}}
 	span.no-content-text No notes found...
 	| {{end}}
@@ -17,7 +28,10 @@ mixin collectionList(list)
 		div.item-right
 			div.item-title
 				a(href="/collection/{{.ID}}") {{.Title}}
+			div.item-date
+				| Last Updated - {{.UpdatedAt.Format "2006-01-02"}}
 			div.item-description {{.Description}}
+			+tagList()
 	| {{end}}{{else}}
 	span.no-content-text No collections found...
 	| {{end}}
@@ -28,6 +42,8 @@ mixin userList(list)
 		div.item-right
 			div.item-title
 				a(href="/u/{{.UserName}}") {{.UserName}}
+			div.item-date
+				| Joined - {{.CreatedAt.Format "2006-01-02"}}
 	| {{end}}{{else}}
 	span.no-content-text No users found...
 	| {{end}}

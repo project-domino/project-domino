@@ -7,7 +7,7 @@ import (
 
 // SetupDatabase initializes the database with empty tables of all the needed
 // types.
-// TODO tags
+// TODO tags on collection
 func SetupDatabase(db *gorm.DB) error {
 	if !db.HasTable(&models.User{}) {
 		db.CreateTable(&models.User{})

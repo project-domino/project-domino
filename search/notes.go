@@ -18,7 +18,9 @@ func Notes(q string, items int, page int) ([]models.Note, error) {
 	// qSelectors := searchQuery.Selectors
 	qText := strings.Join(searchQuery.Text, " & ")
 
-	if err := db.DB.Where(queryFormat, qText).
+	if err := db.DB.
+		Preload("Tags").
+		Where(queryFormat, qText).
 		Where("published = ?", true).
 		Find(&notes).
 		Limit(items).

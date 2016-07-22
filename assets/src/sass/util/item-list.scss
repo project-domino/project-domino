@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "tag-list.scss";
 
 .item-list {
 	margin: 0 auto;
@@ -28,6 +29,11 @@
 	.item-right {
 		display:flex;
 		flex-direction: column;
+
+		.item-date {
+			color: $darker;
+			font-size: 12px;
+		}
 	}
 }
 

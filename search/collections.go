@@ -19,7 +19,9 @@ func Collections(q string, items int, page int) ([]models.Collection, error) {
 	qText := strings.Join(searchQuery.Text, " & ")
 
 	if q != "" {
-		if err := db.DB.Where(queryFormat, qText).
+		if err := db.DB.
+			Preload("Tags").
+			Where(queryFormat, qText).
 			Where("published = ?", true).
 			Find(&collections).
 			Limit(items).

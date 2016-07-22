@@ -12,9 +12,17 @@ block body
 			div.item-heading
 				h2.item-title {{.collection.Title}}
 				div.item-heading-right
-					span.collection-date Last Updated - {{.collection.UpdatedAt.Format "2006-01-02"}}
+					span.collection-date
+						| Last Updated - {{.collection.UpdatedAt.Format "2006-01-02"}}
 			div.panel-body
 				p.collection-description {{.collection.Description}}
+			div.panel-seperator
+			| {{if .collection.Tags}}
+			div.tag-list
+				| {{range .collection.Tags}}
+				div.tag {{.Name}}
+				| {{end}}
+			| {{end}}
 		div.panel.collection-notes
 			div.panel-body
 				| {{if .collection.Notes}}{{range .collection.Notes}}
@@ -22,7 +30,15 @@ block body
 					div.item-right
 						div.item-title
 							a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+						div.item-date
+							| Last Updated - {{.UpdatedAt.Format "2006-01-02"}}
 						div.item-description {{.Description}}
+						| {{if .Tags}}
+						div.tag-list
+							| {{range .Tags}}
+							div.tag {{.Name}}
+							| {{end}}
+						| {{end}}
 				| {{end}}{{else}}
 				span.no-content-text There are no notes in this collection...
 				| {{end}}
