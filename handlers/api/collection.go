@@ -76,6 +76,12 @@ func NewCollection(c *gin.Context) {
 
 	tx.Commit()
 
+	// Update searchtext field
+	if err := db.UpdateCollectionSearchText(newCollection.ID); err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
 	// Return collection in JSON
 	c.JSON(http.StatusOK, newCollection)
 }
@@ -170,6 +176,12 @@ func EditCollection(c *gin.Context) {
 	}
 
 	tx.Commit()
+
+	// Update searchtext field
+	if err := db.UpdateCollectionSearchText(collection.ID); err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 	// Return collection in JSON
 	c.JSON(http.StatusOK, collection)

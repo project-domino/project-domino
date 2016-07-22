@@ -7,7 +7,7 @@ import (
 
 // SetupDatabase initializes the database with empty tables of all the needed
 // types.
-// TODO tags on collection
+// TODO weights on searchtext
 func SetupDatabase(db *gorm.DB) error {
 	if !db.HasTable(&models.User{}) {
 		db.CreateTable(&models.User{})
@@ -27,10 +27,6 @@ func SetupDatabase(db *gorm.DB) error {
 		setupTable(db, &models.Collection{})
 		db.Exec("ALTER TABLE collections ADD COLUMN searchtext TSVECTOR")
 		db.Exec("CREATE INDEX searchtext_collection_gin ON collections USING GIN(searchtext)")
-		db.Exec(`CREATE TRIGGER ts_searchtext_collection
-			BEFORE INSERT OR UPDATE ON collections
-			FOR EACH ROW EXECUTE PROCEDURE
-			tsvector_update_trigger('searchtext', 'pg_catalog.english', 'title', 'description')`)
 	}
 	if !db.HasTable(&models.Tag{}) {
 		setupTable(db, &models.Tag{})
