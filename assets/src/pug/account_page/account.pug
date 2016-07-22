@@ -1,5 +1,12 @@
 extends ../template.pug
 
+mixin sidebarLink(link, text, pageName)
+	| {{if eq "#{pageName}" $.pageName}}
+	a.sidebar-link.active(href=link) #{text}
+	| {{else}}
+	a.sidebar-link(href=link) #{text}
+	| {{end}}
+
 block head
 	title {{.user.UserName}}
 
@@ -9,8 +16,8 @@ block css
 block body
 	div.panel.page-sidebar
 		h4.sidebar-header Account Settings
-		a.sidebar-link(href="/account/profile") Profile
-		a.sidebar-link(href="/account/security") Security
-		a.sidebar-link(href="/account/notifications") Notifications
+		+sidebarLink("/account/profile", "Profile", "profile")
+		+sidebarLink("/account/security", "Security", "security")
+		+sidebarLink("/account/notifications", "Notifications", "notifications")
 	div.panel.page-body
 		block account-body

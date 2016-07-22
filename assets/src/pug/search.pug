@@ -48,6 +48,15 @@ mixin userList(list)
 	span.no-content-text No users found...
 	| {{end}}
 
+mixin searchControl(searchType, pageTitle)
+	- var searchLink = "/search/" + searchType + "?q={{.query}}";
+	li.h-control
+		| {{if eq .searchType "#{searchType}"}}
+		a.active(href=searchLink) #{pageTitle}
+		| {{else}}
+		a(href=searchLink) #{pageTitle}
+		| {{end}}
+
 block head
 	title {{.query}}
 
@@ -58,30 +67,10 @@ block body
 	div.panel.search-result-container
 		div.panel-body
 			ul.h-control-list
-				li.h-control
-					| {{if eq .searchType "all"}}
-					a.active(href="/search/all?q={{.query}}") All
-					| {{else}}
-					a(href="/search/all?q={{.query}}") All
-					| {{end}}
-				li.h-control
-					| {{if eq .searchType "note"}}
-					a.active(href="/search/note?q={{.query}}") Notes
-					| {{else}}
-					a(href="/search/note?q={{.query}}") Notes
-					| {{end}}
-				li.h-control
-					| {{if eq .searchType "collection"}}
-					a.active(href="/search/collection?q={{.query}}") Collections
-					| {{else}}
-					a(href="/search/collection?q={{.query}}") Collections
-					| {{end}}
-				li.h-control
-					| {{if eq .searchType "user"}}
-					a.active(href="/search/user?q={{.query}}") Users
-					| {{else}}
-					a(href="/search/user?q={{.query}}") Users
-					| {{end}}
+				+searchControl("all", "All")
+				+searchControl("note", "Notes")
+				+searchControl("collection", "Collections")
+				+searchControl("user", "Users")
 			| {{if eq .searchType "all"}}
 			h4.panel-field-header Notes
 			+noteList(".searchResult.Notes")

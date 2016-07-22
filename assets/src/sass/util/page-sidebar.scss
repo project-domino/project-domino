@@ -27,3 +27,16 @@
 	.page-sidebar { width: calc(100% - 40px); }
 	.page-body { width: calc(100% - 40px); }
 }
+
+.sidebar-header { margin: 15px 0; }
+
+.sidebar-link {
+	color: $darker;
+	padding: 8px;
+	text-decoration: none;
+
+	&.active {
+		background-color: $primary-color;
+		color: white;
+	}
+}

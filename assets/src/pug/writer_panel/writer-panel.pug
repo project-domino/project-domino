@@ -1,30 +1,63 @@
 extends ../template.pug
 
+mixin sidebarLink(link, text, pageName)
+	| {{if $.pageName}}
+	| {{if eq "#{pageName}" $.pageName}}
+	a.sidebar-link.active(href=link) #{text}
+	| {{else}}
+	a.sidebar-link(href=link) #{text}
+	| {{end}}
+	| {{else}}
+	a.sidebar-link(href=link) #{text}
+	| {{end}}
+
+mixin noteLink(text)
+	| {{if $.note}}
+	| {{if eq $.note.ID .ID}}
+	a.sidebar-link.active(href="/writer-panel/note/{{.ID}}/edit") #{text}
+	| {{else}}
+	a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") #{text}
+	| {{end}}
+	| {{else}}
+	a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") #{text}
+	| {{end}}
+
+mixin collectionLink(text)
+	| {{if $.collection}}
+	| {{if eq $.collection.ID .ID}}
+	a.sidebar-link.active(href="/writer-panel/collection/{{.ID}}/edit") #{text}
+	| {{else}}
+	a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") #{text}
+	| {{end}}
+	| {{else}}
+	a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") #{text}
+	| {{end}}
+
 block body
 	div.page-sidebar.panel
 		h4.sidebar-header Create
-		a.sidebar-link(href="/writer-panel/note") New Note
-		a.sidebar-link(href="/writer-panel/collection") New Collection
-		a.sidebar-link(href="/writer-panel/tag") New Tag
+		+sidebarLink("/writer-panel/note", "New Note", "new-note")
+		+sidebarLink("/writer-panel/collection", "New Collection", "new-collection")
+		+sidebarLink("/writer-panel/tag", "New Tag", "new-tag")
 		div.sidebar-section-container
 			h4.sidebar-header My Notes
 			| {{range .user.Notes}}
 			| {{if .Published}}{{else}}
-			a.sidebar-link.draft(href="/writer-panel/note/{{.ID}}/edit") {{.Title}} - Draft
+			+noteLink("{{.Title}} - Draft")
 			| {{end}}{{end}}
 			| {{range .user.Notes}}
 			| {{if .Published}}
-			a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") {{.Title}}
+			+noteLink("{{.Title}}")
 			| {{end}}{{end}}
 		div.sidebar-section-container
 			h4.sidebar-header My Collections
 			| {{range .user.Collections}}
 			| {{if .Published}}{{else}}
-			a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") {{.Title}} - Draft
+			+collectionLink("{{.Title}} - Draft")
 			| {{end}}{{end}}
 			| {{range .user.Collections}}
 			| {{if .Published}}
-			a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") {{.Title}}
+			+collectionLink("{{.Title}}")
 			| {{end}}{{end}}
 	div.page-body
 		block writer-panel-body
