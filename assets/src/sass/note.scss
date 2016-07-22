@@ -2,11 +2,4 @@
 @import "main.scss";
 
 @import "util/tag-list.scss";
-
-.contributor-container {
-	color: $darker;
-	display: flex;
-	font-size: 13px;
-	flex-direction: row-reverse;
-	width: 100%;
-}
+@import "util/panel-contributor.scss";

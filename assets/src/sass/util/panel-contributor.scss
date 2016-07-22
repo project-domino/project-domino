@@ -1,0 +1,9 @@
+@import "variables.scss";
+
+.contributor-container {
+	color: $darker;
+	display: flex;
+	font-size: 13px;
+	flex-direction: row-reverse;
+	width: 100%;
+}

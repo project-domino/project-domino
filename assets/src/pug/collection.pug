@@ -23,6 +23,10 @@ block body
 				div.tag {{.Name}}
 				| {{end}}
 			| {{end}}
+			div.contributor-container
+				span.author Created By -
+					= ' '
+					a(href="/u/{{.collection.Author.UserName}}") {{.collection.Author.UserName}}
 		div.panel.collection-notes
 			div.panel-body
 				| {{if .collection.Notes}}{{range .collection.Notes}}
