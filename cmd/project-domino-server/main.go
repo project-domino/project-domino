@@ -87,21 +87,21 @@ func main() {
 		GET("/collections", handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
-		middleware.LoadNote("Author", "Tags")).
+		middleware.LoadNote("Author", "Tags"),
+		middleware.VerifyNotePublic()).
 		GET("/:noteID", handlers.Simple("individual-note.html")).
 		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
-	m.Group("/collection").
+	m.Group("/collection",
+		middleware.LoadCollection("Author", "Tags"),
+		middleware.VerifyCollectionPublic()).
 		GET("/:collectionID",
-			middleware.LoadCollection("Author", "Tags"),
 			handlers.Simple("collection.html")).
 		GET("/:collectionID/note/:noteID",
 			middleware.LoadNote("Author", "Tags"),
-			middleware.LoadCollection("Author", "Tags"),
 			handlers.Simple("collection-note.html")).
 		GET("/:collectionID/note/:noteID/:noteName",
 			middleware.LoadNote("Author", "Tags"),
-			middleware.LoadCollection("Author", "Tags"),
 			handlers.Simple("collection-note.html"))
 
 	m.Group("/writer-panel",
