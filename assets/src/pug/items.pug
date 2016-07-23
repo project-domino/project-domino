@@ -1,0 +1,29 @@
+mixin noteItem(link, notePipeline)
+	div.list-item
+		div.item-right
+			div.item-title
+				a(href=link) {{#{notePipeline}Title}}
+			div.item-date
+				| Last Updated - {{#{notePipeline}UpdatedAt.Format "2006-01-02"}}
+			div.item-description {{#{notePipeline}Description}}
+			| {{if #{notePipeline}Tags}}
+			div.tag-list
+				| {{range #{notePipeline}Tags}}
+				div.tag {{#{notePipeline}Name}}
+				| {{end}}
+			| {{end}}
+
+mixin collectionItem(link, collectionPipeline)
+	div.list-item
+		div.item-right
+			div.item-title
+				a(href=link) {{#{collectionPipeline}Title}}
+			div.item-date
+				| Last Updated - {{#{collectionPipeline}UpdatedAt.Format "2006-01-02"}}
+			div.item-description {{#{collectionPipeline}Description}}
+			| {{if #{collectionPipeline}Tags}}
+			div.tag-list
+				| {{range #{collectionPipeline}Tags}}
+				div.tag {{#{collectionPipeline}Name}}
+				| {{end}}
+			| {{end}}

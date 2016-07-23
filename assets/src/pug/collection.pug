@@ -1,5 +1,7 @@
 extends ./template.pug
 
+include items.pug
+
 block head
 	title {{.collection.Title}}
 
@@ -28,21 +30,10 @@ block body
 					= ' '
 					a(href="/u/{{.collection.Author.UserName}}") {{.collection.Author.UserName}}
 		div.panel.collection-notes
+			h2.panel-heading Notes
 			div.panel-body
 				| {{if .collection.Notes}}{{range .collection.Notes}}
-				div.list-item
-					div.item-right
-						div.item-title
-							a(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
-						div.item-date
-							| Last Updated - {{.UpdatedAt.Format "2006-01-02"}}
-						div.item-description {{.Description}}
-						| {{if .Tags}}
-						div.tag-list
-							| {{range .Tags}}
-							div.tag {{.Name}}
-							| {{end}}
-						| {{end}}
+				+noteItem("/collection/{{$.collection.ID}}/note/{{.ID}}", ".")
 				| {{end}}{{else}}
 				span.no-content-text There are no notes in this collection...
 				| {{end}}

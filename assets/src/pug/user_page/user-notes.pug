@@ -1,15 +1,10 @@
 extends ./user.pug
 
+include ../items.pug
+
 block user-body
 	+control("notes")
 	div.item-list
-		| {{range $i, $e := .pageUser.Notes}}
-		div.list-item
-			div.item-left
-				span.item-number {{$i}}
-			div.item-right
-				div.item-title
-					a(href="/note/{{$e.ID}}") {{$e.Title}}
-				div.item-description {{$e.Description}}
-		div.item-seperator
+		| {{range .pageUser.Notes}}
+		+noteItem("/note/{{.ID}}", ".")
 		| {{end}}

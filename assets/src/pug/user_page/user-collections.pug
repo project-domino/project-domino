@@ -1,15 +1,10 @@
 extends ./user.pug
 
+include ../items.pug
+
 block user-body
 	+control("collections")
 	div.item-list
-		| {{range $i, $e := .pageUser.Collections}}
-		div.list-item
-			div.item-left
-				span.item-number {{$i}}
-			div.item-right
-				div.item-title
-					a(href="/collection/{{$e.ID}}") {{$e.Title}}
-				div.item-description {{$e.Description}}
-		div.item-seperator
+		| {{range .pageUser.Collections}}
+		+collectionItem("/collection/{{.ID}}", ".")
 		| {{end}}

@@ -81,8 +81,8 @@ func main() {
 		handlers.Simple("search.html"))
 
 	m.Group("/u/:username",
-		middleware.LoadUser("Notes", "Collections")).
-		GET("/", handlers.Simple("user-notes.html")).
+		middleware.LoadUser("Notes", "Collections", "Notes.Tags", "Collections.Tags")).
+		GET("/", redirect.User).
 		GET("/notes", handlers.Simple("user-notes.html")).
 		GET("/collections", handlers.Simple("user-collections.html"))
 
