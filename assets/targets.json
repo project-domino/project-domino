@@ -1,7 +1,6 @@
 {
 	"copy": {
-		"select2.css": "node_modules/select2/dist/css/select2.min.css",
-		"quill.css":   "node_modules/quill/dist/quill.snow.css"
+		"select2.css": "node_modules/select2/dist/css/select2.min.css"
 	},
 	"js": {
 		"editor":          "src/editor/main.js",

@@ -27,17 +27,9 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 		// Initialize tag selector
 		super.initTagSelector();
 
-		// Initialize quill
-		this.quill = new Quill("#editor", { // eslint-disable-line no-undef
-			modules: {
-				"toolbar": {
-					container: "#editor-toolbar",
-				},
-				"image-tooltip": true,
-				"link-tooltip":  true,
-			},
-			theme: "snow",
-		});
+		// Initialize ckeditor
+		CKEDITOR.replace("editor"); // eslint-disable-line no-undef
+		this.editor = CKEDITOR.instances.editor; // eslint-disable-line no-undef
 
 		// If a note is passed, set page contents
 		if(note) {
@@ -46,7 +38,7 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 					return e.ID;
 				})).trigger("change");
 			}
-			this.quill.setHTML(note.Body);
+			this.editor.setData(note.Body);
 		}
 
 		// Set chars remaining
@@ -71,7 +63,7 @@ class WriterPanelNoteUtil extends WriterPanelUtil {
 		return {
 			title:       this.title.val(),
 			description: this.description.val(),
-			body:        this.quill.getHTML(),
+			body:        this.editor.getData(),
 			tags:        this.tagSelector.val().map(e => {return parseFloat(e);}),
 		};
 	}

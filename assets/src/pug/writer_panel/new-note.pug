@@ -3,7 +3,6 @@ extends ./writer-panel.pug
 block head
 	title New Note
 	link(rel="stylesheet", href="/assets/select2.css")
-	link(rel="stylesheet", href="//cdn.quilljs.com/0.20.1/quill.snow.css")
 
 block css
 	link(rel="stylesheet", href="/assets/writer-panel-note.css")
@@ -19,7 +18,7 @@ block writer-panel-body
 			div.char-remaining-container
 				span.char-remaining
 			h4.panel-field-header Type your note's content below
-			include ./quill.pug
+			textarea(name="editor")
 			h4.panel-field-header Pick some tags for your note
 			div.tag-selector-container
 				select.tag-selector(multiple="multiple", style="width: 100%;")
@@ -28,5 +27,5 @@ block writer-panel-body
 			button.btn.btn-primary.save-btn Save
 
 block scripts
-	script(src="//cdn.quilljs.com/0.20.1/quill.js")
+	script(src="//cdn.ckeditor.com/4.5.10/standard/ckeditor.js")
 	script(src="/assets/new-note.js")
