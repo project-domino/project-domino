@@ -6,8 +6,6 @@ html
 		script(src="https://use.fontawesome.com/3ca30f4373.js")
 		block css
 			link(rel="stylesheet", href="/assets/main.css")
-			link(rel="stylesheet", href="/assets/bootstrap-material-design.css")
-			link(rel="stylesheet", href="/assets/ripples.css")
 		block head
 	body
 		div.navbar
@@ -35,7 +33,9 @@ html
 						a(href="/account") My Account
 						a.logout-btn Sign Out
 				| {{else}}
-				button.sign-in-btn.btn-primary Sign In
+				a(href="/register") Sign up
+				span /
+				a(href="/login") Sign in
 				| {{end}}
 		block sidebar
 		div#main-content.main-content
@@ -51,7 +51,5 @@ html
 			div#alert-content.alert-content
 				span#alert-close.alert-close ×
 				span#alert-text.alert-text
-		script(src="/assets/material.js")
-		script(src="/assets/ripples.js")
 		script(src="/assets/main.js")
 		block scripts

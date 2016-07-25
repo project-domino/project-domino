@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
-	"bootstrap-material-design": "0.5.10",
     "eslint-config-remexre": "^1.0.3",
     "gulp": "^3.9.1",
     "gulp-add-src": "^0.2.0",
