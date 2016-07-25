@@ -27,7 +27,7 @@ func init() {
 
 	// Setup configuration files.
 	viper.SetConfigName("project-domino")
-	viper.AddConfigPath("/etc/project-domino/")
+	viper.AddConfigPath("/etc")
 	viper.AddConfigPath("$HOME/.project-domino")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath(filepath.Dir(os.Args[0]))
