@@ -1,6 +1,10 @@
 {
 	"copy": {
-		"select2.css": "node_modules/select2/dist/css/select2.min.css"
+		"select2.css":                   "node_modules/select2/dist/css/select2.min.css",
+		"bootstrap-material-design.css": "node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css",
+		"ripples.css":                   "node_modules/bootstrap-material-design/dist/css/ripples.min.css",
+		"material.js":                   "node_modules/bootstrap-material-design/dist/js/material.min.js",
+		"ripples.js":                    "node_modules/bootstrap-material-design/dist/js/ripples.min.js"
 	},
 	"js": {
 		"editor":          "src/editor/main.js",

@@ -11,10 +11,10 @@ const (
 type Notification struct {
 	gorm.Model
 
-	SendorID uint
-	Sendor   User
-	UserID   uint
-	User     User
+	ActorID uint
+	Actor   User
+	UserID  uint
+	User    User
 
 	Title   string
 	Type    string

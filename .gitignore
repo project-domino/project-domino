@@ -9,6 +9,7 @@ domino.db
 project-domino.tgz
 
 cmd/project-domino-server/project-domino-server
+cmd/project-domino-mail/project-domino-mail
 
 dist/
 node_modules/
