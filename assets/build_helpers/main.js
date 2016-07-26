@@ -14,6 +14,10 @@ const helpers = _([
 ]).fromPairs().value();
 
 module.exports = files => {
+	gulp.task("ckeditor-copy", () => {
+		gulp.src("../ckeditor/**")
+			.pipe(gulp.dest("dist/ckeditor/"));
+	});
 	const targets = _(files).map((targets, type) => {
 		const helper = helpers[type];
 		gulp.task(type, _.map(targets, (file, name) => {
@@ -25,7 +29,7 @@ module.exports = files => {
 			return targetName;
 		}));
 		return type;
-	}).flatten().value();
+	}).flatten().value().concat("ckeditor-copy");
 
 	gulp.task("default", targets, () => {
 		gulp.src(["dist/**", "!dist/assets.zip", "!dist/doc"])

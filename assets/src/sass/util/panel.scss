@@ -14,6 +14,8 @@
 		margin-bottom: 20px;
 
 		.item-title {
+			font-family: $fonts-normal;
+			font-weight: normal;
 			display: inline-block;
 			margin: 20px 0px 10px;
 		}
@@ -31,6 +33,8 @@
 
 .panel-heading {
 	border-bottom: 1px solid $border-color;
+	font-family: $fonts-normal;
+	font-weight: normal;
 	margin: 0;
 	padding: 20px 0 10px;
 }

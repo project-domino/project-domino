@@ -1,6 +1,6 @@
 {
 	"copy": {
-		"select2.css":                   "node_modules/select2/dist/css/select2.min.css"
+		"select2.css": "node_modules/select2/dist/css/select2.min.css"
 	},
 	"js": {
 		"editor":          "src/editor/main.js",
