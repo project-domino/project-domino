@@ -14,10 +14,10 @@ block body
 			| {{range .collection.Notes}}
 			| {{if eq .ID $.note.ID}}
 			li
-				a.sidebar-item.active(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+				a.sidebar-item.active(href="/collection/{{$.collection.ID}}/note/{{.ID}}/{{toSnakeCase .Title}}") {{.Title}}
 			| {{else}}
 			li
-				a.sidebar-item(href="/collection/{{$.collection.ID}}/note/{{.ID}}") {{.Title}}
+				a.sidebar-item(href="/collection/{{$.collection.ID}}/note/{{.ID}}/{{toSnakeCase .Title}}") {{.Title}}
 			| {{end}}
 			| {{end}}
 	div.collection-body

@@ -6,5 +6,5 @@ block user-body
 	+control("notes")
 	div.item-list
 		| {{range .pageUser.Notes}}
-		+noteItem("/note/{{.ID}}", ".")
+		+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
 		| {{end}}

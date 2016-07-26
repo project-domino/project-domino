@@ -33,7 +33,7 @@ block body
 			h2.panel-heading Notes
 			div.panel-body
 				| {{if .collection.Notes}}{{range .collection.Notes}}
-				+noteItem("/collection/{{$.collection.ID}}/note/{{.ID}}", ".")
+				+noteItem("/collection/{{$.collection.ID}}/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
 				| {{end}}{{else}}
 				span.no-content-text There are no notes in this collection...
 				| {{end}}

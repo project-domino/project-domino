@@ -4,7 +4,7 @@ include items.pug
 
 mixin noteList(list)
 	| {{if #{list}}}{{range #{list}}}
-	+noteItem("/note/{{.ID}}", ".")
+	+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
 	| {{end}}{{else}}
 	span.no-content-text No notes found...
 	| {{end}}

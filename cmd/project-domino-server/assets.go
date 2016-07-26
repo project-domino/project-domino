@@ -7,6 +7,7 @@ import (
 	"path"
 
 	"github.com/gin-gonic/gin"
+	"github.com/project-domino/project-domino/templatefuncs"
 	"github.com/spf13/viper"
 
 	"golang.org/x/tools/godoc/vfs"
@@ -38,7 +39,13 @@ func GetTemplates(fs vfs.FileSystem) (*template.Template, error) {
 	if err != nil {
 		return nil, err
 	}
-	t := template.New("")
+
+	// Build template FuncMap
+	funcMap := template.FuncMap{
+		"toSnakeCase": templatefuncs.ToSnakeCase,
+	}
+
+	t := template.New("").Funcs(funcMap)
 	for _, file := range allFiles {
 		if file.IsDir() || path.Ext(file.Name()) != ".html" {
 			continue
