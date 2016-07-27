@@ -8,7 +8,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/project-domino/project-domino/templatefuncs"
-	"github.com/spf13/viper"
 
 	"golang.org/x/tools/godoc/vfs"
 	"golang.org/x/tools/godoc/vfs/httpfs"
@@ -69,10 +68,10 @@ func GetTemplates(fs vfs.FileSystem) (*template.Template, error) {
 // GetAssetFileSystem returns a vfs.FileSystem containing the assets and
 // templates.
 func GetAssetFileSystem() (vfs.FileSystem, error) {
-	if viper.GetBool("assets.dev") {
-		return vfs.OS("assets/dist"), nil
+	if Config.Assets.Dev {
+		return vfs.OS(Config.Assets.Path), nil
 	}
-	return NewZipFileSystem(viper.GetString("assets.path"))
+	return NewZipFileSystem(Config.Assets.Path)
 }
 
 // NewZipFileSystem creates a vfs.FileSystem for assets from a .zip file.

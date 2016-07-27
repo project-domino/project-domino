@@ -1,44 +1,32 @@
 package main
 
 import (
+	"flag"
 	"log"
-	"os"
-	"path/filepath"
-	"strings"
 
-	"github.com/spf13/viper"
+	"github.com/project-domino/project-domino/config"
 )
 
+// Config is the configuration for the server.
+var Config ConfigType
+
+// ConfigType is the type of the configuration for the server.
+type ConfigType struct {
+	Assets   config.Assets   `toml:"assets"`
+	Database config.Database `toml:"database"`
+	HTTP     config.HTTP     `toml:"http"`
+}
+
 func init() {
-	// Set variable defaults.
-	viper.SetDefault("assets", map[string]interface{}{
-		"dev":  false,
-		"path": "assets.zip",
-	})
-	viper.SetDefault("database", map[string]interface{}{
-		"debug": false,
-		"type":  "postgres",
-		"url":   "dbname=domino sslmode=disable",
-	})
-	viper.SetDefault("http", map[string]interface{}{
-		"debug": false,
-		"port":  80,
-	})
-
-	// Setup configuration files.
-	viper.SetConfigName("project-domino")
-	viper.AddConfigPath("/etc")
-	viper.AddConfigPath("$HOME/.project-domino")
-	viper.AddConfigPath(".")
-	viper.AddConfigPath(filepath.Dir(os.Args[0]))
-
-	// Add environment variables.
-	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-	viper.BindEnv("http.port", "PORT")
+	// Create default config object.
+	Config = ConfigType{
+		Assets:   config.DefaultAssets,
+		Database: config.DefaultDatabase,
+		HTTP:     config.DefaultHTTP,
+	}
 
 	// Read config or die.
-	if err := viper.ReadInConfig(); err != nil {
+	if err := config.LoadConfig(Config, flag.Args()); err != nil {
 		log.Fatal(err)
 	}
 }

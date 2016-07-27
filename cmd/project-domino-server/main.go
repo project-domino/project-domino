@@ -1,10 +1,11 @@
 package main
 
 import (
-	// Standard Library
 	"fmt"
 
-	// Internal Dependencies
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
@@ -12,30 +13,22 @@ import (
 	"github.com/project-domino/project-domino/handlers/redirect"
 	"github.com/project-domino/project-domino/middleware"
 	"github.com/project-domino/project-domino/models"
-
-	// Third-Party Dependencies
-	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	"github.com/spf13/viper"
-
-	// Database Driver
-	_ "github.com/lib/pq"
 )
 
 func main() {
 	// Open database connection.
 	var err error
 	db.DB, err = gorm.Open(
-		viper.GetString("database.type"),
-		viper.GetString("database.url"),
+		Config.Database.Type,
+		Config.Database.URL,
 	)
 	Must(err)
 	defer db.DB.Close()
-	db.DB.LogMode(viper.GetBool("database.debug"))
+	db.DB.LogMode(Config.Database.Debug)
 	Must(SetupDatabase(db.DB))
 
 	// Enable/disable gin's debug mode.
-	if viper.GetBool("http.debug") {
+	if Config.HTTP.Debug {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
@@ -128,6 +121,14 @@ func main() {
 			handlers.Simple("new-tag.html"))
 
 	// API
+	m.GET("/api/version", func(c *gin.Context) {
+		handlers.RenderData(c, "debug.html", "data", map[string]interface{}{
+			"currentVersion": "v1",
+			"versions": []string{
+				"v1",
+			},
+		})
+	})
 	m.Group("/api/v1").
 		GET("/search/:searchType",
 			middleware.LoadSearchItems(),
@@ -154,18 +155,18 @@ func main() {
 			api.NewTag)
 
 	// Debug Routes
-	if viper.GetBool("http.debug") {
+	if Config.HTTP.Debug {
 		m.Group("/debug").
 			GET("/editor", handlers.Simple("editor.html")).
 			GET("/error", func(c *gin.Context) {
 				errors.Debug.Apply(c)
 			}).
 			GET("/config", func(c *gin.Context) {
-				handlers.RenderData(c, "debug.html", "data", viper.AllSettings())
+				handlers.RenderData(c, "debug.html", "data", Config)
 			}).
 			GET("/new/note", handlers.Simple("new-note.html"))
 	}
 
 	// Start serving.
-	Must(r.Run(fmt.Sprintf(":%d", viper.GetInt("http.port"))))
+	Must(r.Run(fmt.Sprintf(":%d", Config.HTTP.Port)))
 }

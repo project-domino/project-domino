@@ -1,43 +1,35 @@
 package main
 
 import (
-	// Standard Library
-
-	// Internal Dependencies
 	"log"
 	"net/smtp"
 	"time"
 
-	// Third-Party Dependencies
-
 	"github.com/jinzhu/gorm"
-	"github.com/spf13/viper"
-
-	// Database Driver
-	_ "github.com/lib/pq"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
 func main() {
 	// Open database connection.
 	db, err := gorm.Open(
-		viper.GetString("database.type"),
-		viper.GetString("database.url"),
+		Config.Database.Type,
+		Config.Database.URL,
 	)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
-	db.LogMode(viper.GetBool("database.debug"))
+	db.LogMode(Config.Database.Debug)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Get smtp settings
 	auth := smtp.PlainAuth(
-		viper.GetString("smtp.identity"),
-		viper.GetString("smtp.username"),
-		viper.GetString("smtp.password"),
-		viper.GetString("host"),
+		Config.SMTP.Identity,
+		Config.SMTP.Username,
+		Config.SMTP.Password,
+		Config.SMTP.Host,
 	)
 
 	// Start polling db
@@ -50,7 +42,7 @@ func main() {
 			log.Fatal(err)
 		} else {
 			if email.ID != 0 {
-				err := SendEmail(email, auth, viper.GetString("smtp.address"))
+				err := SendEmail(email, auth, Config.SMTP.Address)
 				if err != nil {
 					log.Println(err)
 				}
