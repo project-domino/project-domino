@@ -19,10 +19,7 @@ function server() {
 	cd cmd/project-domino-server;
 	go get -v .;
 	go build -v;
-};
 
-# Mail-daemon-building function.
-function server() {
 	cd cmd/project-domino-mail;
 	go get -v .;
 	go build -v;
