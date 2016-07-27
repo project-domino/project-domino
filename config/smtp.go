@@ -12,8 +12,8 @@ type SMTP struct {
 
 // DefaultSMTP is the default SMTP server configuration.
 var DefaultSMTP = SMTP{
-	Address:  "localhost:25",
-	Host:     "localhost:25",
+	Address:  "do-not-reply@project-domino.com",
+	Host:     "smtp:25",
 	Identity: "",
 	Username: "domino",
 	Password: "",
