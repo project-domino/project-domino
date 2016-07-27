@@ -21,11 +21,18 @@ function server() {
 	go build -v;
 };
 
+# Mail-daemon-building function.
+function server() {
+	cd cmd/project-domino-mail;
+	go get -v .;
+	go build -v;
+};
+
 # Deployment bundle-building function.
 function deployBundle() {
 	tmp_file="$(mktemp)";
+	tar rf "${tmp_file}" -C cmd/project-domino-mail project-domino-mail;
 	tar rf "${tmp_file}" -C cmd/project-domino-server project-domino-server;
-	tar rf "${tmp_file}" -C cmd/project-domino-server project-domino.toml;
 	tar rf "${tmp_file}" -C assets/dist assets.zip;
 	gzip "${tmp_file}" -c > project-domino.tgz;
 	rm "${tmp_file}";
