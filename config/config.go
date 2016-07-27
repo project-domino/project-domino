@@ -9,6 +9,9 @@ import (
 
 // LoadConfig loads from one or more configuration files.
 func LoadConfig(config interface{}, files []string) error {
+	if len(files) == 0 {
+		log.Println("WARNING: Using default config")
+	}
 	for _, file := range files {
 		if err := loadConfigFile(config, file); err != nil {
 			return err

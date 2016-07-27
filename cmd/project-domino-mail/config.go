@@ -1,8 +1,8 @@
 package main
 
 import (
-	"flag"
 	"log"
+	"os"
 
 	"github.com/project-domino/project-domino/config"
 )
@@ -24,7 +24,7 @@ func init() {
 	}
 
 	// Read config or die.
-	if err := config.LoadConfig(Config, flag.Args()); err != nil {
+	if err := config.LoadConfig(Config, os.Args); err != nil {
 		log.Fatal(err)
 	}
 }
