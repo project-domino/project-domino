@@ -20,7 +20,7 @@ function server() {
 	go get -v .;
 	go build -v;
 
-	cd cmd/project-domino-mail;
+	cd ../project-domino-mail;
 	go get -v .;
 	go build -v;
 };
