@@ -2,6 +2,7 @@ package config
 
 import (
 	"io/ioutil"
+	"log"
 
 	"github.com/naoina/toml"
 )
@@ -13,10 +14,12 @@ func LoadConfig(config interface{}, files []string) error {
 			return err
 		}
 	}
+	log.Println("Loaded config", config)
 	return nil
 }
 
 func loadConfigFile(config interface{}, file string) error {
+	log.Printf("Loading config from file %s...", file)
 	b, err := ioutil.ReadFile(file)
 	if err != nil {
 		return err
