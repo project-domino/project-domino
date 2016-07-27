@@ -2,9 +2,9 @@ package config
 
 // HTTP is a type for HTTP server settings.
 type HTTP struct {
-	Debug bool   `toml:"debug"`
-	Dev   bool   `toml:"dev"`
-	Port  uint16 `toml:"port"`
+	Debug bool `toml:"debug"`
+	Dev   bool `toml:"dev"`
+	Port  int  `toml:"port"`
 }
 
 // DefaultHTTP is the default HTTP server configuration.

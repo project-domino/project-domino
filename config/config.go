@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 
+	"github.com/k0kubun/pp"
 	"github.com/naoina/toml"
 )
 
@@ -17,7 +18,7 @@ func LoadConfig(config interface{}, files []string) error {
 			return err
 		}
 	}
-	log.Println("Loaded config", config)
+	log.Printf("Loaded config %s", pp.Sprint(config))
 	return nil
 }
 
