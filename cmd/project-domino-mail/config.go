@@ -24,7 +24,7 @@ func init() {
 	}
 
 	// Read config or die.
-	if err := config.LoadConfig(Config, os.Args); err != nil {
+	if err := config.LoadConfig(Config, os.Args[1:]); err != nil {
 		log.Fatal(err)
 	}
 }
