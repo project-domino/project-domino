@@ -5,29 +5,16 @@ import (
 	"net/smtp"
 	"time"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/project-domino/project-domino/db"
 )
 
 func main() {
-	// Open database connection.
-	opened := false
-	var err error
-	var db *gorm.DB
-	for !opened {
-		log.Printf("Connecting to DB at %s...", Config.Database.URL)
-		db, err = gorm.Open(
-			Config.Database.Type,
-			Config.Database.URL,
-		)
-		opened = err == nil
-		time.Sleep(time.Second)
-	}
-	defer db.Close()
-	db.LogMode(Config.Database.Debug)
-	if err != nil {
+	db.Open(Config.Database.Type, Config.Database.URL, Config.Database.Debug)
+	if err := db.Setup(); err != nil {
 		log.Fatal(err)
 	}
+	defer db.DB.Close()
 
 	// Get smtp settings
 	auth := smtp.PlainAuth(
@@ -40,7 +27,7 @@ func main() {
 	// Start polling db
 	for _ = range time.Tick(time.Second) {
 		// Get next email from the db
-		email, err := GetEmail(db)
+		email, err := GetEmail(db.DB)
 
 		// If there is an email and no error, send the email
 		if err != nil {
@@ -51,7 +38,7 @@ func main() {
 				if err != nil {
 					log.Println(err)
 				}
-				if err := MarkSent(db, email); err != nil {
+				if err := MarkSent(db.DB, email); err != nil {
 					log.Fatal(err)
 				}
 			}

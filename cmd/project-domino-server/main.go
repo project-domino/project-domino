@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
@@ -18,21 +16,11 @@ import (
 )
 
 func main() {
-	// Open database connection.
-	opened := false
-	for !opened {
-		var err error
-		log.Printf("Connecting to DB at %s...", Config.Database.URL)
-		db.DB, err = gorm.Open(
-			Config.Database.Type,
-			Config.Database.URL,
-		)
-		opened = err == nil
-		time.Sleep(time.Second)
+	db.Open(Config.Database.Type, Config.Database.URL, Config.Database.Debug)
+	if err := db.Setup(); err != nil {
+		log.Fatal(err)
 	}
 	defer db.DB.Close()
-	db.DB.LogMode(Config.Database.Debug)
-	Must(SetupDatabase(db.DB))
 
 	// Enable/disable gin's debug mode.
 	if Config.HTTP.Debug {
