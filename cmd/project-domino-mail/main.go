@@ -11,12 +11,17 @@ import (
 
 func main() {
 	// Open database connection.
-	db, err := gorm.Open(
-		Config.Database.Type,
-		Config.Database.URL,
-	)
-	if err != nil {
-		log.Fatal(err)
+	opened := false
+	var err error
+	var db *gorm.DB
+	for !opened {
+		log.Printf("Connecting to DB at %s...", Config.Database.URL)
+		db, err = gorm.Open(
+			Config.Database.Type,
+			Config.Database.URL,
+		)
+		opened = err == nil
+		time.Sleep(time.Second)
 	}
 	defer db.Close()
 	db.LogMode(Config.Database.Debug)

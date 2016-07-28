@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -17,12 +19,17 @@ import (
 
 func main() {
 	// Open database connection.
-	var err error
-	db.DB, err = gorm.Open(
-		Config.Database.Type,
-		Config.Database.URL,
-	)
-	Must(err)
+	opened := false
+	for !opened {
+		var err error
+		log.Printf("Connecting to DB at %s...", Config.Database.URL)
+		db.DB, err = gorm.Open(
+			Config.Database.Type,
+			Config.Database.URL,
+		)
+		opened = err == nil
+		time.Sleep(time.Second)
+	}
 	defer db.DB.Close()
 	db.DB.LogMode(Config.Database.Debug)
 	Must(SetupDatabase(db.DB))
