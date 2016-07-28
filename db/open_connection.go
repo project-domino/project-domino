@@ -18,6 +18,7 @@ func Open(dbType string, dbURL string, debug bool) {
 			dbURL,
 		)
 		opened = err == nil
+		log.Println(err)
 		time.Sleep(time.Second)
 	}
 	DB.LogMode(debug)
