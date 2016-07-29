@@ -10,9 +10,9 @@ import (
 // TODO weights on searchtext
 func Setup() error {
 	// Create transaction
-	DB.Exec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE")
 	tx := DB.Begin()
 	defer tx.Commit()
+	tx.Exec("SET TRANSACTION ISOLATION LEVEL SERIALIZABLE")
 
 	if !tx.HasTable(&models.User{}) {
 		tx.CreateTable(&models.User{})
