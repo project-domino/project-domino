@@ -11,9 +11,6 @@ import (
 
 func main() {
 	db.Open(Config.Database.Type, Config.Database.URL, Config.Database.Debug)
-	if err := db.Setup(); err != nil {
-		log.Fatal(err)
-	}
 	defer db.DB.Close()
 
 	// Get smtp settings
