@@ -28,7 +28,7 @@ func main() {
 
 		// If there is an email and no error, send the email
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		} else {
 			if email.ID != 0 {
 				err := SendEmail(email, auth, Config.SMTP.Address)
