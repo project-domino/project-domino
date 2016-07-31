@@ -15,18 +15,6 @@
 	width: 100%;
 	z-index: 1;
 
-	.sidebar-btn-container {
-		padding-right: 10px;
-		width: 40px;
-
-		.sidebar-btn {
-			color: $sidebar-btn-color;
-			cursor: pointer;
-		}
-		.sidebar-btn:hover { color: darken($sidebar-btn-color, 10%); }
-		.sidebar-btn:active { color: darken($sidebar-btn-color, 20%); }
-	}
-
 	.logo {
 		display: inline;
 		margin: 0;

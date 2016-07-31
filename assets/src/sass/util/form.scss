@@ -12,6 +12,10 @@
 	padding-left: 5px;
 }
 
+.form-input.invalid {
+	border: 1px solid $input-border-invalid-color;
+}
+
 .input-btn-container {
 	display: flex;
 	height: 30px;
