@@ -6,30 +6,32 @@ block head
 block css
 	link(rel="stylesheet", href="/assets/writer-panel-tag.css")
 
-block writer-panel-body
-	div.panel.new-note-container.create-closed
-		h2.panel-heading Create a new tag
-		div.panel-body
-			h4.panel-field-header Note:
-			p.panel-paragraph
-				| Before creating a tag, first check if a similar tag exists.
-				| New tags which are rarely used will be removed.
-			h4.panel-field-header Type your tags name below:
-			div.input-btn-container
-				input.new-tag-name-field(placeholder="Enter tag name...")
-				button.toggle-create-btn.btn-primary
-					span.fa.fa-plus.toggle-create-btn-icon
-			h4.toggle-content.description-header.hidden
-				| Please enter a description for your tag. This should be brief but informative.
-			textarea.toggle-content.new-tag-description-field.hidden
-			div.create-btn-container.toggle-content.hidden
-				button.toggle-content.btn.btn-success.new-tag-create-btn.hidden Create Tag
-			h4.panel-field-header Similar Tags:
-			table.tag-search-table.hidden
-				tr
-					th Name
-					th Description
-			span.result-notification Please enter your tag name...
+block body
+	+sidebar("new-tag")
+	div.page-body
+		div.panel.new-note-container.create-closed
+			h2.panel-heading Create a new tag
+			div.panel-body
+				h4.panel-field-header Note:
+				p.panel-paragraph
+					| Before creating a tag, first check if a similar tag exists.
+					| New tags which are rarely used will be removed.
+				h4.panel-field-header Type your tags name below:
+				div.input-btn-container
+					input.new-tag-name-field(placeholder="Enter tag name...")
+					button.toggle-create-btn.btn-primary
+						span.fa.fa-plus.toggle-create-btn-icon
+				h4.toggle-content.description-header.hidden
+					| Please enter a description for your tag. This should be brief but informative.
+				textarea.toggle-content.new-tag-description-field.hidden
+				div.create-btn-container.toggle-content.hidden
+					button.toggle-content.btn.btn-success.new-tag-create-btn.hidden Create Tag
+				h4.panel-field-header Similar Tags:
+				table.tag-search-table.hidden
+					tr
+						th Name
+						th Description
+				span.result-notification Please enter your tag name...
 
 block scripts
 	script(src="/assets/new-tag.js")

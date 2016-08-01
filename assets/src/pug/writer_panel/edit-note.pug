@@ -7,39 +7,41 @@ block head
 block css
 	link(rel="stylesheet", href="/assets/writer-panel-note.css")
 
-block writer-panel-body
-	div.panel.new-note-container
-		h2.panel-heading Edit Note
-		div.panel-body
-			h4.panel-field-header Status: {{if.note.Published}}Published{{else}}Draft{{end}}
-			p
-				| {{if.note.Published}}
-				| This note is public and can be seen by everyone.
-				| {{else}}
-				| This note is a draft and can only be seen by you.
-				| {{end}}
-			div.panel-seperator
-			h4.panel-field-header Title
-			input.note-title.form-input(placeholder="Enter note title...", value="{{.note.Title}}")
-			h4.panel-field-header Description
-			textarea.note-description {{.note.Description}}
-			div.char-remaining-container
-				span.char-remaining
-			h4.panel-field-header Content
-			textarea(name="editor")
-			h4.panel-field-header Tags
-			div.tag-selector-container
-				select.tag-selector(multiple="multiple", style="width: 100%;")
-					| {{range .note.Tags}}
-					option(value="{{.ID}}") {{.Name}}
+block body
+	+sidebar("")
+	div.page-body
+		div.panel.new-note-container
+			h2.panel-heading Edit Note
+			div.panel-body
+				h4.panel-field-header Status: {{if.note.Published}}Published{{else}}Draft{{end}}
+				p
+					| {{if.note.Published}}
+					| This note is public and can be seen by everyone.
+					| {{else}}
+					| This note is a draft and can only be seen by you.
 					| {{end}}
-		div.panel-footer
-			| {{if .note.Published}}{{else}}
-			button.btn.btn-success.publish-btn Publish
-			| {{end}}
-			button.btn.btn-primary.save-btn Save
-	div.hidden.data
-		div#note-data {{.noteJSON}}
+				div.panel-seperator
+				h4.panel-field-header Title
+				input.note-title.form-input(placeholder="Enter note title...", value="{{.note.Title}}")
+				h4.panel-field-header Description
+				textarea.note-description {{.note.Description}}
+				div.char-remaining-container
+					span.char-remaining
+				h4.panel-field-header Content
+				textarea(name="editor")
+				h4.panel-field-header Tags
+				div.tag-selector-container
+					select.tag-selector(multiple="multiple", style="width: 100%;")
+						| {{range .note.Tags}}
+						option(value="{{.ID}}") {{.Name}}
+						| {{end}}
+			div.panel-footer
+				| {{if .note.Published}}{{else}}
+				button.btn.btn-success.publish-btn Publish
+				| {{end}}
+				button.btn.btn-primary.save-btn Save
+		div.hidden.data
+			div#note-data {{.noteJSON}}
 
 block scripts
 	script(src="/assets/ckeditor/ckeditor.js")

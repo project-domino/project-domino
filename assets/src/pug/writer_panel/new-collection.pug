@@ -7,32 +7,34 @@ block head
 block css
 	link(rel="stylesheet", href="/assets/writer-panel-collection.css")
 
-block writer-panel-body
-	div.panel.new-collection-container
-		h2.panel-heading Create a new collection
-		div.panel-body
-			h4.panel-field-header Title
-			input.collection-title.form-input(placeholder="Enter collection title...", autocomplete="off")
-			h4.panel-field-header Type a short description for your collection
-			textarea.collection-description
-			div.char-remaining-container
-				span.char-remaining
-			h4.panel-field-header Search for notes to place in your collection
-			div.input-btn-container
-				input.note-search-field(placeholder="Search for a note...", autocomplete="off")
-				button.note-search-btn.btn.btn-primary
-					span.fa.fa-search.note-search-btn-icon
-			div.search-result-container.hidden.item-list
-			span.result-notification Please enter a search term...
-			h4.panel-field-header Selected Notes
-			div.selected-notes.hidden.item-list
-			span.no-notes-text No notes selected...
-			h4.panel-field-header Pick some tags for your collection
-			div.tag-selector-container
-				select.tag-selector(multiple="multiple", style="width: 100%;")
-		div.panel-footer
-			button.btn.btn-success.publish-btn Publish
-			button.btn.btn-primary.save-btn Save
+block body
+	+sidebar("new-collection")
+	div.page-body
+		div.panel.new-collection-container
+			h2.panel-heading Create a new collection
+			div.panel-body
+				h4.panel-field-header Title
+				input.collection-title.form-input(placeholder="Enter collection title...", autocomplete="off")
+				h4.panel-field-header Type a short description for your collection
+				textarea.collection-description
+				div.char-remaining-container
+					span.char-remaining
+				h4.panel-field-header Search for notes to place in your collection
+				div.input-btn-container
+					input.note-search-field(placeholder="Search for a note...", autocomplete="off")
+					button.note-search-btn.btn.btn-primary
+						span.fa.fa-search.note-search-btn-icon
+				div.search-result-container.hidden.item-list
+				span.result-notification Please enter a search term...
+				h4.panel-field-header Selected Notes
+				div.selected-notes.hidden.item-list
+				span.no-notes-text No notes selected...
+				h4.panel-field-header Pick some tags for your collection
+				div.tag-selector-container
+					select.tag-selector(multiple="multiple", style="width: 100%;")
+			div.panel-footer
+				button.btn.btn-success.publish-btn Publish
+				button.btn.btn-primary.save-btn Save
 
 block scripts
 	script(src="/assets/new-collection.js")

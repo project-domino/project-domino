@@ -66,13 +66,10 @@ func main() {
 		middleware.RequireAuth()).
 		GET("/", redirect.Account).
 		GET("/profile",
-			middleware.AddPageName("profile"),
 			handlers.Simple("account-profile.html")).
 		GET("/security",
-			middleware.AddPageName("security"),
 			handlers.Simple("account-security.html")).
 		GET("/notifications",
-			middleware.AddPageName("notifications"),
 			handlers.Simple("account-notifications.html"))
 
 	m.GET("/search/:searchType",
@@ -110,21 +107,18 @@ func main() {
 		middleware.LoadRequestUser("Notes", "Collections")).
 		GET("/", redirect.WriterPanel).
 		GET("/note",
-			middleware.AddPageName("new-note"),
 			handlers.Simple("new-note.html")).
 		GET("/note/:noteID/edit",
 			middleware.LoadNote("Author", "Tags"),
 			middleware.VerifyNoteOwner(),
 			handlers.Simple("edit-note.html")).
 		GET("/collection",
-			middleware.AddPageName("new-collection"),
 			handlers.Simple("new-collection.html")).
 		GET("/collection/:collectionID/edit",
 			middleware.LoadCollection("Author", "Tags"),
 			middleware.VerifyCollectionOwner(),
 			handlers.Simple("edit-collection.html")).
 		GET("/tag",
-			middleware.AddPageName("new-tag"),
 			handlers.Simple("new-tag.html"))
 
 	// API

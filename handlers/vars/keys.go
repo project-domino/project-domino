@@ -17,7 +17,6 @@ var KeysList = []string{
 	"nextPage",
 	"prevPage",
 	"items",
-	"pageName",
 }
 
 // Keys returns the variables which have been set via gin.Context.Set. This is

@@ -7,24 +7,26 @@ block head
 block css
 	link(rel="stylesheet", href="/assets/writer-panel-note.css")
 
-block writer-panel-body
-	div.panel.new-note-container
-		h2.panel-heading Create a new note
-		div.panel-body
-			h4.panel-field-header Title
-			input.note-title.form-input(placeholder="Enter note title...")
-			h4.panel-field-header Type a short description for your note
-			textarea.note-description
-			div.char-remaining-container
-				span.char-remaining
-			h4.panel-field-header Type your note's content below
-			textarea(name="editor")
-			h4.panel-field-header Pick some tags for your note
-			div.tag-selector-container
-				select.tag-selector(multiple="multiple", style="width: 100%;")
-		div.panel-footer
-			button.btn.btn-success.publish-btn Publish
-			button.btn.btn-primary.save-btn Save
+block body
+	+sidebar("new-note")
+	div.page-body
+		div.panel.new-note-container
+			h2.panel-heading Create a new note
+			div.panel-body
+				h4.panel-field-header Title
+				input.note-title.form-input(placeholder="Enter note title...")
+				h4.panel-field-header Type a short description for your note
+				textarea.note-description
+				div.char-remaining-container
+					span.char-remaining
+				h4.panel-field-header Type your note's content below
+				textarea(name="editor")
+				h4.panel-field-header Pick some tags for your note
+				div.tag-selector-container
+					select.tag-selector(multiple="multiple", style="width: 100%;")
+			div.panel-footer
+				button.btn.btn-success.publish-btn Publish
+				button.btn.btn-primary.save-btn Save
 
 block scripts
 	script(src="/assets/ckeditor/ckeditor.js")

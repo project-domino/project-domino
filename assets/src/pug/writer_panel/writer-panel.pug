@@ -1,15 +1,7 @@
 extends ../template.pug
 
-mixin sidebarLink(link, text, pageName)
-	| {{if $.pageName}}
-	| {{if eq "#{pageName}" $.pageName}}
-	a.sidebar-link.active(href=link) #{text}
-	| {{else}}
-	a.sidebar-link(href=link) #{text}
-	| {{end}}
-	| {{else}}
-	a.sidebar-link(href=link) #{text}
-	| {{end}}
+mixin sidebarLink(link, text, active)
+	a.sidebar-link(href=link, class=active ? "active" : "") #{text}
 
 mixin noteLink(text)
 	| {{if $.note}}
@@ -33,12 +25,12 @@ mixin collectionLink(text)
 	a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") #{text}
 	| {{end}}
 
-block body
+mixin sidebar(subPage)
 	div.page-sidebar.panel
 		h4.sidebar-header Create
-		+sidebarLink("/writer-panel/note", "New Note", "new-note")
-		+sidebarLink("/writer-panel/collection", "New Collection", "new-collection")
-		+sidebarLink("/writer-panel/tag", "New Tag", "new-tag")
+		+sidebarLink("/writer-panel/note", "New Note", subPage == "new-note")
+		+sidebarLink("/writer-panel/collection", "New Collection", subPage =="new-collection")
+		+sidebarLink("/writer-panel/tag", "New Tag", subPage == "new-tag")
 		div.sidebar-section-container
 			h4.sidebar-header My Notes
 			| {{range .user.Notes}}
@@ -59,5 +51,3 @@ block body
 			| {{if .Published}}
 			+collectionLink("{{.Title}}")
 			| {{end}}{{end}}
-	div.page-body
-		block writer-panel-body
