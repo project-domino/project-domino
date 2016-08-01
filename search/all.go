@@ -16,10 +16,10 @@ func All(q string, items int) (AllResponse, error) {
 	var response AllResponse
 	var searchErr error
 
-	response.Notes, searchErr = Notes(q, 1, items)
-	response.Collections, searchErr = Collections(q, 1, items)
-	response.Users, searchErr = Users(q, 1, items)
-	response.Tags, searchErr = Tags(q, 1, items)
+	response.Notes, searchErr = Notes(q, items, 1)
+	response.Collections, searchErr = Collections(q, items, 1)
+	response.Users, searchErr = Users(q, items, 1)
+	response.Tags, searchErr = Tags(q, items, 1)
 
 	return response, searchErr
 }

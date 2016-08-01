@@ -19,9 +19,9 @@ func Users(q string, items int, page int) ([]models.User, error) {
 	qText := strings.Join(searchQuery.Text, " & ")
 
 	if err := db.DB.Where(queryFormat, qText).
-		Find(&users).
 		Limit(items).
-		Offset(page * items).
+		Offset((page - 1) * items).
+		Find(&users).
 		Error; err != nil {
 		return users, err
 	}

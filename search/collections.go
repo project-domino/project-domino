@@ -23,9 +23,9 @@ func Collections(q string, items int, page int) ([]models.Collection, error) {
 			Preload("Tags").
 			Where(queryFormat, qText).
 			Where("published = ?", true).
-			Find(&collections).
 			Limit(items).
-			Offset(page * items).
+			Offset((page - 1) * items).
+			Find(&collections).
 			Error; err != nil {
 			return collections, err
 		}

@@ -19,9 +19,9 @@ func Tags(q string, items int, page int) ([]models.Tag, error) {
 	qText := strings.Join(searchQuery.Text, " & ")
 
 	if err := db.DB.Where(queryFormat, qText).
-		Find(&tags).
 		Limit(items).
-		Offset(page * items).
+		Offset((page - 1) * items).
+		Find(&tags).
 		Error; err != nil {
 		return tags, err
 	}

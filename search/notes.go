@@ -22,9 +22,9 @@ func Notes(q string, items int, page int) ([]models.Note, error) {
 		Preload("Tags").
 		Where(queryFormat, qText).
 		Where("published = ?", true).
-		Find(&notes).
 		Limit(items).
-		Offset(page * items).
+		Offset((page - 1) * items).
+		Find(&notes).
 		Error; err != nil {
 		return notes, err
 	}
