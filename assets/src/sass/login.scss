@@ -11,12 +11,17 @@
 	text-align: center;
 	width: 500px;
 
-	button {
-		margin-top: 10px;
-		width: 50%;
+	.panel-body {
+		margin: auto;
+		width: 80%;
+
+		button {
+			margin-top: 10px;
+			width: 62.5%;
+		}
+		input { width: 100%; }
+		.seperator { display: block; }
 	}
-	input { width: 80%; }
-	.seperator { display: block; }
 }
 
 @media only screen and (max-width: 500px) {

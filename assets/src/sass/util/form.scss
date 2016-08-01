@@ -10,10 +10,17 @@
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding-left: 5px;
+
+	&.invalid { border: 1px solid $input-invalid-color; }
 }
 
-.form-input.invalid {
-	border: 1px solid $input-border-invalid-color;
+.form-notify {
+	display: block;
+	font-size: 14px;
+	margin: 5px 0;
+	text-align: left;
+
+	&.invalid { color: $input-invalid-color; }
 }
 
 .input-btn-container {

@@ -11,7 +11,10 @@ block body
 		h2 Login
 		div.panel-body
 			input#username-field.form-input(placeholder="Enter your username...")
+			p.hidden.form-notify.username-notify
 			input#password-field.form-input(placeholder="Enter your password...", type="password")
+			p.hidden.form-notify.password-notify
+			span.form-notify.login-notify
 			button#login-btn.btn.btn-primary Login
 			span.seperator or...
 			a(href="/register") Register

@@ -59,7 +59,7 @@ func Login(c *gin.Context) {
 // Logout handles requests to log a user out.
 func Logout(c *gin.Context) {
 	http.SetCookie(c.Writer, &http.Cookie{
-		Name:   "auth",
+		Name:    "auth",
 		Path:    "/",
 		Value:   "",
 		Expires: time.Unix(0, 0),
@@ -69,7 +69,6 @@ func Logout(c *gin.Context) {
 // Register handles requests to handle a new user.
 func Register(c *gin.Context) {
 	// Get needed variables from request.
-	email := c.PostForm("email")
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
 	retypePassword := c.PostForm("retypePassword")
@@ -88,7 +87,7 @@ func Register(c *gin.Context) {
 
 	// Check if other users have the same email or userName
 	var checkUsers []models.User
-	if err := db.DB.Where("email = ?", email).
+	if err := db.DB.
 		Or("user_name = ?", userName).
 		Find(&checkUsers).
 		Error; err != nil && err != gorm.ErrRecordNotFound {
@@ -103,7 +102,6 @@ func Register(c *gin.Context) {
 
 	// Create the user.
 	user := models.User{
-		Email:    email,
 		UserName: userName,
 		Type:     models.General,
 	}

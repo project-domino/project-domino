@@ -10,10 +10,12 @@ block body
 	div.panel.panel-body.login-panel
 		h2 Register
 		div.panel-body
-			input#email-field.form-input(placeholder="Enter your email...")
 			input#username-field.form-input(placeholder="Choose a username...")
+			p.hidden.form-notify.username-notify
 			input#password-field.form-input(placeholder="Choose a password...", type="password")
+			p.hidden.form-notify.password-notify
 			input#retype-password-field.form-input(placeholder="Retype your password...", type="password")
+			p.hidden.form-notify.retype-password-notify
 			button#register-btn.btn.btn-primary Register
 			span.seperator or...
 			a(href="/login") Login
