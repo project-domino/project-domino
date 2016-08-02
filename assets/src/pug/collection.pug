@@ -1,6 +1,7 @@
 extends ./template.pug
 
 include items.pug
+include tags.pug
 
 block head
 	title {{.collection.Title}}
@@ -19,12 +20,7 @@ block body
 			div.panel-body
 				p.collection-description {{.collection.Description}}
 			div.panel-seperator
-			| {{if .collection.Tags}}
-			div.tag-list
-				| {{range .collection.Tags}}
-				div.tag {{.Name}}
-				| {{end}}
-			| {{end}}
+			+tagList(".collection.Tags")
 			div.contributor-container
 				span.author Created By -
 					= ' '

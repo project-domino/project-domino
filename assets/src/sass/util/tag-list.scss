@@ -5,12 +5,16 @@
 	margin: 8px 0;
 
 	.tag {
-		background-color: $primary-color;
+		background-color: $lighter;
 		border-radius: 3px;
-		color: white;
+		color: $dark;
+		cursor: pointer;
 		display: inline;
 		font-size: 13px;
 		margin-right: 2px;
 		padding: 5px 10px;
+		text-decoration: none;
+
+		&:active { background-color: $gray}
 	}
 }
