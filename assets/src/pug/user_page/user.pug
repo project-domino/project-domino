@@ -7,6 +7,13 @@ mixin control(subPage)
 		li.h-control
 			a(href="/u/{{.pageUser.UserName}}/collections", class=(subPage === "collections") ? "active" : "") Collections
 
+mixin navLinks(prevLink, nextLink)
+	div.page-nav-links
+		a.prev-link(href!=prevLink)
+			span.fa.fa-chevron-left
+		a.next-link(href!=nextLink)
+			span.fa.fa-chevron-right
+
 block head
 	title {{.pageUser.UserName}}
 
@@ -14,18 +21,18 @@ block css
 	link(rel="stylesheet", href="/assets/user.css")
 
 block body
-	div.user-info-container
-		div.panel.user-info
-			div.panel-body
-				| {{if ne .pageUser.Name ""}}
-				div.user-info-field.user-full-name {{.pageUser.Name}}
-				| {{end}}
-				div.user-info-field.user-name {{.pageUser.UserName}}
-				div.user-info-field.joined-date
-					| Joined - {{.pageUser.CreatedAt.Format "2006-01-02"}}
-				div.user-info-field.num-notes
-					| {{len .pageUser.Notes}} Notes
-				div.user-info-field.num-collections
-					| {{len .pageUser.Collections}} Collections
-		div.panel.user-items
+	div.panel.user-info.page-sidebar
+		div.panel-body
+			| {{if ne .pageUser.Name ""}}
+			div.user-info-field.user-full-name {{.pageUser.Name}}
+			| {{end}}
+			div.user-info-field.user-name {{.pageUser.UserName}}
+			div.user-info-field.joined-date
+				| Joined - {{.pageUser.CreatedAt.Format "2006-01-02"}}
+			div.user-info-field.num-notes
+				| {{len .pageUser.Notes}} Notes
+			div.user-info-field.num-collections
+				| {{len .pageUser.Collections}} Collections
+	div.panel.user-items.page-body
+		div.panel-body
 			block user-body

@@ -4,7 +4,12 @@ include ../items.pug
 
 block user-body
 	+control("collections")
-	div.item-list
-		| {{range .pageUser.Collections}}
-		+collectionItem("/collection/{{.ID}}", ".")
-		| {{end}}
+	div.user-items-content
+		span.page-number Page {{.currentPage}}
+		div.item-list
+			| {{range .collections}}
+			+collectionItem("/collection/{{.ID}}", ".")
+			| {{end}}
+		- var prevLink = "{{printf \"/u/%s/collections?items=%d&page=%d\" .pageUser.UserName .items .prevPage}}"
+		- var nextLink = "{{printf \"/u/%s/collections?items=%d&page=%d\" .pageUser.UserName .items .nextPage}}"
+		+navLinks(prevLink, nextLink)

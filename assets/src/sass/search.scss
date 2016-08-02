@@ -3,6 +3,7 @@
 
 @import "util/horizontal-control.scss";
 @import "util/item-list.scss";
+@import "util/pageify.scss";
 
 .search-result-container {
 	margin: 20px auto;
@@ -14,10 +15,4 @@
 		margin: 20px;
 		width: calc(100% - 40px);
 	}
-}
-
-.page-nav-links {
-	text-align: center;
-
-	.prev-link, .next-link { padding: 10px; }
 }

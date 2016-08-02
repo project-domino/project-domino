@@ -4,7 +4,12 @@ include ../items.pug
 
 block user-body
 	+control("notes")
-	div.item-list
-		| {{range .pageUser.Notes}}
-		+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
-		| {{end}}
+	div.user-items-content
+		span.page-number Page {{.currentPage}}
+		div.item-list
+			| {{range .notes}}
+			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
+			| {{end}}
+		- var prevLink = "{{printf \"/u/%s/notes?items=%d&page=%d\" .pageUser.UserName .items .prevPage}}"
+		- var nextLink = "{{printf \"/u/%s/notes?items=%d&page=%d\" .pageUser.UserName .items .nextPage}}"
+		+navLinks(prevLink, nextLink)

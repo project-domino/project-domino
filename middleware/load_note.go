@@ -39,7 +39,6 @@ func LoadNote(objects ...string) gin.HandlerFunc {
 		// Format note in JSON
 		noteJSON, err := json.Marshal(note)
 		if err != nil {
-			c.Error(err)
 			errors.JSON.Apply(c)
 			return
 		}

@@ -44,7 +44,6 @@ func LoadCollection(objects ...string) gin.HandlerFunc {
 		// Format collection in JSON
 		collectionJSON, err := json.Marshal(collection)
 		if err != nil {
-			c.Error(err)
 			errors.JSON.Apply(c)
 			return
 		}

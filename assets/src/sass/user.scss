@@ -3,38 +3,14 @@
 
 @import "util/horizontal-control.scss";
 @import "util/item-list.scss";
+@import "util/pageify.scss";
+@import "util/page-sidebar.scss";
 
-.user-info-container {
+.user-items-content {
+	width: 90%;
 	margin: 20px auto;
-	width: 1200px;
-}
-
-@media screen and (max-width: 1240px) {
-	.user-info-container {
-		margin: 20px;
-		width: calc(100% - 40px);
-	}
-}
-
-.user-info, .user-items { float: left; }
-
-.user-info {
-	margin: 0 10px 0 0;
-	width: calc(25% - 10px);
-}
-
-.user-items {
-	margin: 0 0 0 10px;
-	width: calc(75% - 10px);
-}
-
-@media screen and (max-width: 1000px) {
-	.user-info, .user-items {
-		margin: 0 0 20px 0;
-		width: 100%;
-	}
 }
 
 .item-list {
-	margin: 20px auto;
+	width: 100%
 }

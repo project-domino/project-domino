@@ -60,6 +60,7 @@ block body
 			+userList(".searchResult.Users")
 			| {{else}}
 			h4.panel-field-header Results
+			span.page-number Page {{.currentPage}}
 			| {{if eq .searchType "note"}}
 			+noteList(".searchResult")
 			| {{else if eq .searchType "collection"}}
@@ -68,8 +69,10 @@ block body
 			+userList(".searchResult")
 			| {{end}}
 			div.page-nav-links
-				a.prev-link(href="{{.prevPage}}")
+				- var prevLink = "{{printf \"/search/%s?q=%s&items=%d&page=%d\" .searchType .query .items .prevPage}}"
+				- var nextLink = "{{printf \"/search/%s?q=%s&items=%d&page=%d\" .searchType .query .items .nextPage}}"
+				a.prev-link(href!=prevLink)
 					span.fa.fa-chevron-left
-				a.next-link(href="{{.nextPage}}")
+				a.next-link(href!=nextLink)
 					span.fa.fa-chevron-right
 			| {{end}}

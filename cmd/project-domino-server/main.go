@@ -74,14 +74,17 @@ func main() {
 
 	m.GET("/search/:searchType",
 		middleware.LoadSearchItems(),
-		middleware.LoadSearchVars(),
 		handlers.Simple("search.html"))
 
 	m.Group("/u/:username",
-		middleware.LoadUser("Notes", "Collections", "Notes.Tags", "Collections.Tags")).
+		middleware.LoadUser("Notes", "Collections")).
 		GET("/", redirect.User).
-		GET("/notes", handlers.Simple("user-notes.html")).
-		GET("/collections", handlers.Simple("user-collections.html"))
+		GET("/notes",
+			middleware.LoadNotes(middleware.LoadNotesAuthor, "Tags"),
+			handlers.Simple("user-notes.html")).
+		GET("/collections",
+			middleware.LoadCollections(middleware.LoadCollectionsAuthor, "Tags"),
+			handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
 		middleware.LoadNote("Author", "Tags"),

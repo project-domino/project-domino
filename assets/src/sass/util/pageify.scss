@@ -1,0 +1,14 @@
+@import "util/variables.scss";
+
+.page-number {
+	color: $darker;
+	display: block;
+	font-size: small;
+	margin-bottom: 15px;
+}
+
+.page-nav-links {
+	text-align: center;
+
+	.prev-link, .next-link { padding: 10px; }
+}
