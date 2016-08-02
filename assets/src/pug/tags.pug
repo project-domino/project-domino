@@ -2,6 +2,6 @@ mixin tagList(tagPipeline)
 	| {{if #{tagPipeline}}}
 	div.tag-list
 		| {{range #{tagPipeline}}}
-		a.tag(href!="{{urlquery | (printf \"/search/all?q=tag:%s\" .Name)}}") {{.Name}}
+		a.tag(href!="{{urlquery | (printf \"/search/all?q=tag:\\\"%s\\\"\" .Name)}}") {{.Name}}
 		| {{end}}
 	| {{end}}
