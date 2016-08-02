@@ -18,8 +18,7 @@ type Comment struct {
 	Body string
 
 	// Ranking Info
-	Upvotes       uint
-	Downvotes     uint
+	Ranking       int
 	UpvoteUsers   []User `gorm:"many2many:upvotecomment_user;"`
 	DownvoteUsers []User `gorm:"many2many:downvotecomment_user;"`
 }

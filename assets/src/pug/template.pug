@@ -13,7 +13,7 @@ html
 			h2.logo
 				a.navbar-title(href="/") Domino
 			div.search-container
-				input.search-field(placeholder="Search...", value="{{.query}}")
+				input.search-field(placeholder="Search...", value="{{.query}}", autocomplete="off")
 				button.search-btn
 					span.fa.fa-search
 			div.nav-right-container
@@ -30,8 +30,8 @@ html
 						| 	{{.user.UserName}}
 						| {{end}}
 					div.dropdown-content.account-dropdown-content
-						a(href="/account") My Account
-						a.logout-btn Sign Out
+						a.dropdown-content-btn(href="/account") My Account
+						span.dropdown-content-btn.logout-btn Sign Out
 				| {{else}}
 				a(href="/register") Sign up
 				span /

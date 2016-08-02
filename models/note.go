@@ -18,8 +18,7 @@ type Note struct {
 	Tags []Tag `gorm:"many2many:note_tag;"`
 
 	// Ranking Info
-	Upvotes       uint
-	Downvotes     uint
+	Ranking       int
 	UpvoteUsers   []User `gorm:"many2many:upvotenote_user;"`
 	DownvoteUsers []User `gorm:"many2many:downvotenote_user;"`
 }

@@ -9,4 +9,10 @@ const (
 	AllSearchType               = "all"
 )
 
+// These constants are valid selectors
+const (
+	AuthorSelector string = "author"
+	TagSelector           = "tag"
+)
+
 const queryFormat string = "searchtext @@ to_tsquery(?)"

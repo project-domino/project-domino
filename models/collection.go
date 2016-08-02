@@ -15,12 +15,11 @@ type Collection struct {
 
 	Published bool
 
-	Tags []Tag `gorm:"many2many:collection_tag;"`
+	Tags  []Tag  `gorm:"many2many:collection_tag;"`
 	Notes []Note `gorm:"-"`
 
 	// Ranking Info
-	Upvotes       uint
-	Downvotes     uint
+	Ranking       int
 	UpvoteUsers   []User `gorm:"many2many:upvotecollection_user;"`
 	DownvoteUsers []User `gorm:"many2many:downvotecollection_user;"`
 }
