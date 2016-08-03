@@ -10,6 +10,6 @@ block user-body
 			| {{range .collections}}
 			+collectionItem("/collection/{{.ID}}", ".")
 			| {{end}}
-		- var prevLink = "{{printf \"/u/%s/collections?items=%d&page=%d\" .pageUser.UserName .items .prevPage}}"
-		- var nextLink = "{{printf \"/u/%s/collections?items=%d&page=%d\" .pageUser.UserName .items .nextPage}}"
+		- var prevLink = "/u/{{.pageUser.UserName}}/collections?items={{.items}}&page={{.prevPage}}"
+		- var nextLink = "/u/{{.pageUser.UserName}}/collections?items={{.items}}&page={{.nextPage}}"
 		+navLinks(prevLink, nextLink)

@@ -10,6 +10,6 @@ block user-body
 			| {{range .notes}}
 			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
 			| {{end}}
-		- var prevLink = "{{printf \"/u/%s/notes?items=%d&page=%d\" .pageUser.UserName .items .prevPage}}"
-		- var nextLink = "{{printf \"/u/%s/notes?items=%d&page=%d\" .pageUser.UserName .items .nextPage}}"
+		- var prevLink = "/u/{{.pageUser.UserName}}/notes?items={{.items}}&page={{.prevPage}}"
+		- var nextLink = "/u/{{.pageUser.UserName}}/notes?items={{.items}}&page={{.nextPage}}"
 		+navLinks(prevLink, nextLink)

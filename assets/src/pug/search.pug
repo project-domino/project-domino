@@ -69,8 +69,8 @@ block body
 			+userList(".searchResult")
 			| {{end}}
 			div.page-nav-links
-				- var prevLink = "{{printf \"/search/%s?q=%s&items=%d&page=%d\" .searchType .query .items .prevPage}}"
-				- var nextLink = "{{printf \"/search/%s?q=%s&items=%d&page=%d\" .searchType .query .items .nextPage}}"
+				- var prevLink = "/search/{{.searchType}}?q={{.query}}&items={{.items}}&page={{.prevPage}}"
+				- var nextLink = "/search/{{.searchType}}?q={{.query}}&items={{.items}}&page={{.nextPage}}"
 				a.prev-link(href!=prevLink)
 					span.fa.fa-chevron-left
 				a.next-link(href!=nextLink)
