@@ -1,21 +1,43 @@
 include tags.pug
 
+mixin itemRanking(type, p, upvoteItems, downvoteItems)
+	| {{if #{p}.InList #{upvoteItems}}}
+	div.item-ranking-container.upvoted(data-type=type, data-id="{{" + p + ".ID}}")
+		span.fa.fa-caret-up.item-upvote
+		span.item-ranking {{#{p}.Ranking}}
+		span.fa.fa-caret-down.item-downvote
+	| {{else if #{p}.InList #{downvoteItems}}}
+	div.item-ranking-container.downvoted(data-type=type, data-id="{{" + p + ".ID}}")
+		span.fa.fa-caret-up.item-upvote
+		span.item-ranking {{#{p}.Ranking}}
+		span.fa.fa-caret-down.item-downvote
+	| {{else}}
+	div.item-ranking-container(data-type=type, data-id="{{" + p + ".ID}}")
+		span.fa.fa-caret-up.item-upvote
+		span.item-ranking {{#{p}.Ranking}}
+		span.fa.fa-caret-down.item-downvote
+	| {{end}}
+
 mixin noteItem(link, notePipeline)
 	div.list-item
+		div.item-left
+			+itemRanking("note", notePipeline, "$.user.UpvoteNotes", "$.user.DownvoteNotes")
 		div.item-right
 			div.item-title
-				a(href=link) {{#{notePipeline}Title}}
+				a(href=link) {{#{notePipeline}.Title}}
 			div.item-date
-				| Last Updated - {{#{notePipeline}UpdatedAt.Format "2006-01-02"}}
-			div.item-description {{#{notePipeline}Description}}
-			+tagList(notePipeline + "Tags")
+				| Last Updated - {{#{notePipeline}.UpdatedAt.Format "2006-01-02"}}
+			div.item-description {{#{notePipeline}.Description}}
+			+tagList(notePipeline + ".Tags")
 
 mixin collectionItem(link, collectionPipeline)
 	div.list-item
+		div.item-left
+			+itemRanking("collection", collectionPipeline, "$.user.UpvoteCollections", "$.user.DownvoteCollections")
 		div.item-right
 			div.item-title
-				a(href=link) {{#{collectionPipeline}Title}}
+				a(href=link) {{#{collectionPipeline}.Title}}
 			div.item-date
-				| Last Updated - {{#{collectionPipeline}UpdatedAt.Format "2006-01-02"}}
-			div.item-description {{#{collectionPipeline}Description}}
-			+tagList(collectionPipeline + "Tags")
+				| Last Updated - {{#{collectionPipeline}.UpdatedAt.Format "2006-01-02"}}
+			div.item-description {{#{collectionPipeline}.Description}}
+			+tagList(collectionPipeline + ".Tags")

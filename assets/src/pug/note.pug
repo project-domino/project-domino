@@ -1,7 +1,11 @@
 include tags.pug
+include items.pug
 
 div.panel.note-container
 	div.item-heading
+		| {{with .note}}
+		+itemRanking("note", "", "$.user.UpvoteNotes", "$.user.DownvoteNotes")
+		| {{end}}
 		h2.item-title {{.note.Title}}
 		div.item-heading-right
 			span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}

@@ -1,7 +1,7 @@
 import $ from "jquery";
 import _ from "lodash";
-import WriterPanelCollectionUtil from "./writer-panel-collection-util.js";
-import getModal from "./modal.js";
+import WriterPanelCollectionUtil from "./util/writer-panel-collection-util.js";
+import getModal from "./util/modal.js";
 
 const util = new WriterPanelCollectionUtil();
 const modal = getModal();

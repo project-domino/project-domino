@@ -43,3 +43,40 @@
 	margin: 5px auto;
 	width: 85%;
 }
+
+.item-ranking-container {
+	display:flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+
+	>span {
+		flex-grow: 1;
+		text-align: center;
+	}
+
+	.item-upvote, .item-downvote {
+		cursor: pointer;
+		color: $gray;
+
+		&:active { color: $darker; }
+	}
+
+	.item-ranking { color: $darker; }
+}
+
+.item-ranking-container.upvoted {
+	.item-ranking { color:$primary-color; }
+	.item-upvote {
+		color: $primary-color;
+		&:active { color: darken($primary-color, 20%); }
+	}
+}
+
+.item-ranking-container.downvoted {
+	.item-ranking { color:$danger-color; }
+	.item-downvote {
+		color: $danger-color;
+		&:active { color: darken($danger-color, 20%); }
+	}
+}

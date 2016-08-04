@@ -8,7 +8,7 @@ block user-body
 		span.page-number Page {{.currentPage}}
 		div.item-list
 			| {{range .collections}}
-			+collectionItem("/collection/{{.ID}}", ".")
+			+collectionItem("/collection/{{.ID}}", "")
 			| {{end}}
 		- var prevLink = "/u/{{.pageUser.UserName}}/collections?items={{.items}}&page={{.prevPage}}"
 		- var nextLink = "/u/{{.pageUser.UserName}}/collections?items={{.items}}&page={{.nextPage}}"

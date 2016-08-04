@@ -1,7 +1,7 @@
 import $ from "jquery";
 import zxcvbn from "zxcvbn";
-import getModal from "../js/modal.js";
-import FormUtil from "./form-util.js";
+import getModal from "./util/modal.js";
+import FormUtil from "./util/form-util.js";
 
 const util = new FormUtil();
 const modal = getModal();

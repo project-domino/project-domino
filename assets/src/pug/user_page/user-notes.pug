@@ -8,7 +8,7 @@ block user-body
 		span.page-number Page {{.currentPage}}
 		div.item-list
 			| {{range .notes}}
-			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
+			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", "")
 			| {{end}}
 		- var prevLink = "/u/{{.pageUser.UserName}}/notes?items={{.items}}&page={{.prevPage}}"
 		- var nextLink = "/u/{{.pageUser.UserName}}/notes?items={{.items}}&page={{.nextPage}}"

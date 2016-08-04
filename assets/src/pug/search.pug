@@ -4,14 +4,14 @@ include items.pug
 
 mixin noteList(list)
 	| {{if #{list}}}{{range #{list}}}
-	+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
+	+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", "")
 	| {{end}}{{else}}
 	span.no-content-text No notes found...
 	| {{end}}
 
 mixin collectionList(list)
 	| {{if #{list}}}{{range #{list}}}
-	+collectionItem("/collection/{{.ID}}", ".")
+	+collectionItem("/collection/{{.ID}}", "")
 	| {{end}}{{else}}
 	span.no-content-text No collections found...
 	| {{end}}
@@ -76,3 +76,6 @@ block body
 				a.next-link(href!=nextLink)
 					span.fa.fa-chevron-right
 			| {{end}}
+
+block scripts
+	script(src="/assets/ranking.js")

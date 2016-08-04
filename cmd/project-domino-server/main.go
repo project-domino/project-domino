@@ -73,6 +73,11 @@ func main() {
 			handlers.Simple("account-notifications.html"))
 
 	m.GET("/search/:searchType",
+		middleware.LoadRequestUser(
+			"UpvoteNotes",
+			"DownvoteNotes",
+			"UpvoteCollections",
+			"DownvoteCollections"),
 		middleware.LoadSearchItems(),
 		handlers.Simple("search.html"))
 
@@ -80,19 +85,27 @@ func main() {
 		middleware.LoadUser("Notes", "Collections")).
 		GET("/", redirect.User).
 		GET("/notes",
+			middleware.LoadRequestUser("UpvoteNotes", "DownvoteNotes"),
 			middleware.LoadNotes(middleware.LoadNotesAuthor, "Tags"),
 			handlers.Simple("user-notes.html")).
 		GET("/collections",
+			middleware.LoadRequestUser("UpvoteCollections", "DownvoteCollections"),
 			middleware.LoadCollections(middleware.LoadCollectionsAuthor, "Tags"),
 			handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
+		middleware.LoadRequestUser("UpvoteNotes", "DownvoteNotes"),
 		middleware.LoadNote("Author", "Tags"),
 		middleware.VerifyNotePublic()).
 		GET("/:noteID", handlers.Simple("individual-note.html")).
 		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
 	m.Group("/collection",
+		middleware.LoadRequestUser(
+			"UpvoteNotes",
+			"DownvoteNotes",
+			"UpvoteCollections",
+			"DownvoteCollections"),
 		middleware.LoadCollection("Author", "Tags"),
 		middleware.VerifyCollectionPublic()).
 		GET("/:collectionID",
@@ -137,6 +150,10 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.EditNote).
+		PUT("/note/:noteID/vote",
+			middleware.RequireAuth(),
+			middleware.LoadNote(),
+			api.VoteNote).
 		POST("/collection",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
@@ -145,6 +162,10 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),
 			api.EditCollection).
+		PUT("/collection/:collectionID/vote",
+			middleware.RequireAuth(),
+			middleware.LoadCollection(),
+			api.VoteCollection).
 		POST("/tag",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),

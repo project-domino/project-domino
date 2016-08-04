@@ -1,6 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
-import getModal from "../js/modal.js";
+import getModal from "./util/modal.js";
 
 const modal = getModal();
 

@@ -1,6 +1,6 @@
 import $ from "jquery";
-import getModal from "../js/modal.js";
-import FormUtil from "./form-util.js";
+import getModal from "./util/modal.js";
+import FormUtil from "./util/form-util.js";
 
 const modal = getModal();
 const util = new FormUtil();

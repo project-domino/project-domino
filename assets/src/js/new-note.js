@@ -1,7 +1,7 @@
 import $ from "jquery";
 import _ from "lodash";
-import WriterPanelNoteUtil from "./writer-panel-note-util.js";
-import getModal from "./modal.js";
+import WriterPanelNoteUtil from "./util/writer-panel-note-util.js";
+import getModal from "./util/modal.js";
 
 const util = new WriterPanelNoteUtil();
 const modal = getModal();

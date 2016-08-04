@@ -22,3 +22,13 @@ type Note struct {
 	UpvoteUsers   []User `gorm:"many2many:upvotenote_user;"`
 	DownvoteUsers []User `gorm:"many2many:downvotenote_user;"`
 }
+
+// InList checks if a given note is in a list
+func (n Note) InList(l []Note) bool {
+	for _, e := range l {
+		if n.ID == e.ID {
+			return true
+		}
+	}
+	return false
+}

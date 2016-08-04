@@ -4,7 +4,7 @@ import $ from "jquery";
 import "select2";
 import _ from "lodash";
 
-import getModal from "../js/modal.js";
+import getModal from "./modal.js";
 import WriterPanelUtil from "./writer-panel-util.js";
 
 const modal = getModal();

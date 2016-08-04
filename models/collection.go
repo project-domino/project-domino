@@ -23,3 +23,13 @@ type Collection struct {
 	UpvoteUsers   []User `gorm:"many2many:upvotecollection_user;"`
 	DownvoteUsers []User `gorm:"many2many:downvotecollection_user;"`
 }
+
+// InList checks if a given collection is in a list
+func (c Collection) InList(l []Collection) bool {
+	for _, e := range l {
+		if c.ID == e.ID {
+			return true
+		}
+	}
+	return false
+}

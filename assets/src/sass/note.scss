@@ -1,5 +1,12 @@
 @import "util/variables.scss";
 @import "main.scss";
 
+@import "util/item-list.scss";
 @import "util/tag-list.scss";
 @import "util/panel-contributor.scss";
+
+.item-ranking-container {
+	width: 35px;
+
+	>span { text-align: left; }
+}

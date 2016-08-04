@@ -13,6 +13,9 @@ block body
 	div.content
 		div.panel.collection-info
 			div.item-heading
+				| {{with .collection}}
+				+itemRanking("collection", "", "$.user.UpvoteCollections", "$.user.DownvoteCollections")
+				| {{end}}
 				h2.item-title {{.collection.Title}}
 				div.item-heading-right
 					span.collection-date
@@ -29,7 +32,10 @@ block body
 			h2.panel-heading Notes
 			div.panel-body
 				| {{if .collection.Notes}}{{range .collection.Notes}}
-				+noteItem("/collection/{{$.collection.ID}}/note/{{.ID}}/{{toSnakeCase .Title}}", ".")
+				+noteItem("/collection/{{$.collection.ID}}/note/{{.ID}}/{{toSnakeCase .Title}}", "")
 				| {{end}}{{else}}
 				span.no-content-text There are no notes in this collection...
 				| {{end}}
+
+block scripts
+	script(src="/assets/ranking.js")
