@@ -3,10 +3,49 @@
 
 @import "util/item-list.scss";
 @import "util/tag-list.scss";
+@import "util/horizontal-control.scss";
 @import "util/panel-contributor.scss";
 
 .item-ranking-container {
 	width: 35px;
 
-	>span { text-align: left; }
+	span { text-align: left; }
+}
+
+.comments {
+	margin-top: 20px;
+}
+
+.questions-container, .suggestions-container {
+	margin-top: 20px;
+	width: 100%;
+
+	input { width: 100%; }
+}
+
+.comment-input-container {
+	h4 {
+		font-family: $fonts-normal;
+		margin: 10px 0;
+	}
+
+	p {
+		font-family: $fonts-normal;
+		font-size: 14px;
+	}
+
+	.comment-input-area {
+		min-height: 50px;
+		max-width: 100%;
+		min-width: 100%;
+	}
+
+	.comment-button-container {
+		display: flex;
+		flex-direction: row-reverse;
+		margin-top: 10px;
+		width: 100%;
+
+		button { margin: 0 5px; }
+	}
 }

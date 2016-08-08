@@ -13,8 +13,9 @@ html
 			h2.logo
 				a.navbar-title(href="/") Domino
 			div.search-container
-				input.search-field(placeholder="Search...", value="{{.query}}", autocomplete="off")
-				button.search-btn
+				form#search-form.hidden(action="/search/all", method="GET")
+				input.search-field(type="text", name="q", placeholder="Search...", value="{{.query}}", form="search-form", autocomplete="off")
+				button.search-btn(type="submit", form="search-form")
 					span.fa.fa-search
 			div.nav-right-container
 				| {{if .loggedIn}}
@@ -51,5 +52,8 @@ html
 			div#alert-content.alert-content
 				span#alert-close.alert-close ×
 				span#alert-text.alert-text
+		div.data.hidden
+			div#logged-in-val {{.loggedIn}}
+			div#user-data {{json .user}}
 		script(src="/assets/main.js")
 		block scripts

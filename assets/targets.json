@@ -11,7 +11,8 @@
 		"new-note":        "src/js/new-note.js",
 		"new-tag":         "src/js/new-tag.js",
 		"register":        "src/js/register.js",
-		"ranking":         "src/js/ranking.js"
+		"ranking":         "src/js/ranking.js",
+		"note":            "src/js/note.js"
 	},
 	"pug": {
 		"account-notifications": "src/pug/account_page/account-notifications.pug",

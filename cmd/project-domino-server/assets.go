@@ -43,6 +43,7 @@ func GetTemplates(fs vfs.FileSystem) (*template.Template, error) {
 	// Build template FuncMap
 	funcMap := template.FuncMap{
 		"toSnakeCase": templatefuncs.ToSnakeCase,
+		"json":        templatefuncs.JSONMarshal,
 	}
 
 	t := template.New("").Funcs(funcMap)

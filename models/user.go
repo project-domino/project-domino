@@ -28,8 +28,8 @@ type User struct {
 	Collections  []Collection `gorm:"ForeignKey:AuthorID"`
 
 	Email          string
-	EmailVerified  bool
-	SendNewsletter bool
+	EmailVerified  bool `json:"-" xml:"-"`
+	SendNewsletter bool `json:"-" xml:"-"`
 
 	// Ranking Info
 	UpvoteCollections   []Collection `gorm:"many2many:upvotecollection_user;"`

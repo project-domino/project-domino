@@ -1,20 +1,52 @@
 include tags.pug
 include items.pug
 
-div.panel.note-container
-	div.item-heading
-		| {{with .note}}
-		+itemRanking("note", "", "$.user.UpvoteNotes", "$.user.DownvoteNotes")
-		| {{end}}
-		h2.item-title {{.note.Title}}
-		div.item-heading-right
-			span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
-	div.panel-body {{.noteHTML}}
-	div.panel-seperator
-	+tagList(".note.Tags")
-	div.contributor-container
-		span.note-author Created By -
-			= ' '
-			a(href="/u/{{.note.Author.UserName}}") {{.note.Author.UserName}}
-div.hidden.data
-	div#note-data {{.noteJSON}}
+div.note-container
+	div.panel.note
+		div.item-heading
+			| {{with .note}}
+			+itemRanking("note", "", "$.user.UpvoteNotes", "$.user.DownvoteNotes")
+			| {{end}}
+			h2.item-title {{.note.Title}}
+			div.item-heading-right
+				span.note-date Last Updated - {{.note.UpdatedAt.Format "2006-01-02"}}
+		div.panel-body {{.noteHTML}}
+		div.panel-seperator
+		+tagList(".note.Tags")
+		div.contributor-container
+			span.note-author Created By -
+				= ' '
+				a(href="/u/{{.note.Author.UserName}}") {{.note.Author.UserName}}
+	div.panel.comments
+		div.panel-body
+			ul.h-control-list
+				li.h-control
+					a.questions-link.active(href="#") Questions
+				li.h-control
+					a.suggestions-link(href="#") Suggestions
+			div.questions-container
+				input.form-input.questions-input-placeholder(placeholder="Ask a question...")
+				div.questions-input-container.comment-input-container.hidden
+					h4 Enter in your question below:
+					p Please make sure your question is constructive and specific.
+					textarea.question-input-area.comment-input-area
+					div.question-button-container.comment-button-container
+						button.btn.btn-primary.question-button Ask a question
+						button.btn.question-cancel-button Cancel
+				div.questions-comment-list
+					div.user-comments
+					div.other-comments
+			div.suggestions-container.hidden
+				input.form-input.suggestions-input-placeholder(placeholder="Suggest a change...")
+				div.suggestions-input-container.comment-input-container.hidden
+					h4 Enter in your suggestion below:
+					p Please make sure your suggestion can help the creator improve on the content.
+					textarea.suggestion-input-area.comment-input-area
+					div.suggestion-button-container.comment-button-container
+						button.btn.btn-primary.suggestion-button Suggest a change
+						button.btn.suggestion-cancel-button Cancel
+				div.suggestions-comment-list
+					div.user-comments
+					div.other-comments
+	div.hidden.data
+		div#note-data {{.noteJSON}}

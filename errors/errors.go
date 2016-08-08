@@ -32,6 +32,8 @@ var (
 	NoteNotFound       = &Error{404, "Note Not Found"}
 	CollectionNotFound = &Error{404, "Collection Not Found"}
 	UserNotFound       = &Error{404, "User Not Found"}
+	CommentNotFound    = &Error{404, "Comment Not Found"}
+	CommentNesting     = &Error{404, "A comment can only be nested one level deep"}
 )
 
 // 5xx errors

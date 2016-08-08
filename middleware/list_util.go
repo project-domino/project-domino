@@ -19,7 +19,7 @@ func getListVars(c *gin.Context) (int, int, *errors.Error) {
 	i := c.DefaultQuery("items", "25")
 	p := c.DefaultQuery("page", "1")
 
-	// Convert page and items to uint
+	// Convert page and items to int
 	tItems, convertErr1 := strconv.ParseInt(i, 10, 64)
 	tPage, convertErr2 := strconv.ParseInt(p, 10, 64)
 	items := int(tItems)

@@ -94,26 +94,48 @@ func main() {
 			handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
-		middleware.LoadRequestUser("UpvoteNotes", "DownvoteNotes"),
+		middleware.LoadRequestUser(
+			"UpvoteNotes",
+			"DownvoteNotes",
+			"UpvoteComments",
+			"DownvoteComments",
+		),
 		middleware.LoadNote("Author", "Tags"),
 		middleware.VerifyNotePublic()).
 		GET("/:noteID", handlers.Simple("individual-note.html")).
 		GET("/:noteID/:note-name", handlers.Simple("individual-note.html"))
 
 	m.Group("/collection",
-		middleware.LoadRequestUser(
-			"UpvoteNotes",
-			"DownvoteNotes",
-			"UpvoteCollections",
-			"DownvoteCollections"),
 		middleware.LoadCollection("Author", "Tags"),
 		middleware.VerifyCollectionPublic()).
 		GET("/:collectionID",
+			middleware.LoadRequestUser(
+				"UpvoteNotes",
+				"DownvoteNotes",
+				"UpvoteCollections",
+				"DownvoteCollections",
+			),
 			handlers.Simple("collection.html")).
 		GET("/:collectionID/note/:noteID",
+			middleware.LoadRequestUser(
+				"UpvoteNotes",
+				"DownvoteNotes",
+				"UpvoteCollections",
+				"DownvoteCollections",
+				"UpvoteComments",
+				"DownvoteComments",
+			),
 			middleware.LoadNote("Author", "Tags"),
 			handlers.Simple("collection-note.html")).
 		GET("/:collectionID/note/:noteID/:noteName",
+			middleware.LoadRequestUser(
+				"UpvoteNotes",
+				"DownvoteNotes",
+				"UpvoteCollections",
+				"DownvoteCollections",
+				"UpvoteComments",
+				"DownvoteComments",
+			),
 			middleware.LoadNote("Author", "Tags"),
 			handlers.Simple("collection-note.html"))
 
@@ -154,6 +176,12 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.LoadNote(),
 			api.VoteNote).
+		GET("/note/:noteID/comments/:commentType",
+			middleware.LoadComments("User"),
+			handlers.JSON("comments")).
+		POST("/note/:noteID/comments/:commentType",
+			middleware.RequireAuth(),
+			api.NewComment).
 		POST("/collection",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),

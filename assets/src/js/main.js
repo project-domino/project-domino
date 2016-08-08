@@ -4,15 +4,6 @@ import $ from "jquery";
 
 $(() => {
 	// Wire up buttons
-	var searchFunction = () => {
-		window.location.assign("/search/all?q=" +
-			encodeURIComponent($(".search-field").val()));
-	};
-	$(".search-btn").click(searchFunction);
-	$(".search-field").keyup(e => {
-		if(e.keyCode === 13)
-			searchFunction();
-	});
 	$(".logout-btn").click(() => {
 		$.ajax({
 			type:     "POST",

@@ -12,19 +12,21 @@ func LoadRequestUser(objects ...string) gin.HandlerFunc {
 		// Acquire user from the request context.
 		user := c.MustGet("user").(models.User)
 
-		// Set objects to be preloaded to db
-		preloadedDB := db.DB.Where("id = ?", user.ID)
-		for _, object := range objects {
-			preloadedDB = preloadedDB.Preload(object)
-		}
+		if user.ID != 0 {
+			// Set objects to be preloaded to db
+			preloadedDB := db.DB.Where("id = ?", user.ID)
+			for _, object := range objects {
+				preloadedDB = preloadedDB.Preload(object)
+			}
 
-		// Query for user and set context
-		var loadedUser models.User
-		if err := preloadedDB.First(&loadedUser).Error; err != nil {
-			c.AbortWithError(500, err)
-			return
+			// Query for user and set context
+			var loadedUser models.User
+			if err := preloadedDB.First(&loadedUser).Error; err != nil {
+				c.AbortWithError(500, err)
+				return
+			}
+			c.Set("user", loadedUser)
 		}
-		c.Set("user", loadedUser)
 
 		c.Next()
 	}
