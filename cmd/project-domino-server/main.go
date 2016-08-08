@@ -194,6 +194,10 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.LoadCollection(),
 			api.VoteCollection).
+		PUT("/comment/:commentID/vote",
+			middleware.RequireAuth(),
+			middleware.LoadComment(),
+			api.VoteComment).
 		POST("/tag",
 			middleware.RequireAuth(),
 			middleware.RequireUserType(models.Writer, models.Admin),

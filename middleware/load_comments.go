@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,9 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 		p := c.DefaultQuery("page", "1")
 		noteID := c.Param("noteID")
 		commentType := c.Param("commentType")
+
+		// Acquire user from the request context.
+		user := c.MustGet("user").(models.User)
 
 		// Verify comment type is valid
 		if (commentType != models.QuestionComment) && (commentType != models.SuggestionComment) {
@@ -45,6 +49,11 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 		preloadedDB := db.DB
 		for _, object := range objects {
 			preloadedDB = preloadedDB.Preload(object)
+		}
+
+		// If there is a user get the users comments first
+		if user.ID != 0 {
+			preloadedDB = preloadedDB.Order(fmt.Sprintf("(user_id = %d)", user.ID))
 		}
 
 		// Query for parent comments

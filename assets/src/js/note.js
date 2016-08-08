@@ -47,10 +47,15 @@ var initToggles = () => {
 // Returns a jquery object from a given comment
 var renderComment = (user, comment) => {
 	var votingStatus = "";
-	if(_(user.UpvoteComments).map(e => e.ID).value().contains(comment.ID))
-		votingStatus = "upvoted";
-	if(_(user.DownvoteComments).map(e => e.ID).value().contains(comment.ID))
-		votingStatus = "downvoted";
+
+	if(user.UpvoteComments) {
+		if(_(user.UpvoteComments).map(e => e.ID).value().contains(comment.ID))
+			votingStatus = "upvoted";
+	}
+	if(user.DownvoteComments) {
+		if(_(user.DownvoteComments).map(e => e.ID).value().contains(comment.ID))
+			votingStatus = "downvoted";
+	}
 
 	return $("<div>").addClass("list-item").append(
 		$("<div>").addClass("item-left").append(
@@ -63,7 +68,7 @@ var renderComment = (user, comment) => {
 				.append(
 					$("<span>").addClass("fa fa-caret-up item-upvote"),
 					$("<span>").addClass("item-ranking").text(comment.Ranking),
-					$("<span>").addClass("fa fa-caret-up item-downvote")
+					$("<span>").addClass("fa fa-caret-down item-downvote")
 				)
 		),
 		$("<div>").addClass("item-right").append(
@@ -106,7 +111,7 @@ var loadComments = type => {
 		else if(type === "suggestion")
 			suggestionPageNumber++;
 
-		$("." + type + "s-comment-list > .other-comments").append(
+		$("." + type + "s-comment-list").append(
 			data.map(e => {
 				return renderComment(user, e);
 			})
@@ -116,7 +121,6 @@ var loadComments = type => {
 		modal.alert(err.responseText, 3000);
 	});
 };
-
 window.loadComments = loadComments;
 
 // postComment posts a comment
@@ -139,14 +143,20 @@ var postComment = (body, type, parent) => {
 			parentID: parent,
 		},
 		dataType: "json",
-	}).then(data => {
+	}).then(() => {
+		// Clear input area and reset input with placeholder
 		$("." + type + "-input-area").val("");
 		$(".questions-input-container, .suggestions-input-container").addClass("hidden");
 		$(".questions-input-placeholder, .suggestions-input-placeholder").removeClass("hidden");
 
-		$("." + type + "s-comment-list > .user-comments").append(
-			renderComment(user, data)
-		);
+		// Reset the comments
+		if(type === "question")
+			questionPageNumber = 0;
+		else if(type === "suggestion")
+			suggestionPageNumber = 0;
+
+		$("." + type + "s-comment-list").empty();
+		loadComments(type);
 	}).fail(err => {
 		console.log(err);
 		modal.alert(err.responseText, 3000);
@@ -155,6 +165,9 @@ var postComment = (body, type, parent) => {
 
 $(() => {
 	initToggles();
+
+	loadComments("question");
+	loadComments("suggestion");
 
 	$(".question-button").click(() => {
 		postComment($(".question-input-area").val(), "question", "");

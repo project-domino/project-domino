@@ -24,7 +24,7 @@ func SetupDatabase(db *gorm.DB) error {
 		db.Exec("CREATE INDEX searchtext_note_gin ON notes USING GIN(searchtext)")
 	}
 	if !db.HasTable(&models.Collection{}) {
-		setupTable(db, &models.Collection{})
+		db.CreateTable(&models.Collection{})
 		db.Exec("ALTER TABLE collections ADD COLUMN searchtext TSVECTOR")
 		db.Exec("CREATE INDEX searchtext_collection_gin ON collections USING GIN(searchtext)")
 	}
