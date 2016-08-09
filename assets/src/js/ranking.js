@@ -65,3 +65,5 @@ $(() => {
 		changeVote($(this).parent(), "-1");
 	});
 });
+
+export {changeVote};

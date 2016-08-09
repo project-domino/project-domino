@@ -1,7 +1,7 @@
 import $ from "jquery";
-import _ from "lodash";
 
 import getModal from "./util/modal.js";
+import {changeVote} from "./ranking.js";
 
 const modal = getModal();
 
@@ -22,13 +22,13 @@ var initToggles = () => {
 		$(".questions-container").addClass("hidden");
 	});
 
-	$(".questions-input-placeholder").click(function (e) {
+	$(".questions-input-placeholder").focus(function (e) {
 		e.preventDefault();
 		$(this).addClass("hidden");
 		$(".questions-input-container").removeClass("hidden");
 		$(".question-input-area").focus();
 	});
-	$(".suggestions-input-placeholder").click(function (e) {
+	$(".suggestions-input-placeholder").focus(function (e) {
 		e.preventDefault();
 		$(this).addClass("hidden");
 		$(".suggestions-input-container").removeClass("hidden");
@@ -81,7 +81,7 @@ var postComment = (body, type, parent) => {
 			suggestionPageNumber = 0;
 
 		$("." + type + "s-comment-list").empty();
-		loadComments(type);
+		loadComments(type); // eslint-disable-line no-use-before-define
 	}).fail(err => {
 		console.log(err);
 		modal.alert(err.responseText, 3000);
@@ -93,11 +93,11 @@ var renderCommentItem = (user, comment, showReply) => {
 	var votingStatus = "";
 
 	if(user.UpvoteComments) {
-		if(_(user.UpvoteComments).map(e => e.ID).value().contains(comment.ID))
+		if(user.UpvoteComments.map(e => e.ID).includes(comment.ID))
 			votingStatus = "upvoted";
 	}
 	if(user.DownvoteComments) {
-		if(_(user.DownvoteComments).map(e => e.ID).value().contains(comment.ID))
+		if(user.DownvoteComments.map(e => e.ID).includes(comment.ID))
 			votingStatus = "downvoted";
 	}
 
@@ -133,9 +133,17 @@ var renderCommentItem = (user, comment, showReply) => {
 					"data-id":   comment.ID,
 				})
 				.append(
-					$("<span>").addClass("fa fa-caret-up item-upvote"),
+					$("<span>").addClass("fa fa-caret-up item-upvote").click(
+						function () {
+							changeVote($(this).parent(), "1");
+						}
+					),
 					$("<span>").addClass("item-ranking").text(comment.Ranking),
-					$("<span>").addClass("fa fa-caret-down item-downvote")
+					$("<span>").addClass("fa fa-caret-down item-downvote").click(
+						function () {
+							changeVote($(this).parent(), "-1");
+						}
+					)
 				)
 		),
 		itemRight

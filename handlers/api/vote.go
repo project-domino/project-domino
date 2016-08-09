@@ -30,9 +30,10 @@ func VoteNote(c *gin.Context) {
 	}
 
 	// Reset note ranking
-	upvoteUsers := db.DB.Model(&note).Association("UpvoteUsers").Count()
-	downvoteUsers := db.DB.Model(&note).Association("DownvoteUsers").Count()
-	if db.DB.Error != nil {
+	upvoteUsers := tx.Model(&note).Association("UpvoteUsers").Count()
+	downvoteUsers := tx.Model(&note).Association("DownvoteUsers").Count()
+	if tx.Error != nil {
+		tx.Rollback()
 		c.AbortWithError(500, err)
 		return
 	}
@@ -74,9 +75,10 @@ func VoteCollection(c *gin.Context) {
 	}
 
 	// Reset collection ranking
-	upvoteUsers := db.DB.Model(&collection).Association("UpvoteUsers").Count()
-	downvoteUsers := db.DB.Model(&collection).Association("DownvoteUsers").Count()
-	if db.DB.Error != nil {
+	upvoteUsers := tx.Model(&collection).Association("UpvoteUsers").Count()
+	downvoteUsers := tx.Model(&collection).Association("DownvoteUsers").Count()
+	if tx.Error != nil {
+		tx.Rollback()
 		c.AbortWithError(500, err)
 		return
 	}
@@ -118,9 +120,10 @@ func VoteComment(c *gin.Context) {
 	}
 
 	// Reset comment ranking
-	upvoteUsers := db.DB.Model(&comment).Association("UpvoteUsers").Count()
-	downvoteUsers := db.DB.Model(&comment).Association("DownvoteUsers").Count()
-	if db.DB.Error != nil {
+	upvoteUsers := tx.Model(&comment).Association("UpvoteUsers").Count()
+	downvoteUsers := tx.Model(&comment).Association("DownvoteUsers").Count()
+	if tx.Error != nil {
+		tx.Rollback()
 		c.AbortWithError(500, err)
 		return
 	}
