@@ -49,7 +49,7 @@ var suggestionPageNumber = 0;
 var questionPageNumber = 0;
 
 // postComment posts a comment
-var postComment = (body, type, parent) => {
+var postComment = (body, type, parent, fn) => {
 	var note = JSON.parse($("#note-data").text());
 	var user = JSON.parse($("#user-data").text());
 
@@ -68,21 +68,7 @@ var postComment = (body, type, parent) => {
 			parentID: parent,
 		},
 		dataType: "json",
-	}).then(() => {
-		// Clear input area and reset input with placeholder
-		$("." + type + "-input-area").val("");
-		$(".questions-input-container, .suggestions-input-container").addClass("hidden");
-		$(".questions-input-placeholder, .suggestions-input-placeholder").removeClass("hidden");
-
-		// Reset the comments
-		if(type === "question")
-			questionPageNumber = 0;
-		else if(type === "suggestion")
-			suggestionPageNumber = 0;
-
-		$("." + type + "s-comment-list").empty();
-		loadComments(type); // eslint-disable-line no-use-before-define
-	}).fail(err => {
+	}).then(fn).fail(err => {
 		console.log(err);
 		modal.alert(err.responseText, 3000);
 	});
@@ -152,7 +138,7 @@ var renderCommentItem = (user, comment, showReply) => {
 
 // Returns a jquery object from a given comment
 var renderComment = (user, comment) => {
-	var subComments = $("<div>").addClass("subcomments");
+	var subComments = $("<div>").addClass("subcomments").attr("data-comment-id", comment.ID);
 	if(comment.Children)
 		subComments.append(comment.Children.map(e => renderCommentItem(user, e, false)));
 
@@ -168,7 +154,11 @@ var renderComment = (user, comment) => {
 						postComment(
 							$(".comment-input-area[data-comment-id='" + comment.ID + "']").val(),
 							comment.Type,
-							comment.ID
+							comment.ID,
+							data => {
+								$(".subcomments[data-comment-id='" + comment.ID + "']")
+									.append(renderCommentItem(user, data, false));
+							}
 						);
 					}),
 					$("<button>").addClass("btn").text("Cancel").click(function () {
@@ -239,10 +229,28 @@ $(() => {
 	loadComments("suggestion");
 
 	$(".question-button").click(() => {
-		postComment($(".question-input-area").val(), "question", "");
+		postComment($(".question-input-area").val(), "question", "", () => {
+			$(".question-input-area").val("");
+			$(".questions-input-container").addClass("hidden");
+			$(".questions-input-placeholder").removeClass("hidden");
+
+			questionPageNumber = 0;
+
+			$(".questions-comment-list").empty();
+			loadComments("question");
+		});
 	});
 	$(".suggestion-button").click(() => {
-		postComment($(".suggestion-input-area").val(), "suggestion", "");
+		postComment($(".suggestion-input-area").val(), "suggestion", "", () => {
+			$(".suggestion-input-area").val("");
+			$(".suggestions-input-container").addClass("hidden");
+			$(".suggestions-input-placeholder").removeClass("hidden");
+
+			suggestionPageNumber = 0;
+
+			$(".suggestions-comment-list").empty();
+			loadComments("suggestion");
+		});
 	});
 
 	$(".load-questions-btn").click(() => loadComments("question"));
