@@ -6,7 +6,7 @@
 @import "util/horizontal-control.scss";
 @import "util/panel-contributor.scss";
 
-.item-ranking-container {
+.item-heading > .item-ranking-container {
 	width: 35px;
 
 	span { text-align: left; }
@@ -14,6 +14,18 @@
 
 .comments {
 	margin-top: 20px;
+}
+
+.comment {
+	.subcomments {
+		margin-left: 5%;
+		width: 95%;
+	}
+
+	.comment-input-container {
+		margin-left: 50px;
+		width: calc(100% - 50px);
+	}
 }
 
 .questions-container, .suggestions-container {
@@ -48,4 +60,16 @@
 
 		button { margin: 0 5px; }
 	}
+}
+
+.load-comments-container {
+	text-align: center;
+	width: 100%;
+
+	button {
+		margin: auto;
+		width: 50%;
+	}
+
+	span { color: $darker; }
 }

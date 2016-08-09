@@ -52,14 +52,15 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 		}
 
 		// If there is a user get the users comments first
+		parentCommentDB := preloadedDB
 		if user.ID != 0 {
-			preloadedDB = preloadedDB.Order(fmt.Sprintf("(user_id = %d)", user.ID))
+			parentCommentDB = parentCommentDB.Order(fmt.Sprintf("(user_id = %d)", user.ID))
 		}
 
 		// Query for parent comments
 		var parentComments []models.Comment
 		var parentIDs []uint
-		if err := preloadedDB.
+		if err := parentCommentDB.
 			Where("note_id = ?", noteID).
 			Where("parent_id = ?", 0).
 			Where("type = ?", commentType).
@@ -67,7 +68,7 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 			Limit(items).
 			Offset((page-1)*items).
 			Find(&parentComments).
-			Pluck("parent_id", &parentIDs).
+			Pluck("id", &parentIDs).
 			Error; err != nil {
 
 			c.AbortWithError(500, err)
@@ -80,8 +81,8 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 			Where("note_id = ?", noteID).
 			Where("parent_id IN (?)", parentIDs).
 			Where("type = ?", commentType).
-			Order("created_at desc").
-			Find(&parentComments).
+			Order("created_at").
+			Find(&childComments).
 			Error; err != nil {
 
 			c.AbortWithError(500, err)
@@ -89,10 +90,10 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 		}
 
 		// Append child comments to parent
-		for _, child := range childComments {
-			for _, parent := range parentComments {
-				if parent.ID == child.ParentID {
-					parent.Children = append(parent.Children, child)
+		for _, c := range childComments {
+			for pi := range parentComments {
+				if parentComments[pi].ID == c.ParentID {
+					parentComments[pi].Children = append(parentComments[pi].Children, c)
 				}
 			}
 		}

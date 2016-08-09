@@ -29,6 +29,7 @@
 	.item-right {
 		display:flex;
 		flex-direction: column;
+		word-wrap: break-word;
 
 		.item-date {
 			color: $darker;
