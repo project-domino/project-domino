@@ -4,7 +4,7 @@ import getModal from "./util/modal.js";
 
 const modal = getModal();
 
-var changeVote = (rankingContainer, dir) => {
+const changeVote = (rankingContainer, dir) => {
 	if($("#logged-in-val").text() === "false") {
 		modal.alert("You must sign in to rank items.", 3000);
 		return;

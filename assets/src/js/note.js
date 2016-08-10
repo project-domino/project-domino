@@ -158,6 +158,10 @@ var renderComment = (user, comment) => {
 							data => {
 								$(".subcomments[data-comment-id='" + comment.ID + "']")
 									.append(renderCommentItem(user, data, false));
+								$(".comment-input-container[data-comment-id='" + comment.ID + "']")
+									.addClass("hidden");
+								$(".comment-reply-link[data-comment-id='" + comment.ID + "']")
+									.removeClass("hidden");
 							}
 						);
 					}),
