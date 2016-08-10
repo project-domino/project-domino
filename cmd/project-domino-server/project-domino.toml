@@ -1,6 +1,5 @@
 [assets]
-dev = false
-path = "assets.zip"
+path = "assets/dist"
 
 [database]
 debug = false

@@ -12,8 +12,7 @@ import (
 func init() {
 	// Set variable defaults.
 	viper.SetDefault("assets", map[string]interface{}{
-		"dev":  false,
-		"path": "assets.zip",
+		"path": "assets/dist",
 	})
 	viper.SetDefault("database", map[string]interface{}{
 		"debug": false,

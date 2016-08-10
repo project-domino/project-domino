@@ -1,6 +1,5 @@
 const _ =    require("lodash");
 const gulp = require("gulp");
-const zip =  require("gulp-zip");
 
 const helpers = _([
 	"copy",
@@ -31,9 +30,5 @@ module.exports = files => {
 		return type;
 	}).flatten().value().concat("ckeditor-copy");
 
-	gulp.task("default", targets, () => {
-		gulp.src(["dist/**", "!dist/assets.zip", "!dist/doc"])
-			.pipe(zip("assets.zip"))
-			.pipe(gulp.dest("dist/"));
-	});
+	gulp.task("default", targets);
 };
