@@ -69,5 +69,6 @@ func NewComment(c *gin.Context) {
 		return
 	}
 
+	comment.User = user
 	c.JSON(200, comment)
 }

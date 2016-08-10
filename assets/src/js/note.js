@@ -89,9 +89,9 @@ var renderCommentItem = (user, comment, showReply) => {
 
 	var itemRight = $("<div>").addClass("item-right").append(
 		$("<div>").addClass("item-title").append(comment.User.UserName),
-			$("<div>").addClass("item-date").append(comment.CreatedAt),
-			$("<div>").addClass("item-description").append(comment.Body)
-		);
+		$("<div>").addClass("item-date").append(comment.CreatedAt),
+		$("<div>").addClass("item-description").append(comment.Body)
+	);
 
 	if(showReply) {
 		itemRight.append(
