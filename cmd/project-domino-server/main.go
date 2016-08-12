@@ -50,7 +50,7 @@ func main() {
 
 	// Routes that require user object
 	m := r.Group("/")
-	m.Use(middleware.Login())
+	m.Use(middleware.Login(), middleware.LoadNotifications())
 
 	// Authentication Routes
 	m.GET("/login", handlers.Simple("login.html"))

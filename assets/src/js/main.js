@@ -18,8 +18,8 @@ $(() => {
 	$(".account-dropdown-btn").click(() => {
 		$(".account-dropdown-content").toggle();
 	});
-	$(".new-item-dropdown-btn").click(() => {
-		$(".new-item-dropdown-content").toggle();
+	$(".notification-dropdown-btn").click(() => {
+		$(".notification-dropdown-content").toggle();
 	});
 	$(".sidebar-btn").click(() => {
 		$("body").toggleClass("sidebar-close");

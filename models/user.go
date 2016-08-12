@@ -31,6 +31,8 @@ type User struct {
 	EmailVerified  bool `json:"-" xml:"-"`
 	SendNewsletter bool `json:"-" xml:"-"`
 
+	Notifications []Notification `gorm:"ForeignKey:SubjectID"`
+
 	// Ranking Info
 	UpvoteCollections   []Collection `gorm:"many2many:upvotecollection_user;"`
 	DownvoteCollections []Collection `gorm:"many2many:downvotecollection_user;"`

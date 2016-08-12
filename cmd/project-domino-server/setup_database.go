@@ -40,6 +40,7 @@ func SetupDatabase(db *gorm.DB) error {
 	setupTable(db, &models.AuthToken{})
 	setupTable(db, &models.Comment{})
 	setupTable(db, &models.CollectionNote{})
+	setupTable(db, &models.Notification{})
 
 	return db.Error
 }

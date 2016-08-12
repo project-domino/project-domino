@@ -2,23 +2,33 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-// These constants are the valid values for Notification.Type.
+// These constants are valid values for Notification.type
 const (
-	CommentNotificationType string = "comment"
+	emailVerifyNotificationType string = "email_verify"
 )
 
 // A Notification holds a user notification
 type Notification struct {
 	gorm.Model
 
-	ActorID uint
-	Actor   User
-	UserID  uint
-	User    User
+	ActorID   uint
+	Actor     User
+	SubjectID uint
+	Subject   User
 
-	Title   string
 	Type    string
-	Payload string
+	Title   string
 	Message string
+	Link    string
 	Read    bool
+}
+
+// GetEmailVerifyNotification returns a notification to verify an email
+func GetEmailVerifyNotification(subject User) Notification {
+	return Notification{
+		SubjectID: subject.ID,
+		Type:      emailVerifyNotificationType,
+		Title:     "You must verify your email address.",
+		Link:      "/email/verify",
+	}
 }
