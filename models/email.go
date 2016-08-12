@@ -12,6 +12,6 @@ type Email struct {
 	Subject string
 	Body    string
 
-	// This should be set to true when sending a verification email
-	Verification bool
+	Sent    bool
+	Dropped bool
 }

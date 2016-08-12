@@ -41,6 +41,8 @@ func SetupDatabase(db *gorm.DB) error {
 	setupTable(db, &models.Comment{})
 	setupTable(db, &models.CollectionNote{})
 	setupTable(db, &models.Notification{})
+	setupTable(db, &models.Email{})
+	setupTable(db, &models.EmailVerificationCode{})
 
 	return db.Error
 }

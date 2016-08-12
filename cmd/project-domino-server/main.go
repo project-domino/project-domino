@@ -3,9 +3,11 @@ package main
 import (
 	// Standard Library
 	"fmt"
+	"log"
 
 	// Internal Dependencies
 	"github.com/project-domino/project-domino/db"
+	"github.com/project-domino/project-domino/email"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/handlers"
 	"github.com/project-domino/project-domino/handlers/api"
@@ -39,6 +41,16 @@ func main() {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
+	}
+
+	// Setup email worker
+	sendgridAPIKey := viper.GetString("sendgrid.api.key")
+	if sendgridAPIKey != "" {
+		if err := email.Init(sendgridAPIKey); err != nil {
+			log.Println(err)
+		}
+	} else {
+		log.Println("Sendgrid API key not found. Email not setup.")
 	}
 
 	// Create and set up router.
