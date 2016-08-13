@@ -25,7 +25,7 @@ func Send(e models.Email) error {
 	e.Dropped = false
 
 	// Save email in db
-	if err := db.DB.Save(&e).Error; err != nil {
+	if err := db.DB.Create(&e).Error; err != nil {
 		return err
 	}
 

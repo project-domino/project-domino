@@ -82,7 +82,9 @@ func main() {
 		GET("/security",
 			handlers.Simple("account-security.html")).
 		GET("/notifications",
-			handlers.Simple("account-notifications.html"))
+			handlers.Simple("account-notifications.html")).
+		PUT("/name", api.EditName).
+		PUT("/email", api.EditEmail)
 
 	m.GET("/search/:searchType",
 		middleware.LoadRequestUser(

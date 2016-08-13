@@ -39,7 +39,7 @@ func NewCollection(c *gin.Context) {
 	// Get request tags
 	tags, err := db.GetTags(requestVars.Tags)
 	if err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -56,7 +56,7 @@ func NewCollection(c *gin.Context) {
 	}
 	if err := tx.Create(&newCollection).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -69,7 +69,7 @@ func NewCollection(c *gin.Context) {
 
 		if err := tx.Create(&relation).Error; err != nil {
 			tx.Rollback()
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 	}
@@ -78,7 +78,7 @@ func NewCollection(c *gin.Context) {
 
 	// Update searchtext field
 	if err := db.UpdateCollectionSearchText(newCollection.ID); err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -107,7 +107,7 @@ func EditCollection(c *gin.Context) {
 	// Get request tags
 	tags, err := db.GetTags(requestVars.Tags)
 	if err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -119,7 +119,7 @@ func EditCollection(c *gin.Context) {
 			errors.CollectionNotFound.Apply(c)
 			return
 		}
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -136,7 +136,7 @@ func EditCollection(c *gin.Context) {
 	if err := tx.Where("collection_id = ?", collection.ID).
 		Delete(models.CollectionNote{}).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -145,7 +145,7 @@ func EditCollection(c *gin.Context) {
 		Association("Tags").
 		Replace(tags).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -157,7 +157,7 @@ func EditCollection(c *gin.Context) {
 
 	if err := tx.Save(&collection).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -170,7 +170,7 @@ func EditCollection(c *gin.Context) {
 
 		if err := tx.Create(&relation).Error; err != nil {
 			tx.Rollback()
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 	}
@@ -179,7 +179,7 @@ func EditCollection(c *gin.Context) {
 
 	// Update searchtext field
 	if err := db.UpdateCollectionSearchText(collection.ID); err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 

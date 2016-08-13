@@ -25,7 +25,7 @@ func NewNote(c *gin.Context) {
 	// Get request variables
 	var requestVars NoteRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		c.AbortWithError(400, err)
+		errors.JSON.Apply(c)
 		return
 	}
 
@@ -38,7 +38,7 @@ func NewNote(c *gin.Context) {
 	// Get request tags
 	tags, err := db.GetTags(requestVars.Tags)
 	if err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -52,13 +52,13 @@ func NewNote(c *gin.Context) {
 		Tags:        tags,
 	}
 	if err := db.DB.Create(&newNote).Error; err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
 	// Update searchtext field
 	if err := db.UpdateNoteSearchText(newNote.ID); err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -74,7 +74,7 @@ func EditNote(c *gin.Context) {
 	// Get request variables
 	var requestVars NoteRequest
 	if err := c.BindJSON(&requestVars); err != nil {
-		c.AbortWithError(400, err)
+		errors.JSON.Apply(c)
 		return
 	}
 
@@ -87,7 +87,7 @@ func EditNote(c *gin.Context) {
 	// Get request tags
 	tags, err := db.GetTags(requestVars.Tags)
 	if err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -113,7 +113,7 @@ func EditNote(c *gin.Context) {
 		Association("Tags").
 		Replace(tags).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -125,7 +125,7 @@ func EditNote(c *gin.Context) {
 
 	if err := tx.Save(&note).Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -133,7 +133,7 @@ func EditNote(c *gin.Context) {
 
 	// Update searchtext field
 	if err := db.UpdateNoteSearchText(note.ID); err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 

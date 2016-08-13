@@ -65,7 +65,7 @@ func NewComment(c *gin.Context) {
 	comment.Body = body
 
 	if err := db.DB.Create(&comment).Error; err != nil {
-		c.AbortWithError(400, err)
+		errors.DB.Apply(c)
 		return
 	}
 

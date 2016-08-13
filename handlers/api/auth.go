@@ -35,7 +35,7 @@ func Login(c *gin.Context) {
 		Or("user_name = ?", userName).
 		Find(&users).
 		Error; err != nil && err != gorm.ErrRecordNotFound {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -91,7 +91,7 @@ func Register(c *gin.Context) {
 		Or("user_name = ?", userName).
 		Find(&checkUsers).
 		Error; err != nil && err != gorm.ErrRecordNotFound {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -112,7 +112,7 @@ func Register(c *gin.Context) {
 
 	// Add user to database.
 	if err := db.DB.Create(&user).Error; err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -139,7 +139,7 @@ func AuthCookie(c *gin.Context, user models.User) {
 	}
 
 	if err := db.DB.Create(&authToken).Error; err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 

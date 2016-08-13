@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 )
 
@@ -36,7 +37,7 @@ func Login() gin.HandlerFunc {
 			Where("expires > ?", time.Now()).
 			Find(&authEntries).
 			Error; err != nil && err != gorm.ErrRecordNotFound {
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 		if len(authEntries) == 0 {

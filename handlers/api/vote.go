@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/project-domino/project-domino/db"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 )
 
@@ -25,7 +26,7 @@ func VoteNote(c *gin.Context) {
 	}
 	if err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -34,7 +35,7 @@ func VoteNote(c *gin.Context) {
 	downvoteUsers := tx.Model(&note).Association("DownvoteUsers").Count()
 	if tx.Error != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 	ranking := upvoteUsers - downvoteUsers
@@ -44,7 +45,7 @@ func VoteNote(c *gin.Context) {
 		note.ID).
 		Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -70,7 +71,7 @@ func VoteCollection(c *gin.Context) {
 	}
 	if err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -79,7 +80,7 @@ func VoteCollection(c *gin.Context) {
 	downvoteUsers := tx.Model(&collection).Association("DownvoteUsers").Count()
 	if tx.Error != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 	ranking := upvoteUsers - downvoteUsers
@@ -89,7 +90,7 @@ func VoteCollection(c *gin.Context) {
 		collection.ID).
 		Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -115,7 +116,7 @@ func VoteComment(c *gin.Context) {
 	}
 	if err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -124,7 +125,7 @@ func VoteComment(c *gin.Context) {
 	downvoteUsers := tx.Model(&comment).Association("DownvoteUsers").Count()
 	if tx.Error != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 	ranking := upvoteUsers - downvoteUsers
@@ -134,7 +135,7 @@ func VoteComment(c *gin.Context) {
 		comment.ID).
 		Error; err != nil {
 		tx.Rollback()
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 

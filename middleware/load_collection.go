@@ -31,13 +31,13 @@ func LoadCollection(objects ...string) gin.HandlerFunc {
 				errors.CollectionNotFound.Apply(c)
 				return
 			}
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 
 		// Load notes into the collection
 		if err := db.LoadCollectionNotes(&collection); err != nil {
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 

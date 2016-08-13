@@ -3,6 +3,7 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/project-domino/project-domino/db"
+	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 )
 
@@ -21,7 +22,7 @@ func LoadUser(objects ...string) gin.HandlerFunc {
 		// Query for user and set context
 		var user models.User
 		if err := preloadedDB.First(&user).Error; err != nil {
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 

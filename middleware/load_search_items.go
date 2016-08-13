@@ -45,7 +45,7 @@ func LoadSearchItems() gin.HandlerFunc {
 		}
 
 		if searchErr != nil {
-			c.AbortWithError(500, searchErr)
+			errors.DB.Apply(c)
 			return
 		}
 

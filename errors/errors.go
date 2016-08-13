@@ -39,6 +39,7 @@ var (
 // 5xx errors
 var (
 	InternalError = &Error{500, "Server Error"}
+	DB            = &Error{500, "Database Error"}
 	Debug         = &Error{500, "teh internets are asplode"}
 	JSON          = &Error{500, "Could not convert to JSON"}
 )

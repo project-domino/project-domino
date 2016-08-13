@@ -49,7 +49,7 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 				if err == gorm.ErrRecordNotFound {
 					errors.UserNotFound.Apply(c)
 				} else {
-					c.AbortWithError(500, err)
+					errors.DB.Apply(c)
 				}
 				return
 			}
@@ -69,7 +69,7 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 			Find(&notes).
 			Error; err != nil {
 
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 

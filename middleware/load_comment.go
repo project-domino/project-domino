@@ -28,7 +28,7 @@ func LoadComment(objects ...string) gin.HandlerFunc {
 				errors.CommentNotFound.Apply(c)
 				return
 			}
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 

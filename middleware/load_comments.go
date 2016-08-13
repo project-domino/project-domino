@@ -71,7 +71,7 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 			Pluck("id", &parentIDs).
 			Error; err != nil {
 
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 
@@ -85,7 +85,7 @@ func LoadComments(objects ...string) gin.HandlerFunc {
 			Find(&childComments).
 			Error; err != nil {
 
-			c.AbortWithError(500, err)
+			errors.DB.Apply(c)
 			return
 		}
 

@@ -24,7 +24,7 @@ func NewTag(c *gin.Context) {
 	var checkTags []models.Tag
 	if err := db.DB.Where("name = ?", name).
 		Find(&checkTags).Error; err != nil && err != gorm.ErrRecordNotFound {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 
@@ -43,7 +43,7 @@ func NewTag(c *gin.Context) {
 		Description: description,
 		Author:      user,
 	}).Error; err != nil {
-		c.AbortWithError(500, err)
+		errors.DB.Apply(c)
 		return
 	}
 }
