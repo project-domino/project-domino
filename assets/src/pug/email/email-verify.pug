@@ -1,0 +1,22 @@
+extends ../template.pug
+
+block head
+	title Verify Email
+
+block body
+	div.panel.panel-single
+		h2 Verify Your Email
+		div.panel-body
+			block error-text
+			p An email was sent to {{.user.Email}}
+			p
+				| If this is not your email please click
+				= ' '
+				a(href="/account/profile")
+					| here
+				| .
+			p Click the button below to send another verification
+			button.btn.btn-primary.verify-btn Send Verification
+
+block scripts
+	script(src="/assets/email-verify.js")

@@ -71,20 +71,25 @@ func main() {
 	m.POST("/register", api.Register)
 	m.POST("/logout", api.Logout)
 
+	// Email verification routes
+	m.Group("/email/verify", middleware.RequireAuth()).
+		GET("/", handlers.Simple("email-verify.html")).
+		POST("/", api.SendEmailVerification).
+		GET("/:verificationCode", redirect.EmailVerify)
+
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
 
 	m.Group("/account",
 		middleware.RequireAuth()).
 		GET("/", redirect.Account).
+		PUT("/", api.EditUser).
 		GET("/profile",
 			handlers.Simple("account-profile.html")).
 		GET("/security",
 			handlers.Simple("account-security.html")).
 		GET("/notifications",
-			handlers.Simple("account-notifications.html")).
-		PUT("/name", api.EditName).
-		PUT("/email", api.EditEmail)
+			handlers.Simple("account-notifications.html"))
 
 	m.GET("/search/:searchType",
 		middleware.LoadRequestUser(

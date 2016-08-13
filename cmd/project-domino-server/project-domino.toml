@@ -9,3 +9,4 @@ url = "dbname=domino sslmode=disable"
 [http]
 debug = false
 port = 12345
+hostname = "localhost:12345"

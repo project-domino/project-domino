@@ -15,7 +15,7 @@ func worker(emails <-chan models.Email) {
 		from := mail.NewEmail("no-reply", "no-reply@notebox.org")
 		subject := e.Subject
 		to := mail.NewEmail(e.User.UserName, e.User.Email)
-		content := mail.NewContent("text/plain", e.Body)
+		content := mail.NewContent("text/html", e.Body)
 		m := mail.NewV3MailInit(from, subject, to, content)
 
 		// Create sendgrid request
@@ -25,23 +25,9 @@ func worker(emails <-chan models.Email) {
 		response, err := sendgrid.API(request)
 		if err != nil {
 			log.Printf("Email Error -\nresponse - %v\nerror - %v", response, err)
-			markDropped(e)
+			e.MarkDropped(db.DB)
 		} else {
-			markSent(e)
+			e.MarkSent(db.DB)
 		}
 	}
-}
-
-func markSent(e models.Email) {
-	e.Sent = true
-	e.Dropped = false
-
-	db.DB.Save(&e)
-}
-
-func markDropped(e models.Email) {
-	e.Sent = false
-	e.Dropped = true
-
-	db.DB.Save(&e)
 }

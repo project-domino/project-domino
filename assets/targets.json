@@ -3,8 +3,10 @@
 		"select2.css": "node_modules/select2/dist/css/select2.min.css"
 	},
 	"js": {
+		"account-profile": "src/js/account-profile.js",
 		"edit-collection": "src/js/edit-collection.js",
 		"edit-note":       "src/js/edit-note.js",
+		"email-verify":    "src/js/email-verify.js",
 		"login":           "src/js/login.js",
 		"main":            "src/js/main.js",
 		"new-collection":  "src/js/new-collection.js",
@@ -23,6 +25,8 @@
 		"edit-collection":       "src/pug/writer_panel/edit-collection.pug",
 		"edit-note":             "src/pug/writer_panel/edit-note.pug",
 		"error":                 "src/pug/error.pug",
+		"email-verify":          "src/pug/email/email-verify.pug",
+		"email-verify-error":    "src/pug/email/email-verify-error.pug",
 		"home":                  "src/pug/home.pug",
 		"individual-note":       "src/pug/individual-note.pug",
 		"login":                 "src/pug/login.pug",
@@ -44,7 +48,6 @@
 		"collection-note":         "src/sass/collection-note.scss",
 		"home":                    "src/sass/home.scss",
 		"individual-note":         "src/sass/individual-note.scss",
-		"login":                   "src/sass/login.scss",
 		"main":                    "src/sass/main.scss",
 		"note":                    "src/sass/note.scss",
 		"search":                  "src/sass/search.scss",

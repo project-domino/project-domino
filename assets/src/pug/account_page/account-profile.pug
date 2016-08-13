@@ -9,8 +9,11 @@ block body
 		h2.panel-heading Profile
 		div.panel-body
 			h4.panel-field-header Name
-			input.user-full-name.form-input(autocomplete="off", value="{{.user.Name}}")
+			input.user-name.form-input(autocomplete="off", value="{{.user.Name}}")
 			h4.panel-field-header Email
 			input.user-email.form-input(autocomplete="off", value="{{.user.Email}}")
 		div.panel-footer
 			button.btn.btn-success.update-btn Update Profile
+
+block scripts
+	script(src="/assets/account-profile.js")

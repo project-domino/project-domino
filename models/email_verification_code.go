@@ -13,4 +13,6 @@ type EmailVerificationCode struct {
 	Email string
 
 	Code string
+
+	Expired bool
 }

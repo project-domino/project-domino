@@ -20,8 +20,9 @@ func init() {
 		"url":   "dbname=domino sslmode=disable",
 	})
 	viper.SetDefault("http", map[string]interface{}{
-		"debug": false,
-		"port":  80,
+		"debug":    false,
+		"port":     80,
+		"hostname": "localhost",
 	})
 
 	// Setup configuration files.

@@ -36,7 +36,7 @@ html
 						| {{with .user.Notifications}}
 						| {{range .}}
 						div.dropdown-item
-							a.dropdown-item-title(href=".Link", data-notification-id="{{.ID}}") {{.Title}}
+							a.dropdown-item-title(href="{{.Link}}", data-notification-id="{{.ID}}") {{.Title}}
 							span.dropdown-item-date {{.CreatedAt.Format "Mon Jan 2 15:04:05"}}
 							p.dropdown-item-description {{.Message}}
 						| {{end}}

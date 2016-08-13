@@ -3,13 +3,13 @@ package email
 import (
 	"errors"
 
-	"github.com/project-domino/project-domino/db"
+	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/models"
 )
 
 // Send queues an email to be sent
 // The email is also added to the db
-func Send(e models.Email) error {
+func Send(e models.Email, db *gorm.DB) error {
 	// Check if email to be sent has a user
 	if e.User.ID == 0 {
 		return errors.New("Email requires a user.")
@@ -25,7 +25,7 @@ func Send(e models.Email) error {
 	e.Dropped = false
 
 	// Save email in db
-	if err := db.DB.Create(&e).Error; err != nil {
+	if err := db.Create(&e).Error; err != nil {
 		return err
 	}
 
