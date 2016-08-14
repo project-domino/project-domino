@@ -58,8 +58,7 @@ func SendVerification(db *gorm.DB, u models.User) error {
 }
 
 func newVerificationEmail(user models.User, code string) models.Email {
-	bodyFormat := "Please click the link below to verify your email address:\n" +
-		"<a href=\"%s\">Verify</a>"
+	bodyFormat := "Please click <a href=\"%s\">here</a> to verify your email address."
 	verifyLink := viper.GetString("http.hostname") + "/email/verify/" + code
 
 	return models.Email{

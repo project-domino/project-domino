@@ -61,5 +61,5 @@ func EmailVerify(c *gin.Context) {
 	}
 
 	tx.Commit()
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/email/conf")
 }

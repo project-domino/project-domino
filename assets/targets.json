@@ -26,6 +26,7 @@
 		"edit-note":             "src/pug/writer_panel/edit-note.pug",
 		"error":                 "src/pug/error.pug",
 		"email-verify":          "src/pug/email/email-verify.pug",
+		"email-verify-conf":     "src/pug/email/email-verify-conf.pug",
 		"email-verify-error":    "src/pug/email/email-verify-error.pug",
 		"home":                  "src/pug/home.pug",
 		"individual-note":       "src/pug/individual-note.pug",

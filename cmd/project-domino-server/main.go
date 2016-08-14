@@ -72,10 +72,11 @@ func main() {
 	m.POST("/logout", api.Logout)
 
 	// Email verification routes
-	m.Group("/email/verify", middleware.RequireAuth()).
-		GET("/", handlers.Simple("email-verify.html")).
-		POST("/", api.SendEmailVerification).
-		GET("/:verificationCode", redirect.EmailVerify)
+	m.Group("/email", middleware.RequireAuth()).
+		GET("/verify", handlers.Simple("email-verify.html")).
+		POST("/verify", api.SendEmailVerification).
+		GET("/verify/:verificationCode", redirect.EmailVerify).
+		GET("/conf", handlers.Simple("email-verify-conf.html"))
 
 	// View Routes
 	m.GET("/", handlers.Simple("home.html"))
