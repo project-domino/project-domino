@@ -3,18 +3,19 @@
 		"select2.css": "node_modules/select2/dist/css/select2.min.css"
 	},
 	"js": {
-		"account-profile": "src/js/account-profile.js",
-		"edit-collection": "src/js/edit-collection.js",
-		"edit-note":       "src/js/edit-note.js",
-		"email-verify":    "src/js/email-verify.js",
-		"login":           "src/js/login.js",
-		"main":            "src/js/main.js",
-		"new-collection":  "src/js/new-collection.js",
-		"new-note":        "src/js/new-note.js",
-		"new-tag":         "src/js/new-tag.js",
-		"register":        "src/js/register.js",
-		"ranking":         "src/js/ranking.js",
-		"note":            "src/js/note.js"
+		"account-profile":  "src/js/account-profile.js",
+		"account-security": "src/js/account-security.js",
+		"edit-collection":  "src/js/edit-collection.js",
+		"edit-note":        "src/js/edit-note.js",
+		"email-verify":     "src/js/email-verify.js",
+		"login":            "src/js/login.js",
+		"main":             "src/js/main.js",
+		"new-collection":   "src/js/new-collection.js",
+		"new-note":         "src/js/new-note.js",
+		"new-tag":          "src/js/new-tag.js",
+		"register":         "src/js/register.js",
+		"ranking":          "src/js/ranking.js",
+		"note":             "src/js/note.js"
 	},
 	"pug": {
 		"account-notifications": "src/pug/account_page/account-notifications.pug",

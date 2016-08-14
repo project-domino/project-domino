@@ -85,6 +85,7 @@ func main() {
 		middleware.RequireAuth()).
 		GET("/", redirect.Account).
 		PUT("/", api.EditUser).
+		PUT("/password", api.ChangePassword).
 		GET("/profile",
 			handlers.Simple("account-profile.html")).
 		GET("/security",

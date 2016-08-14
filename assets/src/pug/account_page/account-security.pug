@@ -6,3 +6,19 @@ block css
 block body
 	+sidebar("security")
 	div.panel.page-body
+		h2.panel-heading Password
+		div.panel-body
+			h4.panel-field-header Old Password
+			input#old-password-field.form-input(autocomplete="off", placeholder="Enter your old password...", type="password")
+			p.hidden.form-notify.old-password-notify
+			h4.panel-field-header New Password
+			input#password-field.form-input(autocomplete="off", placeholder="Choose a new password...", type="password")
+			p.hidden.form-notify.password-notify
+			h4.panel-field-header Retype New Password
+			input#retype-password-field.form-input(autocomplete="off", placeholder="Retype your password...", type="password")
+			p.hidden.form-notify.retype-password-notify
+		div.panel-footer
+			button.btn.change-password-btn Change Password
+
+block scripts
+	script(src="/assets/account-security.js")

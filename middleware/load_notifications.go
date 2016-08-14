@@ -11,9 +11,10 @@ func LoadNotifications() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		user := c.MustGet("user").(models.User)
 
-		db.DB.Model(&user).Where("read = ?", false).Association("Notifications").Find(&user.Notifications)
-
-		c.Set("user", user)
+		if user.ID != 0 {
+			db.DB.Model(&user).Where("read = ?", false).Association("Notifications").Find(&user.Notifications)
+			c.Set("user", user)
+		}
 
 		c.Next()
 	}
