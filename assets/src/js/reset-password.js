@@ -34,6 +34,10 @@ $(() => {
 
 	$("#passwd-verification-send-btn").click(() => {
 		verifyUserName();
+
+		if($(".invalid").length !== 0)
+			return;
+
 		$.ajax({
 			type: "POST",
 			url:  "/reset-password",
@@ -53,6 +57,10 @@ $(() => {
 		verifyCode();
 		verifyPasswordField();
 		verifyRetypePasswordField();
+
+		if($(".invalid").length !== 0)
+			return;
+
 		$.ajax({
 			type: "PUT",
 			url:  "/reset-password",
