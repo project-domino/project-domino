@@ -17,6 +17,7 @@ var (
 	TagExists         = &Error{400, "Tag already exists"}
 	InvalidPage       = &Error{400, "Page number is not valid"}
 	InvalidItems      = &Error{400, "Item count is not valid"}
+	CommentNesting    = &Error{400, "A comment can only be nested one level deep"}
 )
 
 // 403 errors
@@ -24,6 +25,7 @@ var (
 	NotNoteOwner       = &Error{403, "You are not the owner of this note"}
 	NotCollectionOwner = &Error{403, "You are not the owner of this collection"}
 	NotTextbookOwner   = &Error{403, "You are not the owner of this textbook"}
+	EmailNotVerified   = &Error{403, "Your email is not verified"}
 )
 
 // 404 errors
@@ -33,7 +35,7 @@ var (
 	CollectionNotFound = &Error{404, "Collection Not Found"}
 	UserNotFound       = &Error{404, "User Not Found"}
 	CommentNotFound    = &Error{404, "Comment Not Found"}
-	CommentNesting     = &Error{404, "A comment can only be nested one level deep"}
+	ResetCodeNotFound  = &Error{404, "Reset Code Not Found"}
 )
 
 // 5xx errors

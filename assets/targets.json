@@ -15,6 +15,7 @@
 		"new-tag":          "src/js/new-tag.js",
 		"register":         "src/js/register.js",
 		"ranking":          "src/js/ranking.js",
+		"reset-password":   "src/js/reset-password.js",
 		"note":             "src/js/note.js"
 	},
 	"pug": {
@@ -36,6 +37,7 @@
 		"new-note":              "src/pug/writer_panel/new-note.pug",
 		"new-tag":               "src/pug/writer_panel/new-tag.pug",
 		"register":              "src/pug/register.pug",
+		"reset-password":        "src/pug/reset-password.pug",
 		"search":                "src/pug/search.pug",
 		"user-collections":      "src/pug/user_page/user-collections.pug",
 		"user-notes":            "src/pug/user_page/user-notes.pug",

@@ -4,7 +4,9 @@ block head
 	title Error
 
 block body
-	h1 Error {{ .errors.Status }} ({{ .errors.StatusText }})
-	| {{ range .errors.Errors }}
-	pre {{ . }}
-	| {{ end }}
+	div.panel.panel-single
+		h2 Error {{ .errors.Status }} ({{ .errors.StatusText }})
+		div.panel-body
+			| {{ range .errors.Errors }}
+			pre {{ . }}
+			| {{ end }}

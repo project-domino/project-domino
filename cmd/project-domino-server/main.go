@@ -71,6 +71,12 @@ func main() {
 	m.POST("/register", api.Register)
 	m.POST("/logout", api.Logout)
 
+	// Reset Password Routes
+	m.Group("/reset-password").
+		GET("/", handlers.Simple("reset-password.html")).
+		POST("/", api.SendPasswordResetCode).
+		PUT("/", api.ResetPassword)
+
 	// Email verification routes
 	m.Group("/email", middleware.RequireAuth()).
 		GET("/verify", handlers.Simple("email-verify.html")).

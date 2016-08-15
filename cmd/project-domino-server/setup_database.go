@@ -43,6 +43,7 @@ func SetupDatabase(db *gorm.DB) error {
 	setupTable(db, &models.Notification{})
 	setupTable(db, &models.Email{})
 	setupTable(db, &models.EmailVerificationCode{})
+	setupTable(db, &models.PasswordResetCode{})
 
 	return db.Error
 }
