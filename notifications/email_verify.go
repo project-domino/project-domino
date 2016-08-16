@@ -19,7 +19,7 @@ func EmailVerify(db *gorm.DB, subject models.User) error {
 	// Create new email verify notification
 	if err := db.Create(&models.Notification{
 		SubjectID: subject.ID,
-		Type:      emailVerifyNotificationType,
+		Type:      EmailVerifyNotificationType,
 		Title:     "You must verify your email address.",
 		Link:      "/email/verify",
 	}).Error; err != nil {
@@ -34,7 +34,7 @@ func EmailVerify(db *gorm.DB, subject models.User) error {
 func RemoveEmailVerifyNotifications(db *gorm.DB, subject models.User) error {
 	err := db.Table("notifications").
 		Where("subject_id = ?", subject.ID).
-		Where("type = ?", emailVerifyNotificationType).
+		Where("type = ?", EmailVerifyNotificationType).
 		Updates(map[string]interface{}{"read": true}).
 		Error
 

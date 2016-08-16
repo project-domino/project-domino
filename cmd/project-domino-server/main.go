@@ -192,6 +192,9 @@ func main() {
 			middleware.RequireAuth(),
 			middleware.LoadNotifications(),
 			handlers.JSON("notifications")).
+		PUT("/notification/:notificationID/read",
+			middleware.RequireAuth(),
+			api.MarkNotificationRead).
 		GET("/search/:searchType",
 			middleware.LoadSearchItems(),
 			api.Search).

@@ -30,12 +30,13 @@ var (
 
 // 404 errors
 var (
-	NotFound           = &Error{404, "Page Not Found"}
-	NoteNotFound       = &Error{404, "Note Not Found"}
-	CollectionNotFound = &Error{404, "Collection Not Found"}
-	UserNotFound       = &Error{404, "User Not Found"}
-	CommentNotFound    = &Error{404, "Comment Not Found"}
-	ResetCodeNotFound  = &Error{404, "Reset Code Not Found"}
+	NotFound             = &Error{404, "Page Not Found"}
+	NoteNotFound         = &Error{404, "Note Not Found"}
+	CollectionNotFound   = &Error{404, "Collection Not Found"}
+	UserNotFound         = &Error{404, "User Not Found"}
+	CommentNotFound      = &Error{404, "Comment Not Found"}
+	NotificationNotFound = &Error{404, "NotificationNotFound Not Found"}
+	ResetCodeNotFound    = &Error{404, "Reset Code Not Found"}
 )
 
 // 5xx errors

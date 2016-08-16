@@ -6,6 +6,7 @@ import (
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
+	"github.com/project-domino/project-domino/notifications"
 )
 
 // NewComment creates a comment with specified values
@@ -37,6 +38,7 @@ func NewComment(c *gin.Context) {
 	var parentComment models.Comment
 	if parentID != "" {
 		if err := db.DB.
+			Preload("User").
 			Where("ID = ?", parentID).
 			Where("note_id = ?", note.ID).
 			Find(&parentComment).
@@ -70,5 +72,10 @@ func NewComment(c *gin.Context) {
 	}
 
 	comment.User = user
+
+	if parentComment.ID != 0 && parentComment.UserID != user.ID {
+		notifications.Comment(db.DB, user, parentComment.User, comment)
+	}
+
 	c.JSON(200, comment)
 }

@@ -2,5 +2,6 @@ package notifications
 
 // These constants are valid values for Notification.type
 const (
-	emailVerifyNotificationType string = "email_verify"
+	EmailVerifyNotificationType string = "email_verify"
+	CommentNotificationType            = "comment"
 )

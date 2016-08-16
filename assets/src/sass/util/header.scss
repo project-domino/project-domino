@@ -69,6 +69,12 @@
 				&:hover { color: $primary-color; }
 			}
 
+			.notification-dropdown-content {
+				max-height: 250px;
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+
 			.dropdown-content {
 				background-color: #ffffff;
 				border: 1px solid rgba(0, 0, 0, 0.09);
@@ -96,11 +102,15 @@
 
 				}
 
+				.dropdown-item.inactive {
+					background-color: rgba(0, 0, 0, 0.1);
+				}
+
 				.no-items {
 					color: $darker;
 					display: block;
 				}
-		
+
 				.dropdown-link {
 					cursor: pointer;
 					display: block;
