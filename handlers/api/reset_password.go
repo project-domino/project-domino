@@ -136,7 +136,7 @@ func SendPasswordResetCode(c *gin.Context) {
 	codeEmail := models.Email{
 		User:    user,
 		Subject: "Password Reset",
-		Body:    fmt.Sprintf("Your password reset code is: %s", passwordResetCode.Code),
+		Body:    fmt.Sprintf("Your password reset code is: \"%s\"", passwordResetCode.Code),
 	}
 	if err := email.Send(codeEmail, tx); err != nil {
 		tx.Rollback()
