@@ -62,7 +62,7 @@ func main() {
 
 	// Routes that require user object
 	m := r.Group("/")
-	m.Use(middleware.Login(), middleware.LoadNotifications())
+	m.Use(middleware.Login())
 
 	// Authentication Routes
 	m.GET("/login", handlers.Simple("login.html"))
@@ -188,6 +188,10 @@ func main() {
 
 	// API
 	m.Group("/api/v1").
+		GET("/notifications",
+			middleware.RequireAuth(),
+			middleware.LoadNotifications(),
+			handlers.JSON("notifications")).
 		GET("/search/:searchType",
 			middleware.LoadSearchItems(),
 			api.Search).
