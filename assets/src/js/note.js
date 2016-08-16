@@ -89,7 +89,9 @@ var renderCommentItem = (user, comment, showReply) => {
 
 	var itemRight = $("<div>").addClass("item-right").append(
 		$("<div>").addClass("item-title").append(comment.User.UserName),
-		$("<div>").addClass("item-date").append(comment.CreatedAt),
+		$("<div>").addClass("item-date").append(
+			moment(comment.CreatedAt).from(moment()) // eslint-disable-line no-undef
+		),
 		$("<div>").addClass("item-description").append(comment.Body)
 	);
 
