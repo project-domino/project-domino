@@ -11,7 +11,7 @@ html
 		div.navbar
 			block sidebar-btn
 			h2.logo
-				a.navbar-title(href="/") Domino
+				a.navbar-title(href="/") Notebox
 			div.search-container
 				form#search-form.hidden(action="/search/all", method="GET")
 				input.search-field(type="text", name="q", placeholder="Search...", value="{{.query}}", form="search-form", autocomplete="off")
@@ -39,9 +39,10 @@ html
 					span.fa.fa-plus
 				| {{end}}
 				| {{else}}
-				a(href="/register") Sign up
-				span /
-				a(href="/login") Sign in
+				div.sign-in-container
+					a(href="/register") Sign up
+					span /
+					a(href="/login") Sign in
 				| {{end}}
 		block sidebar
 		div#main-content.main-content

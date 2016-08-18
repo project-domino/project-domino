@@ -1,10 +1,36 @@
 @import "util/variables.scss";
 @import "main.scss";
 
-section {
-	width: 100%;
+@import "util/item-list.scss";
+
+html, body {
+	background-color: $theme-color;
 }
 
-.site-info {
-	text-align: center;
+.home-wrapper {
+	margin: 20px auto;
+	width: 1000px;
 }
+
+@media only screen and (max-width: 1040px) {
+	.home-wrapper {
+		margin: 20px;
+		width: calc(100% - 40px);
+	}
+}
+
+.home-top-wrapper {
+	padding: 20px;
+	text-align: center;
+
+	h1 {
+		font-weight: 400;
+		font-size: 48px;
+	}
+}
+
+.panel {
+	margin-bottom: 20px;
+}
+
+.no-content-text { padding: 20px; }

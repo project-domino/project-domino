@@ -22,6 +22,8 @@ var KeysList = []string{
 	"collectionsJSON",
 	"notes",
 	"notesJSON",
+	"featuredNotes",
+	"featuredCollections",
 }
 
 // Keys returns the variables which have been set via gin.Context.Set. This is

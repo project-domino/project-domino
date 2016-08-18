@@ -85,7 +85,15 @@ func main() {
 		GET("/conf", handlers.Simple("email-verify-conf.html"))
 
 	// View Routes
-	m.GET("/", handlers.Simple("home.html"))
+	m.GET("/",
+		middleware.LoadRequestUser(
+			"UpvoteNotes",
+			"DownvoteNotes",
+			"UpvoteCollections",
+			"DownvoteCollections",
+		),
+		middleware.LoadFeaturedItems(),
+		handlers.Simple("home.html"))
 
 	m.Group("/account",
 		middleware.RequireAuth()).

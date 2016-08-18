@@ -9,6 +9,7 @@ type Note struct {
 	Title       string
 	Description string
 	Body        string
+	Featured    bool
 
 	AuthorID uint
 	Author   User

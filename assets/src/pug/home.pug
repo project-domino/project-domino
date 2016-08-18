@@ -1,10 +1,37 @@
 extends ./template.pug
 
+include items.pug
+
 block head
-	title Project Domino
+	title Notebox
 
 block css
 	link(rel="stylesheet", href="/assets/home.css")
 
 block body
-	h1 TODO
+	div.home-wrapper
+		div.home-top-wrapper
+			h1 Welcome to Notebox!
+		div.panel
+			h2.panel-heading Featured Notes
+			div.panel-body
+				| {{with .featuredNotes}}
+				| {{range .}}
+				+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", "")
+				| {{end}}
+				| {{else}}
+				span.no-content-text No featured notes.
+				| {{end}}
+		div.panel
+			h2.panel-heading Featured Collections
+			div.panel-body
+				| {{with .featuredCollections}}
+				| {{range .}}
+				+collectionItem("/collection/{{.ID}}", "")
+				| {{end}}
+				| {{else}}
+				span.no-content-text No featured collections.
+				| {{end}}
+
+block scripts
+	script(src="/assets/ranking.js")

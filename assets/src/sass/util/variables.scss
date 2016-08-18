@@ -1,11 +1,17 @@
 $fonts-light: Source Sans Pro, Helvetica, sans-serif;
 $fonts-normal: Source Sans Pro, Helvetica, sans-serif;
 
+$theme-color: #428bca;
+$theme-dark: #2E3436;
+$theme-light: #EEEEEC;
+
 $foreground-color: #ffffff;
 $background-color: #fafafa;
 $border-color: #e8e8e8;
 
-$primary-color: #428bca;
+$link-color: #61b2a7;
+
+$primary-color: $theme-color;
 $success-color: #41bf34;
 $danger-color: #dd4b39;
 
