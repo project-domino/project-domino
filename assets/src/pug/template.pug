@@ -13,8 +13,7 @@ html
 			block sidebar-btn
 			h2.logo
 				a.navbar-title(href="/") Notebox
-			div.search-container
-				form#search-form.hidden(action="/search/all", method="GET")
+			form#search-form.search-container(action="/search/all", method="GET")
 				input.search-field(type="text", name="q", placeholder="Search...", value="{{.query}}", form="search-form", autocomplete="off")
 				button.search-btn(type="submit", form="search-form")
 					span.fa.fa-search
