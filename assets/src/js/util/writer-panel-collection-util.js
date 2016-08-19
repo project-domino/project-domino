@@ -144,7 +144,7 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 						$("<div>").append(
 							$("<div>").append(
 								$("<button>").click(() => {
-									if(this.selectedNotes.map(e => e.ID).includes(note.ID)) {
+									if(_(this.selectedNotes).map(e => e.ID).includes(note.ID)) {
 										modal.alert("This note has already been selected", 3000);
 										return;
 									}

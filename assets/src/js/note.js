@@ -1,4 +1,5 @@
 import $ from "jquery";
+import _ from "lodash";
 
 import getModal from "./util/modal.js";
 import {changeVote} from "./ranking.js";
@@ -79,11 +80,11 @@ var renderCommentItem = (user, comment, showReply) => {
 	var votingStatus = "";
 
 	if(user.UpvoteComments) {
-		if(user.UpvoteComments.map(e => e.ID).includes(comment.ID))
+		if(_(user.UpvoteComments).map(e => e.ID).includes(comment.ID))
 			votingStatus = "upvoted";
 	}
 	if(user.DownvoteComments) {
-		if(user.DownvoteComments.map(e => e.ID).includes(comment.ID))
+		if(_(user.DownvoteComments).map(e => e.ID).includes(comment.ID))
 			votingStatus = "downvoted";
 	}
 
