@@ -1,16 +1,42 @@
 import $ from "jquery";
 import getModal from "./util/modal.js";
-import FormUtil from "./util/form-util.js";
 import {verifyPassword, verifyRetypePassword} from "./util/password-form-verify.js";
 
-const util = new FormUtil();
 const modal = getModal();
 
-var verifyUserName = util.verifyFilled(
-	$("#username-field"),
-	$(".username-notify"),
-	"Username is required."
-);
+var usernameTest = new RegExp("^[a-zA-Z0-9_-]*$");
+
+var verifyUserName = () => {
+	var field = $("#username-field");
+	var notify = $(".username-notify");
+	var invalid = false;
+	var notificationText = "";
+
+	if(field.val() === "") {
+		invalid = true;
+		notificationText = "Username is required";
+	} else if(!usernameTest.test(field.val())) {
+		invalid = true;
+		notificationText =
+			"Only _, -, letters and numbers are allowed in a username.";
+	}
+
+	if(invalid) {
+		field.addClass("invalid");
+		notify
+			.addClass("invalid")
+			.removeClass("hidden")
+			.empty()
+			.text(notificationText);
+	} else {
+		field.removeClass("invalid");
+		notify
+			.removeClass("invalid")
+			.addClass("hidden")
+			.empty();
+	}
+};
+
 var verifyPasswordField = verifyPassword($("#password-field"), $(".password-notify"));
 var verifyRetypePasswordField = verifyRetypePassword(
 	$("#password-field"),

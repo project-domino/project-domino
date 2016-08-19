@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 
@@ -13,6 +14,8 @@ import (
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
 )
+
+var usernameRegex = regexp.MustCompile("^[a-zA-Z0-9_-]*$")
 
 // Login handles requests to log a user in.
 // If credentials are valid, sets an auth cookie.
@@ -68,20 +71,22 @@ func Logout(c *gin.Context) {
 
 // Register handles requests to handle a new user.
 func Register(c *gin.Context) {
-	// Get needed variables from request.
 	userName := c.PostForm("userName")
 	password := c.PostForm("password")
 	retypePassword := c.PostForm("retypePassword")
 
-	// Check if the request is missing needed parameters
 	if userName == "" || password == "" || retypePassword == "" {
 		errors.MissingParameters.Apply(c)
 		return
 	}
 
-	// Check if password matches retype password
 	if retypePassword != password {
 		errors.PasswordsDoNotMatch.Apply(c)
+		return
+	}
+
+	if !usernameRegex.MatchString(userName) {
+		errors.BadParameters.Apply(c)
 		return
 	}
 
