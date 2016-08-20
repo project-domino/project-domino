@@ -1,5 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
+import {errorHandler} from "./util/error.js";
 import WriterPanelNoteUtil from "./util/writer-panel-note-util.js";
 import getModal from "./util/modal.js";
 
@@ -20,11 +21,8 @@ $(() => {
 			data:     JSON.stringify(_.set(util.getData(), "publish", note.Published)),
 			dataType: "json",
 		}).then(() => {
-			modal.alert("Note Saved", 3000);
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+			modal.alert("Note Saved");
+		}).fail(errorHandler);
 	});
 	$(".publish-btn").click(() => {
 		$.ajax({
@@ -34,9 +32,6 @@ $(() => {
 			dataType: "json",
 		}).then(() => {
 			window.location.reload();
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+		}).fail(errorHandler);
 	});
 });

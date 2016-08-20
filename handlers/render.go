@@ -52,5 +52,7 @@ func RenderStatusData(c *gin.Context, status int, htmlPage string, dataName stri
 		c.String(status, "%s", dataValue)
 	case gin.MIMEXML:
 		c.XML(status, dataValue)
+	default:
+		c.JSON(status, dataValue)
 	}
 }

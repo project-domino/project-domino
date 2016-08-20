@@ -1,19 +1,17 @@
 // js for entire website
 
 import $ from "jquery";
+import {errorHandler} from "./util/error.js";
 
 $(() => {
 	// Wire up buttons
 	$(".logout-btn").click(() => {
 		$.ajax({
-			type:     "POST",
-			url:      "/logout",
-			dataType: "text",
-		}).fail(err => {
-			console.log(err);
+			type: "POST",
+			url:  "/logout",
 		}).then(() => {
 			window.location.reload();
-		});
+		}).fail(errorHandler);
 	});
 	$(".account-dropdown-btn").click(() => {
 		$(".account-dropdown-content").toggle();

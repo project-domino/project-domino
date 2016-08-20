@@ -1,6 +1,7 @@
 import $ from "jquery";
 import _ from "lodash";
 
+import {errorHandler} from "./util/error.js";
 import getModal from "./util/modal.js";
 import {changeVote} from "./ranking.js";
 
@@ -55,7 +56,7 @@ var postComment = (body, type, parent, fn) => {
 	var user = JSON.parse($("#user-data").text());
 
 	if(user.ID === 0) {
-		modal.alert("You must sign in to ask a question.", 3000);
+		modal.alert("You must sign in to ask a question.");
 		return;
 	}
 	if(body === "")
@@ -69,10 +70,7 @@ var postComment = (body, type, parent, fn) => {
 			parentID: parent,
 		},
 		dataType: "json",
-	}).then(fn).fail(err => {
-		console.log(err);
-		modal.alert(err.responseText, 3000);
-	});
+	}).then(fn).fail(errorHandler);
 };
 
 // renderCommentItem renders an individual comment
@@ -223,10 +221,7 @@ var loadComments = type => {
 				$("<span>").text("There are no more " + type + "s.")
 			);
 		}
-	}).fail(err => {
-		console.log(err);
-		modal.alert(err.responseText, 3000);
-	});
+	}).fail(errorHandler);
 };
 
 $(() => {

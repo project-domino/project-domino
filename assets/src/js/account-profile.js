@@ -1,5 +1,5 @@
 import $ from "jquery";
-
+import {errorHandler} from "./util/error.js";
 import getModal from "./util/modal.js";
 
 const modal = getModal();
@@ -13,12 +13,8 @@ $(() => {
 				name:  $(".user-name").val().trim(),
 				email: $(".user-email").val().trim(),
 			},
-			dataType: "text",
 		}).then(() => {
-			modal.alert("Profile Updated", 3000);
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+			modal.alert("Profile Updated");
+		}).fail(errorHandler);
 	});
 });

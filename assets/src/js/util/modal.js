@@ -53,6 +53,8 @@ class Modal {
 	alert(message, time) {
 		this.alertText.text(message);
 		this.alertElement.css("display", "block");
+		if(!time)
+			time = 3000;
 		if(time > 0)
 			setTimeout(this.refreshAlert, time);
 	}

@@ -1,5 +1,5 @@
 import $ from "jquery";
-
+import {errorHandler} from "./util/error.js";
 import getModal from "./util/modal.js";
 
 const modal = getModal();
@@ -7,14 +7,10 @@ const modal = getModal();
 $(() => {
 	$(".verify-btn").click(() => {
 		$.ajax({
-			type:     "POST",
-			url:      "/email/verify",
-			dataType: "text",
+			type: "POST",
+			url:  "/email/verify",
 		}).then(() => {
-			modal.alert("Sent Verification Email", 3000);
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+			modal.alert("Sent Verification Email");
+		}).fail(errorHandler);
 	});
 });

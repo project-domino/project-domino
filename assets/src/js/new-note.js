@@ -1,10 +1,9 @@
 import $ from "jquery";
 import _ from "lodash";
+import {errorHandler} from "./util/error.js";
 import WriterPanelNoteUtil from "./util/writer-panel-note-util.js";
-import getModal from "./util/modal.js";
 
 const util = new WriterPanelNoteUtil();
-const modal = getModal();
 
 var newNoteHandler = publish => {
 	return () => {
@@ -15,10 +14,7 @@ var newNoteHandler = publish => {
 			dataType: "json",
 		}).then(data => {
 			window.location.assign("/writer-panel/note/" + data.ID + "/edit");
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+		}).fail(errorHandler);
 	};
 };
 

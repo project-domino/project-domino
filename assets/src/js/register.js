@@ -1,8 +1,7 @@
 import $ from "jquery";
-import getModal from "./util/modal.js";
-import {verifyPassword, verifyRetypePassword} from "./util/password-form-verify.js";
 
-const modal = getModal();
+import {errorHandler} from "./util/error.js";
+import {verifyPassword, verifyRetypePassword} from "./util/password-form-verify.js";
 
 var usernameTest = new RegExp("^[a-zA-Z0-9_-]*$");
 
@@ -65,12 +64,8 @@ $(() => {
 				password:       $("#password-field").val(),
 				retypePassword: $("#retype-password-field").val(),
 			},
-			dataType: "text",
 		}).then(() => {
 			window.location.assign("/");
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+		}).fail(errorHandler);
 	});
 });

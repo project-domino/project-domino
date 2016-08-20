@@ -1,16 +1,15 @@
 import $ from "jquery";
-import getModal from "./util/modal.js";
 import FormUtil from "./util/form-util.js";
+import {errorHandler} from "./util/error.js";
 
-const modal = getModal();
-const util = new FormUtil();
+const formUtil = new FormUtil();
 
-var verifyUserName = util.verifyFilled(
+var verifyUserName = formUtil.verifyFilled(
 	$("#username-field"),
 	$(".username-notify"),
 	"Username is required."
 );
-var verifyPassword = util.verifyFilled(
+var verifyPassword = formUtil.verifyFilled(
 	$("#password-field"),
 	$(".password-notify"),
 	"Password is required."
@@ -34,13 +33,9 @@ $(() => {
 				userName: $("#username-field").val(),
 				password: $("#password-field").val(),
 			},
-			dataType: "text",
 		}).then(() => {
 			window.location.assign("/");
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+		}).fail(errorHandler);
 	});
 
 	$("#username-field, #password-field").keyup(e => {

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import _ from "lodash";
+import {errorHandler} from "./util/error.js";
 import getModal from "./util/modal.js";
 
 const modal = getModal();
@@ -55,11 +56,9 @@ $(() => {
 				q: $(".new-tag-name-field").val(),
 			},
 			dataType: "json",
-		}).then(tagResultHandler).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+		}).then(tagResultHandler).fail(errorHandler);
 	}, 100));
+
 	$(".new-tag-create-btn").click(() => {
 		$.ajax({
 			type: "POST",
@@ -68,14 +67,11 @@ $(() => {
 				name:        $(".new-tag-name-field").val(),
 				description: $(".new-tag-description-field").val(),
 			},
-			dataType: "text",
+			dataType: "json",
 		}).then(() => {
 			$(".new-tag-name-field").val("");
 			$(".new-tag-description-field").val("");
-			modal.alert("Tag Created", 3000);
-		}).fail(err => {
-			console.log(err);
-			modal.alert(err.responseText, 3000);
-		});
+			modal.alert("Tag Created");
+		}).fail(errorHandler);
 	});
 });
