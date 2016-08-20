@@ -5,6 +5,7 @@ import "select2";
 import _ from "lodash";
 
 import getModal from "./modal.js";
+import {noteRender} from "./item-render.js";
 import WriterPanelUtil from "./writer-panel-util.js";
 
 const modal = getModal();
@@ -58,6 +59,35 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 		this.remainChars.text(charRemaining + " characters remaining...");
 	}
 
+	// removeSelectNote removes a note from the selectedNote list and rerenders
+	removeSelectNote(note) {
+		return () => {
+			_.remove(this.selectedNotes, e => {
+				return e.ID === note.ID;
+			});
+			this.renderSelectNotes();
+		};
+	}
+
+	// moveSelectNote moves a selectedNote up or down in the select list and rerenders
+	moveSelectNote(note, dir) {
+		return () => {
+			var i = _.findIndex(this.selectedNotes, e => {
+				return e.ID === note.ID;
+			});
+
+			var swapIndex = i - dir;
+			if(swapIndex < 0 || swapIndex > (this.selectedNotes.length - 1))
+				return;
+
+			var temp = this.selectedNotes[swapIndex];
+			this.selectedNotes[swapIndex] = this.selectedNotes[i];
+			this.selectedNotes[i] = temp;
+
+			this.renderSelectNotes();
+		};
+	}
+
 	/**
 	 * renderSelectNotes renders all selected notes in selectNotes
 	 */
@@ -70,62 +100,23 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			$(".no-notes-text").removeClass("hidden");
 		}
 		$(".selected-notes").empty().append(
-			_(this.selectedNotes)
+			this.selectedNotes
 			.map((note, i) => {
-				return [
-					$("<div>").append(
+				return noteRender(note,
+					[
 						$("<div>").append(
-							$("<div>").append(
-								$("<span>").addClass("fa fa-trash").click(() => {
-									_.remove(this.selectedNotes, e => {
-										return e.ID === note.ID;
-									});
-									this.renderSelectNotes();
-								})
-							).addClass("select-options-left"),
-							$("<div>").append(
-								$("<span>").addClass("fa fa-chevron-up").click(() => {
-									var i = _.findIndex(this.selectedNotes, e => {
-										return e.ID === note.ID;
-									});
-									if(i > 0) {
-										var temp = this.selectedNotes[i - 1];
-										this.selectedNotes[i - 1] = this.selectedNotes[i];
-										this.selectedNotes[i] = temp;
-									}
-									this.renderSelectNotes();
-								}),
-								$("<span>").addClass("fa fa-chevron-down").click(() => {
-									var i = _.findIndex(this.selectedNotes, e => {
-										return e.ID === note.ID;
-									});
-									if(i < (this.selectedNotes.length - 1)) {
-										var temp = this.selectedNotes[i + 1];
-										this.selectedNotes[i + 1] = this.selectedNotes[i];
-										this.selectedNotes[i] = temp;
-									}
-									this.renderSelectNotes();
-								})
-							).addClass("select-options-right")
-						).addClass("item-left select-options-container"),
+							$("<span>").addClass("fa fa-trash").click(this.removeSelectNote(note))
+						).addClass("select-options-container"),
+						$("<div>").append(
+							$("<span>").addClass("fa fa-chevron-up").click(this.moveSelectNote(note, 1)),
+							$("<span>").addClass("fa fa-chevron-down").click(this.moveSelectNote(note, -1))
+						).addClass("select-options-container"),
 						$("<div>").append(
 							$("<span>").text(i + 1).addClass("item-number")
-						).addClass("item-left"),
-						$("<div>").append(
-							$("<div>").append(
-								$("<a>").attr({
-									href:   "/note/" + note.ID,
-									target: "_blank",
-								}).text(note.Title)
-							).addClass("item-title"),
-							$("<div>").text(note.Description).addClass("item-description")
-						).addClass("item-right")
-					).addClass("list-item").data("note-id", note.ID),
-					$("<div>").addClass("item-seperator"),
-				];
+						),
+					]
+				);
 			})
-			.flatten()
-			.value()
 		);
 	}
 
@@ -138,10 +129,10 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 			$(".search-result-container").removeClass("hidden");
 			$(".result-notification").addClass("hidden");
 			$(".search-result-container").append(
-				_(this.resultNotes)
+				this.resultNotes
 				.map(note => {
-					return [
-						$("<div>").append(
+					return noteRender(note,
+						[
 							$("<div>").append(
 								$("<button>").click(() => {
 									if(_(this.selectedNotes).map(e => e.ID).includes(note.ID)) {
@@ -152,22 +143,10 @@ class WriterPanelCollectionUtil extends WriterPanelUtil {
 									this.renderSelectNotes();
 								}).addClass("add-item-btn btn btn-primary fa fa-plus")
 									.data("note-id", note.ID)
-							).addClass("item-left"),
-							$("<div>").append(
-								$("<div>").append(
-									$("<a>").attr({
-										href:   "/note/" + note.ID,
-										target: "_blank",
-									}).text(note.Title)
-								).addClass("item-title"),
-								$("<div>").text(note.Description).addClass("item-description")
-							).addClass("item-right")
-						).addClass("list-item").data("note", JSON.stringify(note)),
-						$("<div>").addClass("item-seperator"),
-					];
+							),
+						]
+					);
 				})
-				.flatten()
-				.value()
 			);
 		} else {
 			$(".search-result-container").addClass("hidden");

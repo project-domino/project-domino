@@ -13,17 +13,15 @@
 	margin: auto;
 }
 
-.select-options-right, .select-options-left {
+.add-item-btn { padding: 0; }
+
+.select-options-container {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	justify-content: space-around;
-	width: 50%;
 
-	span {
-		cursor: pointer;
-	}
+	span { cursor: pointer; }
 }
 
 .collection-description {
@@ -34,6 +32,8 @@
 	min-width: 100%;
 	width: 100%;
 }
+
+.item-number { color: $darker; }
 
 .tag-selector-container {
 	margin-bottom: 20px;
