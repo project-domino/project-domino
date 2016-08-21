@@ -17,6 +17,8 @@ block body
 				p
 					| {{if.collection.Published}}
 					| This collection is public and can be seen by everyone.
+					= " "
+					a(href="/collection/{{.collection.ID}}", target="_blank") Public Version
 					| {{else}}
 					| This collection is a draft and can only be seen by you.
 					| {{end}}
