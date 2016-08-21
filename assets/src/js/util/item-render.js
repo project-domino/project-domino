@@ -34,7 +34,8 @@ const noteRender = (note, noteLefts) => {
 						target: "_blank",
 					}).text(note.Title)
 				),
-				$("<div>").addClass("item-date").text("Last Updated - " + note.UpdatedAt),
+				$("<div>").addClass("item-date").text("Last Updated - " +
+					moment(note.UpdatedAt).format("Y[-]M[-]D")), // eslint-disable-line no-undef
 				$("<div>").addClass("item-description").text(note.Description)
 			).append(tagList(note.Tags))
 		)
