@@ -7,13 +7,6 @@ mixin control(subPage)
 		li.h-control
 			a(href="/u/{{.pageUser.UserName}}/collections", class=(subPage === "collections") ? "active" : "") Collections
 
-mixin navLinks(prevLink, nextLink)
-	div.page-nav-links
-		a.prev-link(href!=prevLink)
-			span.fa.fa-chevron-left
-		a.next-link(href!=nextLink)
-			span.fa.fa-chevron-right
-
 block head
 	title {{.pageUser.UserName}}
 

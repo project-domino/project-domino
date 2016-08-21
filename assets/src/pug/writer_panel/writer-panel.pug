@@ -3,51 +3,13 @@ extends ../template.pug
 mixin sidebarLink(link, text, active)
 	a.sidebar-link(href=link, class=active ? "active" : "") #{text}
 
-mixin noteLink(text)
-	| {{if $.note}}
-	| {{if eq $.note.ID .ID}}
-	a.sidebar-link.active(href="/writer-panel/note/{{.ID}}/edit") #{text}
-	| {{else}}
-	a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") #{text}
-	| {{end}}
-	| {{else}}
-	a.sidebar-link(href="/writer-panel/note/{{.ID}}/edit") #{text}
-	| {{end}}
-
-mixin collectionLink(text)
-	| {{if $.collection}}
-	| {{if eq $.collection.ID .ID}}
-	a.sidebar-link.active(href="/writer-panel/collection/{{.ID}}/edit") #{text}
-	| {{else}}
-	a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") #{text}
-	| {{end}}
-	| {{else}}
-	a.sidebar-link(href="/writer-panel/collection/{{.ID}}/edit") #{text}
-	| {{end}}
-
 mixin sidebar(subPage)
 	div.page-sidebar.panel
-		h4.sidebar-header Create
-		+sidebarLink("/writer-panel/note", "New Note", subPage == "new-note")
-		+sidebarLink("/writer-panel/collection", "New Collection", subPage =="new-collection")
-		+sidebarLink("/writer-panel/tag", "New Tag", subPage == "new-tag")
-		div.sidebar-section-container
-			h4.sidebar-header My Notes
-			| {{range .user.Notes}}
-			| {{if .Published}}{{else}}
-			+noteLink("{{.Title}} - Draft")
-			| {{end}}{{end}}
-			| {{range .user.Notes}}
-			| {{if .Published}}
-			+noteLink("{{.Title}}")
-			| {{end}}{{end}}
-		div.sidebar-section-container
-			h4.sidebar-header My Collections
-			| {{range .user.Collections}}
-			| {{if .Published}}{{else}}
-			+collectionLink("{{.Title}} - Draft")
-			| {{end}}{{end}}
-			| {{range .user.Collections}}
-			| {{if .Published}}
-			+collectionLink("{{.Title}}")
-			| {{end}}{{end}}
+		div.panel-body
+			h4.sidebar-header My Creations
+			+sidebarLink("/writer-panel/notes", "My Notes", subPage == "notes")
+			+sidebarLink("/writer-panel/collections", "My Collections", subPage == "collections")
+			h4.sidebar-header Create
+			+sidebarLink("/writer-panel/note", "New Note", subPage == "new-note")
+			+sidebarLink("/writer-panel/collection", "New Collection", subPage =="new-collection")
+			+sidebarLink("/writer-panel/tag", "New Tag", subPage == "new-tag")

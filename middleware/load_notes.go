@@ -12,7 +12,8 @@ import (
 
 // These constants are the valid values by in LoadNotes
 const (
-	LoadNotesAuthor string = "author"
+	LoadNotesAuthor      string = "author"
+	LoadNotesRequestUser        = "requestUser"
 )
 
 // LoadNotes loads notes into the request context with specified objects
@@ -36,16 +37,10 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 		}
 
 		switch by {
-		case "author":
-			// Acquire username from URL
-			username := c.Param("username")
-			// Find user in db
+		case LoadNotesAuthor:
 			var user models.User
-			if err := db.DB.
-				Where("user_name = ?", username).
-				First(&user).
+			if err := db.DB.Where("user_name = ?", c.Param("username")).First(&user).
 				Error; err != nil {
-
 				if err == gorm.ErrRecordNotFound {
 					errors.UserNotFound.Apply(c)
 				} else {
@@ -53,9 +48,12 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 				}
 				return
 			}
-			// add where statement to query
+			preloadedDB = preloadedDB.
+				Where("author_id = ?", user.ID).
+				Where("published = ?", true)
+		case LoadNotesRequestUser:
+			user := c.MustGet("user").(models.User)
 			preloadedDB = preloadedDB.Where("author_id = ?", user.ID)
-
 		default:
 			errors.InternalError.Apply(c)
 			return
@@ -66,6 +64,7 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 		if err := preloadedDB.
 			Limit(items).
 			Offset((page - 1) * items).
+			Order("updated_at desc").
 			Find(&notes).
 			Error; err != nil {
 

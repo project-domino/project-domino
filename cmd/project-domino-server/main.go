@@ -134,24 +134,33 @@ func main() {
 			handlers.Simple("collection.html")).
 		GET("/:collectionID/note/:noteID",
 			middleware.LoadNote("Author", "Tags"),
+			middleware.VerifyNotePublic(),
 			handlers.Simple("collection-note.html")).
 		GET("/:collectionID/note/:noteID/:noteName",
 			middleware.LoadNote("Author", "Tags"),
+			middleware.VerifyNotePublic(),
 			handlers.Simple("collection-note.html"))
 
 	m.Group("/writer-panel",
 		middleware.RequireAuth(),
-		middleware.RequireUserType(models.Writer, models.Admin),
-		middleware.LoadRequestUser("Notes", "Collections")).
+		middleware.RequireUserType(models.Writer, models.Admin)).
 		GET("/", redirect.WriterPanel).
 		GET("/note",
 			handlers.Simple("new-note.html")).
+		GET("/notes",
+			middleware.LoadNotes(middleware.LoadNotesRequestUser, "Author", "Tags"),
+			middleware.LoadRankItems(),
+			handlers.Simple("writer-panel-notes.html")).
 		GET("/note/:noteID/edit",
 			middleware.LoadNote("Author", "Tags"),
 			middleware.VerifyNoteOwner(),
 			handlers.Simple("edit-note.html")).
 		GET("/collection",
 			handlers.Simple("new-collection.html")).
+		GET("/collections",
+			middleware.LoadCollections(middleware.LoadCollectionsRequestUser, "Author", "Tags"),
+			middleware.LoadRankItems(),
+			handlers.Simple("writer-panel-collections.html")).
 		GET("/collection/:collectionID/edit",
 			middleware.LoadCollection("Author", "Tags"),
 			middleware.VerifyCollectionOwner(),

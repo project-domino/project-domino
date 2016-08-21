@@ -1,0 +1,27 @@
+extends ./writer-panel.pug
+
+include ../items.pug
+
+block head
+	title Writer Panel - Notes
+
+block css
+	link(rel="stylesheet", href="/assets/writer-panel-list.css")
+
+block body
+	+sidebar("notes")
+	div.page-body
+		div.panel
+			h2.panel-heading My Notes
+			div.panel-body.item-container
+				span.page-number Page {{.currentPage}}
+				div.item-list
+					| {{range .notes}}
+					+noteItem("/writer-panel/note/{{.ID}}/edit", "")
+					| {{end}}
+				- var prevLink = "/writer-panel/notes?items={{.items}}&page={{.prevPage}}"
+				- var nextLink = "/writer-panel/notes?items={{.items}}&page={{.nextPage}}"
+				+navLinks(prevLink, nextLink)
+
+block scripts
+	script(src="/assets/ranking.js")

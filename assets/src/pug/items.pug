@@ -25,6 +25,7 @@ mixin noteItem(link, notePipeline)
 		div.item-right
 			div.item-title
 				a(href=link) {{#{notePipeline}.Title}}
+					| {{if #{notePipeline}.Published}}{{else}} - Draft{{end}}
 			div.item-date
 				| Last Updated - {{#{notePipeline}.UpdatedAt.Format "2006-01-02"}}
 			div.item-description {{#{notePipeline}.Description}}
@@ -37,7 +38,15 @@ mixin collectionItem(link, collectionPipeline)
 		div.item-right
 			div.item-title
 				a(href=link) {{#{collectionPipeline}.Title}}
+					| {{if #{collectionPipeline}.Published}}{{else}} - Draft{{end}}
 			div.item-date
 				| Last Updated - {{#{collectionPipeline}.UpdatedAt.Format "2006-01-02"}}
 			div.item-description {{#{collectionPipeline}.Description}}
 			+tagList(collectionPipeline + ".Tags")
+
+mixin navLinks(prevLink, nextLink)
+	div.page-nav-links
+		a.prev-link(href!=prevLink)
+			span.fa.fa-chevron-left
+		a.next-link(href!=nextLink)
+			span.fa.fa-chevron-right
