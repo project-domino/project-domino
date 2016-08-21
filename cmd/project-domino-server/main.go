@@ -86,12 +86,7 @@ func main() {
 
 	// View Routes
 	m.GET("/",
-		middleware.LoadRequestUser(
-			"UpvoteNotes",
-			"DownvoteNotes",
-			"UpvoteCollections",
-			"DownvoteCollections",
-		),
+		middleware.LoadRankItems(),
 		middleware.LoadFeaturedItems(),
 		handlers.Simple("home.html"))
 
@@ -108,11 +103,7 @@ func main() {
 			handlers.Simple("account-notifications.html"))
 
 	m.GET("/search/:searchType",
-		middleware.LoadRequestUser(
-			"UpvoteNotes",
-			"DownvoteNotes",
-			"UpvoteCollections",
-			"DownvoteCollections"),
+		middleware.LoadRankItems(),
 		middleware.LoadSearchItems(),
 		handlers.Simple("search.html"))
 
@@ -129,12 +120,7 @@ func main() {
 			handlers.Simple("user-collections.html"))
 
 	m.Group("/note",
-		middleware.LoadRequestUser(
-			"UpvoteNotes",
-			"DownvoteNotes",
-			"UpvoteComments",
-			"DownvoteComments",
-		),
+		middleware.LoadRankItems(),
 		middleware.LoadNote("Author", "Tags"),
 		middleware.VerifyNotePublic()).
 		GET("/:noteID", handlers.Simple("individual-note.html")).
@@ -142,35 +128,14 @@ func main() {
 
 	m.Group("/collection",
 		middleware.LoadCollection("Author", "Tags"),
-		middleware.VerifyCollectionPublic()).
+		middleware.VerifyCollectionPublic(),
+		middleware.LoadRankItems()).
 		GET("/:collectionID",
-			middleware.LoadRequestUser(
-				"UpvoteNotes",
-				"DownvoteNotes",
-				"UpvoteCollections",
-				"DownvoteCollections",
-			),
 			handlers.Simple("collection.html")).
 		GET("/:collectionID/note/:noteID",
-			middleware.LoadRequestUser(
-				"UpvoteNotes",
-				"DownvoteNotes",
-				"UpvoteCollections",
-				"DownvoteCollections",
-				"UpvoteComments",
-				"DownvoteComments",
-			),
 			middleware.LoadNote("Author", "Tags"),
 			handlers.Simple("collection-note.html")).
 		GET("/:collectionID/note/:noteID/:noteName",
-			middleware.LoadRequestUser(
-				"UpvoteNotes",
-				"DownvoteNotes",
-				"UpvoteCollections",
-				"DownvoteCollections",
-				"UpvoteComments",
-				"DownvoteComments",
-			),
 			middleware.LoadNote("Author", "Tags"),
 			handlers.Simple("collection-note.html"))
 

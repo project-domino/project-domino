@@ -45,9 +45,7 @@
 		"collection":            "src/pug/collection.pug"
 	},
 	"sass": {
-		"account-notifications":   "src/sass/account_page/account-notifications.scss",
-		"account-profile":         "src/sass/account_page/account-profile.scss",
-		"account-security":        "src/sass/account_page/account-security.scss",
+		"account":                 "src/sass/account.scss",
 		"collection":              "src/sass/collection.scss",
 		"collection-note":         "src/sass/collection-note.scss",
 		"home":                    "src/sass/home.scss",
