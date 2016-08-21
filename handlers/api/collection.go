@@ -51,7 +51,7 @@ func NewCollection(c *gin.Context) {
 		Title:       requestVars.Title,
 		Description: requestVars.Description,
 		Author:      user,
-		Published:   false,
+		Published:   requestVars.Publish,
 		Tags:        tags,
 	}
 	if err := tx.Create(&newCollection).Error; err != nil {
