@@ -35,4 +35,8 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+	// Imgur
+	config.extraPlugins = 'imgur';
+	config.imgurClientId = '28818d93e5ed0ce';
 };
