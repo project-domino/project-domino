@@ -4,9 +4,9 @@ include ../items.pug
 
 block user-body
 	+control("notes")
-	div.user-items-content
+	div.pageify-content
 		span.page-number Page {{.currentPage}}
-		div.item-list
+		div.item-list.full-width
 			| {{range .notes}}
 			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", "")
 			| {{end}}

@@ -4,9 +4,9 @@ include ../items.pug
 
 block user-body
 	+control("collections")
-	div.user-items-content
+	div.pageify-content
 		span.page-number Page {{.currentPage}}
-		div.item-list
+		div.item-list.full-width
 			| {{range .collections}}
 			+collectionItem("/collection/{{.ID}}", "")
 			| {{end}}

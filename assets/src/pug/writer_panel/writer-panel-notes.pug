@@ -13,9 +13,9 @@ block body
 	div.page-body
 		div.panel
 			h2.panel-heading My Notes
-			div.panel-body.item-container
+			div.panel-body.pageify-content
 				span.page-number Page {{.currentPage}}
-				div.item-list
+				div.item-list.full-width
 					| {{range .notes}}
 					+noteItem("/writer-panel/note/{{.ID}}/edit", "")
 					| {{end}}

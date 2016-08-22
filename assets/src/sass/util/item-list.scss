@@ -4,6 +4,8 @@
 .item-list {
 	margin: 0 auto;
 	width: 90%;
+
+	&.full-width { width: 100%; }
 }
 
 .list-item {
