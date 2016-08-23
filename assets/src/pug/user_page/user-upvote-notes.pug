@@ -1,0 +1,15 @@
+extends ./user.pug
+
+include ../items.pug
+
+block user-body
+	+control("upvote-notes")
+	div.pageify-content
+		span.page-number Page {{.currentPage}}
+		div.item-list.full-width
+			| {{range .notes}}
+			+noteItem("/note/{{.ID}}/{{toSnakeCase .Title}}", "")
+			| {{end}}
+		- var prevLink = "/u/{{.pageUser.UserName}}/upvote-notes?items={{.items}}&page={{.prevPage}}"
+		- var nextLink = "/u/{{.pageUser.UserName}}/upvote-notes?items={{.items}}&page={{.nextPage}}"
+		+navLinks(prevLink, nextLink)

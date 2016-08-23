@@ -42,6 +42,8 @@
 		"search":                   "src/pug/search.pug",
 		"user-collections":         "src/pug/user_page/user-collections.pug",
 		"user-notes":               "src/pug/user_page/user-notes.pug",
+		"user-upvote-collections":  "src/pug/user_page/user-upvote-collections.pug",
+		"user-upvote-notes":        "src/pug/user_page/user-upvote-notes.pug",
 		"writer-panel":             "src/pug/writer_panel/writer-panel.pug",
 		"writer-panel-collections": "src/pug/writer_panel/writer-panel-collections.pug",
 		"writer-panel-notes":       "src/pug/writer_panel/writer-panel-notes.pug"

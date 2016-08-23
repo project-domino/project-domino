@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -14,6 +13,7 @@ import (
 const (
 	LoadCollectionsAuthor      string = "author"
 	LoadCollectionsRequestUser        = "requestUser"
+	LoadCollectionsUserUpvote         = "requestUserUpvote"
 )
 
 // LoadCollections loads collections into the request context with specified objects
@@ -36,38 +36,41 @@ func LoadCollections(by string, objects ...string) gin.HandlerFunc {
 			preloadedDB = preloadedDB.Preload(object)
 		}
 
+		preloadedDB = preloadedDB.
+			Limit(items).
+			Offset((page - 1) * items).
+			Order("updated_at desc")
+
+		var collections []models.Collection
+		var err error
+
 		switch by {
 		case LoadCollectionsAuthor:
-			var user models.User
-			if err := db.DB.Where("user_name = ?", c.Param("username")).First(&user).
-				Error; err != nil {
-				if err == gorm.ErrRecordNotFound {
-					errors.UserNotFound.Apply(c)
-				} else {
-					errors.DB.Apply(c)
-				}
-				return
-			}
-			preloadedDB = preloadedDB.
+			user := c.MustGet("pageUser").(models.User)
+			err = preloadedDB.
 				Where("author_id = ?", user.ID).
-				Where("published = ?", true)
+				Where("published = ?", true).
+				Find(&collections).
+				Error
+		case LoadCollectionsUserUpvote:
+			user := c.MustGet("pageUser").(models.User)
+			err = preloadedDB.
+				Model(&user).
+				Association("UpvoteCollections").
+				Find(&collections).
+				Error
 		case LoadCollectionsRequestUser:
 			user := c.MustGet("user").(models.User)
-			preloadedDB = preloadedDB.Where("author_id = ?", user.ID)
+			err = preloadedDB.
+				Where("author_id = ?", user.ID).
+				Find(&collections).
+				Error
 		default:
 			errors.InternalError.Apply(c)
 			return
 		}
 
-		// Query for collections
-		var collections []models.Collection
-		if err := preloadedDB.
-			Limit(items).
-			Offset((page - 1) * items).
-			Order("updated_at desc").
-			Find(&collections).
-			Error; err != nil {
-
+		if err != nil {
 			errors.DB.Apply(c)
 			return
 		}

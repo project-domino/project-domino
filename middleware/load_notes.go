@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"github.com/project-domino/project-domino/db"
 	"github.com/project-domino/project-domino/errors"
 	"github.com/project-domino/project-domino/models"
@@ -14,6 +13,7 @@ import (
 const (
 	LoadNotesAuthor      string = "author"
 	LoadNotesRequestUser        = "requestUser"
+	LoadNotesUserUpvote         = "requestUserUpvote"
 )
 
 // LoadNotes loads notes into the request context with specified objects
@@ -36,38 +36,41 @@ func LoadNotes(by string, objects ...string) gin.HandlerFunc {
 			preloadedDB = preloadedDB.Preload(object)
 		}
 
+		preloadedDB = preloadedDB.
+			Limit(items).
+			Offset((page - 1) * items).
+			Order("updated_at desc")
+
+		var notes []models.Note
+		var err error
+
 		switch by {
 		case LoadNotesAuthor:
-			var user models.User
-			if err := db.DB.Where("user_name = ?", c.Param("username")).First(&user).
-				Error; err != nil {
-				if err == gorm.ErrRecordNotFound {
-					errors.UserNotFound.Apply(c)
-				} else {
-					errors.DB.Apply(c)
-				}
-				return
-			}
-			preloadedDB = preloadedDB.
+			user := c.MustGet("pageUser").(models.User)
+			err = preloadedDB.
 				Where("author_id = ?", user.ID).
-				Where("published = ?", true)
+				Where("published = ?", true).
+				Find(&notes).
+				Error
+		case LoadNotesUserUpvote:
+			user := c.MustGet("pageUser").(models.User)
+			err = preloadedDB.
+				Model(&user).
+				Association("UpvoteNotes").
+				Find(&notes).
+				Error
 		case LoadNotesRequestUser:
 			user := c.MustGet("user").(models.User)
-			preloadedDB = preloadedDB.Where("author_id = ?", user.ID)
+			err = preloadedDB.
+				Where("author_id = ?", user.ID).
+				Find(&notes).
+				Error
 		default:
 			errors.InternalError.Apply(c)
 			return
 		}
 
-		// Query for notes
-		var notes []models.Note
-		if err := preloadedDB.
-			Limit(items).
-			Offset((page - 1) * items).
-			Order("updated_at desc").
-			Find(&notes).
-			Error; err != nil {
-
+		if err != nil {
 			errors.DB.Apply(c)
 			return
 		}

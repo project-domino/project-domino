@@ -108,16 +108,21 @@ func main() {
 		handlers.Simple("search.html"))
 
 	m.Group("/u/:username",
-		middleware.LoadUser("Notes", "Collections")).
+		middleware.LoadUser("Notes", "Collections"),
+		middleware.LoadRankItems()).
 		GET("/", redirect.User).
 		GET("/notes",
-			middleware.LoadRequestUser("UpvoteNotes", "DownvoteNotes"),
 			middleware.LoadNotes(middleware.LoadNotesAuthor, "Tags"),
 			handlers.Simple("user-notes.html")).
 		GET("/collections",
-			middleware.LoadRequestUser("UpvoteCollections", "DownvoteCollections"),
 			middleware.LoadCollections(middleware.LoadCollectionsAuthor, "Tags"),
-			handlers.Simple("user-collections.html"))
+			handlers.Simple("user-collections.html")).
+		GET("/upvote-notes",
+			middleware.LoadNotes(middleware.LoadNotesUserUpvote, "Tags"),
+			handlers.Simple("user-upvote-notes.html")).
+		GET("/upvote-collections",
+			middleware.LoadCollections(middleware.LoadCollectionsUserUpvote, "Tags"),
+			handlers.Simple("user-upvote-collections.html"))
 
 	m.Group("/note",
 		middleware.LoadRankItems(),

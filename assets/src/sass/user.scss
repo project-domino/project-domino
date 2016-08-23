@@ -5,3 +5,21 @@
 @import "util/item-list.scss";
 @import "util/pageify.scss";
 @import "util/page-sidebar.scss";
+
+.darker { color: $darker; }
+
+.stats-container {
+	display: flex;
+	padding: 20px 0;
+
+	.stat {
+		color: $primary-color;
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		font-size: 1em;
+		text-align: center;
+
+		.stat-title { font-weight: bold; }
+	}
+}
