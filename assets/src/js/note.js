@@ -226,8 +226,32 @@ var loadComments = type => {
 	}).fail(errorHandler);
 };
 
+var resizeNoteImages = () => {
+	$(".note img").each((i, e) => {
+		e = $(e);
+
+		if(!e.data("init-width"))
+			e.data("init-width", e.width());
+		if(!e.data("init-height"))
+			e.data("init-height", e.height());
+
+		var ratio = e.data("init-height") / e.data("init-width");
+		var noteWidth = $(".note > .panel-body").width();
+		if(e.data("init-width") > noteWidth) {
+			e.width(noteWidth);
+			e.height(noteWidth * ratio);
+		} else {
+			e.width(e.data("init-width"));
+			e.height(e.data("init-height"));
+		}
+	});
+};
+
 $(() => {
 	initToggles();
+
+	resizeNoteImages();
+	$(window).resize(resizeNoteImages);
 
 	loadComments("question");
 	loadComments("suggestion");
