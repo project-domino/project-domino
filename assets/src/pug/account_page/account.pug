@@ -8,7 +8,7 @@ mixin sidebar(subPage)
 		h4.sidebar-header Account Settings
 		+sidebarLink("/account/profile", "Profile", subPage == "profile")
 		+sidebarLink("/account/security", "Security", subPage == "security")
-		+sidebarLink("/account/notifications", "Notifications", subPage == "notifications")
+		// +sidebarLink("/account/notifications", "Notifications", subPage == "notifications")
 
 block head
 	title {{.user.UserName}}

@@ -100,7 +100,7 @@ func main() {
 		GET("/security",
 			handlers.Simple("account-security.html")).
 		GET("/notifications",
-			handlers.Simple("account-notifications.html"))
+			handlers.TODO)
 
 	m.GET("/search/:searchType",
 		middleware.LoadRankItems(),
