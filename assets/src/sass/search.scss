@@ -16,3 +16,16 @@
 		width: calc(100% - 40px);
 	}
 }
+
+@media only screen and (max-width: 450px) {
+	.search-result-container {
+		margin: 20px 0 20px 0;
+		width: 100%;
+	}
+
+	.panel {
+		border-radius: 0;
+		border-right: none;
+		border-left: none;
+	}
+}
