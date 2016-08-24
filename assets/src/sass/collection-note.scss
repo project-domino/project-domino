@@ -66,20 +66,36 @@
 
 @media screen and (max-width: 1000px) {
 	.collection-sidebar {
+		border: 1px solid $border-color;
+		height: auto;
 		margin: 20px 20px 10px 20px;
+		position: static;
+		width: calc(100% - 40px);
 	}
 	.collection-body {
 		margin: 10px 20px 20px 20px;
-	}
-	.collection-sidebar {
-		border: 1px solid $border-color;
-		height: auto;
-		position: static;
-		width: calc(100% - 40px);
-	}
-	.collection-body {
 		padding-top: 0;
 		position: static;
 		width: calc(100% - 40px);
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.collection-sidebar {
+		border-left: none;
+		border-right: none;
+		margin: 20px 0 10px 0;
+		width: 100%;
+	}
+
+	.collection-body {
+		margin: 10px 0 20px 0;
+		width: 100%;
+	}
+
+	.panel {
+		border-radius: 0;
+		border-right: none;
+		border-left: none;
 	}
 }

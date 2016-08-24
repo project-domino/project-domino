@@ -1,5 +1,12 @@
 doctype html
 
+mixin userNameSelector(userPipeline)
+	| {{if ne #{userPipeline}.Name ""}}
+	| 	{{#{userPipeline}.Name}}
+	| {{else}}
+	| 	{{#{userPipeline}.UserName}}
+	| {{end}}
+
 html
 	head
 		meta(name="viewport", content="width=device-width, initial-scale=1")
@@ -10,7 +17,6 @@ html
 		block head
 	body
 		div.navbar
-			block sidebar-btn
 			h2.logo
 				a.navbar-title(href="/") Notebox
 			form#search-form.search-container(action="/search/all", method="GET")
@@ -21,19 +27,9 @@ html
 				| {{if .loggedIn}}
 				div.dropdown.account-dropdown
 					span.dropdown-btn.account-dropdown-btn
-						| {{if ne .user.Name ""}}
-						| 	{{.user.Name}}
-						| {{else}}
-						| 	{{.user.UserName}}
-						| {{end}}
-					div.dropdown-content.account-dropdown-content
-						a.dropdown-item.dropdown-link(href="/account") My Account
-						span.dropdown-item.dropdown-link.logout-btn Sign Out
+						+userNameSelector(".user")
 				div.dropdown.notification-dropdown
 					span.dropdown-btn.notification-dropdown-btn.fa.fa-bell
-					div.dropdown-content.notification-dropdown-content
-						h3.dropdown-item Notifications
-						div.unread-notifications-list
 				| {{if eq .user.Type "writer"}}
 				a.writer-panel-btn(href="/writer-panel")
 					span.fa.fa-plus
@@ -44,9 +40,34 @@ html
 					span /
 					a(href="/register") Register
 				| {{end}}
-		block sidebar
+			div.nav-right-container-mobile
+				div.dropdown.mobile-dropdown
+					span.dropdown-btn.mobile-dropdown-btn.fa.fa-bars
+		//- Dropdowns
+		div.dropdown-content.notification-dropdown-content
+			h3.dropdown-item Notifications
+			div.unread-notifications-list
+		div.dropdown-content.account-dropdown-content
+			a.dropdown-item.dropdown-link(href="/account") My Account
+			span.dropdown-item.dropdown-link.logout-btn Sign Out
+		div.dropdown-content.mobile-dropdown-content
+			| {{if .loggedIn}}
+			h4.dropdown-item
+				+userNameSelector(".user")
+			| {{if eq .user.Type "writer"}}
+			a.dropdown-item.dropdown-link(href="/writer-panel") Writer Panel
+			| {{end}}
+			a.dropdown-item.dropdown-link(href="/account") My Account
+			span.dropdown-item.dropdown-link.logout-btn Sign Out
+			| {{else}}
+			div.sign-in-container
+				a.dropdown-item.dropdown-link(href="/login") Login
+				a.dropdown-item.dropdown-link(href="/register") Register
+			| {{end}}
+		//- Main Content
 		div#main-content.main-content
 			block body
+		//- Modal
 		div#modal.modal
 			div.container
 				div#modal-content.modal-content
@@ -54,10 +75,12 @@ html
 						span#modal-close.modal-close ×
 					div#modal-body.modal-body
 					div#modal-footer.modal-footer
+		//- Alert
 		div#alert.alert
 			div#alert-content.alert-content
 				span#alert-close.alert-close ×
 				span#alert-text.alert-text
+		//- Hidden data
 		div.data.hidden
 			div#logged-in-val {{.loggedIn}}
 			div#user-data {{json .user}}

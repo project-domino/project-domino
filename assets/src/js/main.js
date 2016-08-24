@@ -4,7 +4,6 @@ import $ from "jquery";
 import {errorHandler} from "./util/error.js";
 
 $(() => {
-	// Wire up buttons
 	$(".logout-btn").click(() => {
 		$.ajax({
 			type: "POST",
@@ -13,14 +12,16 @@ $(() => {
 			window.location.reload();
 		}).fail(errorHandler);
 	});
-	$(".account-dropdown-btn").click(() => {
-		$(".account-dropdown-content").toggle();
+
+	// Setup dropdowns
+	["account", "notification", "mobile"].forEach(e => {
+		$(`.${e}-dropdown-btn`).click(() => {
+			$(".dropdown-content").not(`.${e}-dropdown-content`).hide();
+			$(`.${e}-dropdown-content`).toggle();
+		});
 	});
-	$(".notification-dropdown-btn").click(() => {
-		$(".notification-dropdown-content").toggle();
-	});
-	$(".sidebar-btn").click(() => {
-		$("body").toggleClass("sidebar-close");
+	$(window).resize(() => {
+		$(".dropdown-content").hide();
 	});
 
 	// Notifications

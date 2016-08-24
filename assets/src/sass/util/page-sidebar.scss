@@ -17,17 +17,6 @@
 	width: calc(100% - 400px);
 }
 
-@media screen and (max-width: 1200px) {
-	.page-sidebar { width: 25%; }
-	.page-body { width: calc(75% - 100px); }
-}
-
-@media screen and (max-width: 750px) {
-	.page-sidebar, .page-body { margin: 20px; }
-	.page-sidebar { width: calc(100% - 40px); }
-	.page-body { width: calc(100% - 40px); }
-}
-
 .sidebar-header { margin: 15px 0; }
 
 .sidebar-link {
@@ -38,5 +27,34 @@
 	&.active {
 		background-color: $primary-color;
 		color: white;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.page-sidebar { width: 25%; }
+	.page-body { width: calc(75% - 100px); }
+}
+
+@media screen and (max-width: 750px) {
+	.page-sidebar { margin: 20px 20px 10px 20px; }
+	.page-body { margin: 10px 20px 20px 20px; }
+	.page-sidebar, .page-body { width: calc(100% - 40px); }
+}
+
+@media only screen and (max-width: 450px) {
+	.page-sidebar {
+		margin: 20px 0 10px 0;
+		width: 100%;
+	}
+
+	.page-body {
+		margin: 10px 0 20px 0;
+		width: 100%;
+	}
+
+	.panel {
+		border-radius: 0;
+		border-right: none;
+		border-left: none;
 	}
 }
