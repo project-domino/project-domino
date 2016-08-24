@@ -5,6 +5,8 @@
 @import "util/panel.scss";
 
 // Main styles for the whole website
+html { -webkit-text-size-adjust: 100%; }
+
 html, body {
 	background-color: $background-color;
 	font-family: $fonts-light;
