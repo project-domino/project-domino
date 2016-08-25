@@ -23,3 +23,21 @@
 @media only screen and (max-width: 1040px) {
 	.collection-info, .collection-notes { width: calc(100% - 40px); }
 }
+
+@media only screen and (max-width: 450px) {
+	.collection-info {
+		margin: 20px 0 10px 0;
+		width: 100%;
+	}
+
+	.collection-notes {
+		margin: 10px 0 20px 0;
+		width: 100%;
+	}
+
+	.panel {
+		border-radius: 0;
+		border-right: none;
+		border-left: none;
+	}
+}
