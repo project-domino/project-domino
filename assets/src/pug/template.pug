@@ -31,7 +31,7 @@ html
 				div.dropdown.notification-dropdown
 					span.dropdown-btn.notification-dropdown-btn.fa.fa-bell
 				| {{if eq .user.Type "writer"}}
-				a.writer-panel-btn(href="/writer-panel")
+				a.writer-panel-btn(href="/writer-panel", title="Writer Panel")
 					span.fa.fa-plus
 				| {{end}}
 				| {{else}}
